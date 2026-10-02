@@ -1,0 +1,54 @@
+appId: com.straightup.posture
+---
+# Fresh install state on every run. The emulator has no real camera, so the
+# flow navigates the check entry (guide screen) without requiring capture.
+- launchApp:
+    clearState: true
+
+# --- Onboarding: language + 3 slides + camera rationale + scoring explainer ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "StraightUp"
+- tapOn: "English"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Get started"
+
+# --- Home: empty state + new-check entry ---
+- assertVisible: "Check your posture. Fix the slouch."
+- assertVisible: "No checks yet"
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "New check"
+
+# --- Exercises library: expand one exercise ---
+- tapOn: "Exercises"
+- assertVisible: "Exercise library"
+- assertVisible: "Chin Tucks"
+- tapOn: "Chin Tucks"
+- assertVisible: "Mark done"
+- tapOn: "Chin Tucks"
+
+# --- History: empty state ---
+- tapOn: "History"
+- assertVisible: "No checks yet"
+
+# --- Profile: settings + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "StraightUp Pro"
+- assertVisible: "Stand taller, every week"
+- assertVisible: "Start free trial"
+- tapOn: "Close"
+
+# --- Check flow: guide screen reachable without camera capture ---
+- tapOn: "Home"
+- tapOn: "New check"
+- assertVisible: "Line yourself up"
+- assertVisible: "Start camera"
+- back
+- assertVisible: "No checks yet"
+
+- takeScreenshot: screenshots/shot-04.png

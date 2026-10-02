@@ -1,0 +1,47 @@
+appId: com.lanceledger.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: currency -> tax rate -> start ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Know your number"
+- tapOn: "€"
+- tapOn: "Start tracking"
+
+# --- Dashboard ---
+- assertVisible: "profit this month"
+- assertVisible: "tax shield"
+- assertVisible: "deductible"
+
+# --- Add an expense ---
+- tapOn: "Add"
+- assertVisible: "Add expense"
+- takeScreenshot: screenshots/shot-02.png
+- inputText: "250"
+- tapOn: "Software"
+- tapOn: "Save"
+- assertVisible: "Saved"
+
+# --- Add income via dashboard quick-add ---
+- tapOn: "Today"
+- tapOn: "Add income"
+- assertVisible: "Add income"
+
+# --- Clients tab ---
+- tapOn: "Clients"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "No clients yet"
+
+# --- Reports tab ---
+- tapOn: "Reports"
+- assertVisible: "Spending by category"
+- assertVisible: "Export CSV"
+
+# --- Settings tab ---
+- tapOn: "Settings"
+- assertVisible: "Currency"
+- assertVisible: "Language"
+
+- takeScreenshot: screenshots/shot-04.png

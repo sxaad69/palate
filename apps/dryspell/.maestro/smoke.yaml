@@ -1,0 +1,44 @@
+appId: com.dryspell.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: habit -> spend -> start date ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "A fresh start, one day at a time"
+- tapOn: "Alcohol"
+- tapOn: "Continue"
+- assertVisible: "how much did it cost you per day"
+- tapOn: "Continue"
+- assertVisible: "When was your last day"
+- tapOn: "Start my count"
+
+# --- Dashboard ---
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "days clear"
+- assertVisible: "saved so far"
+- assertVisible: "Daily pledge"
+- tapOn: "Daily pledge"
+- assertVisible: "Pledged for today"
+
+# --- Timeline tab ---
+- tapOn: "Timeline"
+- assertVisible: "Recovery timeline"
+- assertVisible: "24 hours clear"
+
+# --- Journal tab ---
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Journal"
+- assertVisible: "How are you feeling today?"
+
+# --- Badges tab ---
+- tapOn: "Badges"
+- assertVisible: "Achievements"
+
+# --- Profile tab ---
+- tapOn: "Profile"
+- assertVisible: "Language"
+- assertVisible: "Appearance"
+
+- takeScreenshot: screenshots/shot-04.png

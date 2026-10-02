@@ -1,0 +1,90 @@
+name: E2E (emulator + Maestro)
+
+# Automated device testing on every push to main — no Firebase billing needed.
+# Builds a debug APK from the Expo managed project, boots an Android emulator
+# on the GitHub runner, installs the APK and runs the Maestro smoke flow.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '.maestro/**'
+      - '.github/workflows/e2e.yml'
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # Note: ubuntu-latest runners already ship the full Android SDK —
+      # no setup-android step needed (setup-android@v3 is broken: it tries
+      # to install the long-removed 'tools' package).
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Prebuild Android project
+        working-directory: app
+        run: npx expo prebuild --platform android --clean
+        env:
+          CI: 'true'
+
+      # Gradle downloads ~1 GB of dependencies on a cold runner; cache them
+      # across runs so the build doesn't eat 39 of our 90 minutes every time.
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/transforms-4
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('app/package-lock.json', 'app/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Build debug APK
+        working-directory: app/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      # The Gradle build leaves the runner nearly full (~56 MB free), which
+      # breaks every later step that downloads anything. Reclaim space from
+      # toolchains we never use BEFORE installing Maestro / the emulator.
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup || true
+          sudo docker image prune --all --force || true
+          df -h / | tail -1
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Run Maestro smoke test on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          script: |
+            adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk
+            maestro test .maestro/smoke.yaml

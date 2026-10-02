@@ -1,0 +1,24 @@
+appId: com.fernly.app
+---
+- launchApp:
+    clearState: true
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Welcome to Fernly"
+- tapOn: "Monstera"
+- tapOn: "Continue"
+- assertVisible: "Today"
+- tapOn: "Plants"
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "My plants"
+- tapOn: "Doctor"
+- assertVisible: "Plant Doctor"
+- tapOn: "Yellow leaves"
+- tapOn: "Diagnose"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Likely causes"
+- tapOn: "Profile"
+- assertVisible: "Profile"
+- tapOn: "Go Pro"
+- assertVisible: "Fernly Pro"
+
+- takeScreenshot: screenshots/shot-04.png

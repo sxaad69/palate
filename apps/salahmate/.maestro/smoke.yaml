@@ -1,0 +1,43 @@
+appId: com.salahmate.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: default location + MWL, start ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Your day, anchored in prayer"
+- tapOn: "Begin"
+
+# --- Today: next prayer hero + prayer list ---
+- assertVisible: "Next prayer"
+- assertVisible: "Today's prayers"
+- assertVisible: "Fajr"
+
+# --- Mark Fajr prayed, then undo ---
+- tapOn: "Fajr"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Habits"
+
+# --- Add a habit anchored to Fajr ---
+- assertVisible: "Habits"
+- tapOn: "Add habit"
+- assertVisible: "After which prayer?"
+- inputText: "Read 2 pages"
+- tapOn: "Save habit"
+
+# --- Dhikr tab: tap the counter ---
+- tapOn: "Dhikr"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Tap to count"
+
+# --- Progress tab ---
+- tapOn: "Progress"
+- assertVisible: "Prayers this week"
+
+# --- Settings tab ---
+- tapOn: "Settings"
+- assertVisible: "Calculation method"
+- assertVisible: "Language"
+
+- takeScreenshot: screenshots/shot-04.png

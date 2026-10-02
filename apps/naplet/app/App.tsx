@@ -1,0 +1,146 @@
+import React from 'react';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  type Theme as NavigationTheme,
+} from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider, useTheme } from './theme/ThemeProvider';
+import { AppProvider, useApp } from './store/app';
+import { OnboardingScreen } from './screens/OnboardingScreen';
+import { TodayScreen } from './screens/TodayScreen';
+import { LogScreen } from './screens/LogScreen';
+import { FeedEditorScreen } from './screens/FeedEditorScreen';
+import { DiaperEditorScreen } from './screens/DiaperEditorScreen';
+import { StatsScreen } from './screens/StatsScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { PaywallScreen } from './screens/PaywallScreen';
+import type { RootTabParamList } from './navigation';
+
+function tabStack(
+  screens: { name: string; component: React.ComponentType<any> }[],
+) {
+  const Stack = createNativeStackNavigator();
+  return function TabStack() {
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {screens.map((s) => (
+          <Stack.Screen key={s.name} name={s.name} component={s.component} />
+        ))}
+      </Stack.Navigator>
+    );
+  };
+}
+
+const TABS = [
+  {
+    name: 'Today',
+    icon: 'moon-outline',
+    component: tabStack([{ name: 'TodayMain', component: TodayScreen }]),
+  },
+  {
+    name: 'Log',
+    icon: 'add-circle-outline',
+    component: tabStack([
+      { name: 'LogHome', component: LogScreen },
+      { name: 'FeedEditor', component: FeedEditorScreen },
+      { name: 'DiaperEditor', component: DiaperEditorScreen },
+    ]),
+  },
+  {
+    name: 'Stats',
+    icon: 'bar-chart-outline',
+    component: tabStack([{ name: 'StatsMain', component: StatsScreen }]),
+  },
+  {
+    name: 'Profile',
+    icon: 'person-outline',
+    component: tabStack([
+      { name: 'ProfileHome', component: ProfileScreen },
+      { name: 'Paywall', component: PaywallScreen },
+    ]),
+  },
+] as const;
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
+
+function MainTabs() {
+  const { colors, colorScheme } = useTheme();
+  const { t } = useApp();
+  const base = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
+  const navTheme: NavigationTheme = {
+    ...base,
+    colors: {
+      ...base.colors,
+      primary: colors.accent,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.textPrimary,
+      border: colors.border,
+      notification: colors.danger,
+    },
+  };
+
+  const labels: Record<string, string> = {
+    Today: t.today,
+    Log: t.log,
+    Stats: t.stats,
+    Profile: t.profile,
+  };
+
+  return (
+    <NavigationContainer theme={navTheme}>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarActiveTintColor: colors.accent,
+          tabBarInactiveTintColor: colors.textTertiary,
+          tabBarStyle: {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+          },
+          tabBarIcon: ({ color, size }) => {
+            const tab = TABS.find((x) => x.name === route.name);
+            return tab ? (
+              <Ionicons name={tab.icon} size={size} color={color} />
+            ) : null;
+          },
+          tabBarLabel: labels[route.name] ?? route.name,
+        })}
+      >
+        {TABS.map((tab) => (
+          <Tab.Screen
+            key={tab.name}
+            name={tab.name}
+            component={tab.component}
+          />
+        ))}
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function ThemedStatusBar() {
+  const { colorScheme } = useTheme();
+  return <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />;
+}
+
+function Root() {
+  const { onboarded } = useApp();
+  return onboarded ? <MainTabs /> : <OnboardingScreen />;
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppProvider>
+        <ThemedStatusBar />
+        <Root />
+      </AppProvider>
+    </ThemeProvider>
+  );
+}

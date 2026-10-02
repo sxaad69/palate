@@ -1,0 +1,58 @@
+appId: com.hulm.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: journal -> symbols -> disclaimer ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Dreams are for reflecting"
+- tapOn: "→"
+- assertVisible: "Symbols, not verdicts"
+- tapOn: "→"
+- assertVisible: "Not a religious ruling"
+- tapOn: "Begin journaling"
+
+# --- Journal (empty state) ---
+- assertVisible: "Journal"
+- assertVisible: "No dreams yet"
+
+# --- Log a dream: narrative -> auto-suggested symbols -> save ---
+- tapOn: "Log a dream"
+- assertVisible: "What happened?"
+- tapOn: "Write everything you remember…"
+- takeScreenshot: screenshots/shot-02.png
+- inputText: "I was flying over the ocean at night, and the moon was enormous"
+- tapOn: "Save dream"
+- assertVisible: "Reflect"
+
+# --- Detail: confirmed symbol chips + disclaimer ---
+- assertVisible: "For reflection — not a religious ruling."
+
+# --- Lexicon tab: search + Plus-locked entries ---
+- tapOn: "Journal"
+- tapOn: "🔮"
+- assertVisible: "Symbols"
+- assertVisible: "Plus"
+
+# --- Symbol detail: themes, reflection questions, traditional note ---
+- tapOn: "Water"
+- assertVisible: "Themes"
+- assertVisible: "Reflect on this"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Traditional association"
+
+# --- Insights tab: Plus gate ---
+- tapOn: "‹ Symbols"
+- tapOn: "📊"
+- assertVisible: "Insights"
+- assertVisible: "Insights are a Plus feature."
+
+# --- Settings tab: language + appearance + disclaimer ---
+- tapOn: "⚙️"
+- assertVisible: "Settings"
+- assertVisible: "Language"
+- assertVisible: "Appearance"
+- assertVisible: "Please read"
+
+- takeScreenshot: screenshots/shot-04.png

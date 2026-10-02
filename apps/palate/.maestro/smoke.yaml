@@ -1,0 +1,34 @@
+appId: com.palate.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Palate"
+- assertVisible: "The food logger that knows your food"
+- tapOn: "Lose weight"
+- tapOn: "Continue"
+
+# --- Today tab ---
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "Protein"
+- assertVisible: "Carbs"
+
+# Jump to Scan via the CTA button (also exercises cross-tab navigation)
+- tapOn: "Snap your meal"
+
+# --- Scan tab: camera permission prompt (fresh state => not granted) ---
+- assertVisible: "Grant camera access"
+
+# --- Progress tab ---
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Progress"
+- assertVisible: "Current streak"
+
+# --- Profile tab ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+
+- takeScreenshot: screenshots/shot-04.png

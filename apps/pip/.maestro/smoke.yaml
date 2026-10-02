@@ -1,0 +1,21 @@
+appId: com.pip.app
+---
+- launchApp:
+    clearState: true
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Welcome to Pip"
+- tapOn: "Continue"
+- assertVisible: "Today"
+- tapOn: "Done"
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "Shine!"
+- tapOn: "I celebrated!"
+- tapOn: "Recipes"
+- assertVisible: "Recipes"
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Profile"
+- assertVisible: "Profile"
+- tapOn: "Go Pro"
+- assertVisible: "Pip Pro"
+
+- takeScreenshot: screenshots/shot-04.png

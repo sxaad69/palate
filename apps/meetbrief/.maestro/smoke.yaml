@@ -1,0 +1,65 @@
+appId: com.meetbrief.notes
+---
+# Fresh install state on every run. The CI workflow grants RECORD_AUDIO via
+# adb before this runs — the emulator has no real mic, so the flow records
+# silence and asserts UI states, never audio content.
+- launchApp:
+    clearState: true
+
+# --- Onboarding: 3 slides + language + mic rationale ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "MeetBrief"
+- assertVisible: "Never miss a detail"
+- tapOn: "Continue"
+- assertVisible: "Actions, not walls of text"
+- tapOn: "Continue"
+- assertVisible: "Private by design"
+- assertVisible: "Allow microphone access"
+- tapOn: "Allow microphone access"
+- tapOn: "Get started"
+
+# --- Meetings tab: empty state ---
+- assertVisible: "Meetings"
+- assertVisible: "No meetings yet"
+
+# --- Record tab: title + record/pause/resume/stop (silence on emulator) ---
+- tapOn: "Record"
+- assertVisible: "Tap to start recording"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Meeting title"
+- inputText: "Smoke test meeting"
+- tapOn: "Record"
+- assertVisible: "Recording"
+- tapOn: "Pause"
+- assertVisible: "Paused"
+- tapOn: "Resume"
+- assertVisible: "Recording"
+- tapOn: "Stop & save"
+
+# --- Detail: summary, action item add/check ---
+- assertVisible: "Smoke test meeting"
+- assertVisible: "Summary"
+- assertVisible: "Action items"
+- tapOn: "e.g. Send the proposal by Friday"
+- takeScreenshot: screenshots/shot-03.png
+- inputText: "Smoke action"
+- tapOn: "+"
+- assertVisible: "Smoke action"
+- tapOn: "Smoke action"
+- tapOn: "‹"
+
+# --- Meetings list shows the saved recording ---
+- tapOn: "Meetings"
+- assertVisible: "Smoke test meeting"
+
+# --- Stats tab ---
+- tapOn: "Stats"
+- assertVisible: "Meetings recorded"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Upgrade to Pro"
+- assertVisible: "free trial"
+
+- takeScreenshot: screenshots/shot-04.png

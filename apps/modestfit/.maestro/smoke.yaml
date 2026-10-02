@@ -1,0 +1,44 @@
+appId: com.modestfit.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: 3 slides, language, modesty prefs ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Catalog your wardrobe"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Get started"
+- assertVisible: "Choose your language"
+- tapOn: "Continue"
+- assertVisible: "Your modesty preferences"
+- tapOn: "Done"
+
+# --- Wardrobe tab: adopt a starter piece, add a piece ---
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "My Wardrobe"
+- tapOn: "Add piece"
+- assertVisible: "Name"
+- tapOn: "Save"
+- assertVisible: "My Wardrobe"
+
+# --- Outfits tab: create an outfit ---
+- tapOn: "Outfits"
+- assertVisible: "My Outfits"
+- tapOn: "New outfit"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Select pieces"
+- tapOn: "Save"
+
+# --- Ideas tab: generate suggestions ---
+- tapOn: "Ideas"
+- assertVisible: "Shop your closet"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Upgrade to Pro"
+- assertVisible: "Cancel anytime"
+
+- takeScreenshot: screenshots/shot-04.png

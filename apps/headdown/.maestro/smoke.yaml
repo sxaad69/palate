@@ -1,0 +1,38 @@
+appId: com.headdown.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Your attention is the product"
+- tapOn: "→"
+- tapOn: "→"
+- tapOn: "Get focused"
+
+# --- Home: session setup ---
+- assertVisible: "What are you working on?"
+- tapOn: "Start session"
+
+# --- Active session: timer running, guard on ---
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "I got distracted"
+- tapOn: "I got distracted"
+- assertVisible: "Logged. Back to work."
+
+# --- End early → debrief ---
+- tapOn: "End session"
+- tapOn: "End now"
+- assertVisible: "Session ended"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Focus score"
+
+# --- Back home, check other tabs ---
+- tapOn: "Back home"
+- tapOn: "History"
+- assertVisible: "Last 7 days"
+- tapOn: "Settings"
+- assertVisible: "Strict mode"
+
+- takeScreenshot: screenshots/shot-04.png

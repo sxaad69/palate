@@ -1,0 +1,39 @@
+appId: com.fable.breath
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Fable"
+- assertVisible: "Stories you breathe through"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Begin"
+
+# --- Library tab ---
+- assertVisible: "Library"
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "The Tide House"
+- tapOn: "Arrival"
+
+# --- Player: start a session, let it run briefly, pause ---
+- assertVisible: "Begin"
+- tapOn: "Begin"
+- assertVisible: "breathe in"
+- tapOn: "Pause"
+
+# --- Back to library, open Progress tab ---
+- tapOn: "Library"
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Progress"
+- assertVisible: "day streak"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Unlock every story"
+- assertVisible: "Cancel anytime"
+
+- takeScreenshot: screenshots/shot-04.png

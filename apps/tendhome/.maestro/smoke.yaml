@@ -1,0 +1,38 @@
+appId: com.tendhome.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Small tasks now beat big repairs later"
+- tapOn: "→"
+- tapOn: "→"
+- tapOn: "Tend my home"
+
+# --- Home: seeded tasks show as "get started" ---
+- assertVisible: "Needs attention"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Replace HVAC filter"
+
+# --- Task detail: mark done ---
+- assertVisible: "Why it matters"
+- tapOn: "Mark done"
+
+# --- Back out, then library tab ---
+- tapOn: "‹ Tasks"
+- tapOn: "Tasks"
+- assertVisible: "Task library"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Heating & Cooling"
+
+# --- Costs tab ---
+- tapOn: "Costs"
+- assertVisible: "Spent this year"
+
+# --- Settings tab ---
+- tapOn: "Settings"
+- assertVisible: "Due-date reminders"
+
+- takeScreenshot: screenshots/shot-04.png

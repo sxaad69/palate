@@ -1,0 +1,50 @@
+appId: com.twopurse.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: 3 slides (language / currency+names / explainer) ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "TwoPurse"
+- assertVisible: "Money fights, solved gently"
+- tapOn: "Continue"
+- assertVisible: "Currency"
+- tapOn: "USD"
+- tapOn: "Continue"
+- assertVisible: "A monthly money date"
+- tapOn: "Get started"
+
+# --- Envelopes home: starter envelopes + summary ---
+- assertVisible: "Envelopes"
+- takeScreenshot: screenshots/shot-02.png
+- assertVisible: "Groceries"
+- assertVisible: "left to spend"
+
+# --- Add expense: bottom bar -> amount -> save ---
+- tapOn: "Add expense"
+- assertVisible: "Add expense"
+- tapOn:
+    id: "amountInput"
+- inputText: "25"
+- tapOn:
+    id: "saveExpenseBtn"
+
+# --- Home reflects the new expense ---
+- assertVisible: "Envelopes"
+
+# --- Money date tab: review + rollover card ---
+- tapOn: "Money date"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Reviewing"
+- assertVisible: "Roll over & close month"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Get TwoPurse Pro"
+- assertVisible: "TwoPurse Pro"
+- tapOn: "Continue with free"
+- assertVisible: "Profile"
+
+- takeScreenshot: screenshots/shot-04.png

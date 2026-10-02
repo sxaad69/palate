@@ -1,0 +1,44 @@
+appId: com.scrubdeck.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Know it cold for the exam"
+- tapOn: "→"
+- tapOn: "→"
+- tapOn: "Start studying"
+
+# --- Home: due cards hero ---
+- assertVisible: "cards due"
+- tapOn: "Start session"
+
+# --- Study: flip first card and grade it ---
+- assertVisible: "Normal adult vital signs?"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Tap to reveal"
+- assertVisible: "BP <120/80"
+- tapOn: "Good"
+
+# --- Second card, then close the session ---
+- assertVisible: "Order of the nursing process"
+- tapOn: "✕"
+
+# --- Decks tab: locked Plus decks visible ---
+- tapOn: "Decks"
+- assertVisible: "Pharmacology"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Plus"
+
+# --- Stats tab ---
+- tapOn: "Progress"
+- assertVisible: "Total reviews"
+
+# --- Settings tab ---
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- assertVisible: "Language"
+
+- takeScreenshot: screenshots/shot-04.png

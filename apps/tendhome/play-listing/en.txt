@@ -1,0 +1,44 @@
+TITLE (max 30 chars)
+TendHome: Home Maintenance Log
+
+SHORT DESCRIPTION (max 80 chars)
+Home maintenance reminders. Small tasks now beat big repairs.
+
+FULL DESCRIPTION
+Small tasks now beat big repairs later.
+
+TendHome tracks your home's recurring maintenance — the $15 jobs that
+become $1,500 disasters when forgotten.
+
+NEEDS ATTENTION
+Your home screen is a simple urgency queue: overdue and due-soon tasks
+first. Nothing to organize — just do what's next.
+
+PRE-LOADED TASK LIBRARY
+24 common tasks with sensible intervals, ready to switch on:
+• HVAC filter (90 days), dryer vent, AC service
+• Smoke & CO detectors, fire extinguisher
+• Water heater flush, leak checks, sump pump
+• Gutters, roof, winterizing, caulking
+• Fridge coils, dishwasher, oven, range hood
+…plus seasonal tags so the right tasks surface at the right time.
+
+MARK DONE, WE HANDLE THE REST
+Log a completion (with what it cost) and the next due date is set
+automatically — with a reminder on the day.
+
+KNOW WHAT YOUR HOME COSTS
+Every completion can log its cost. See what you've spent this year and
+where it went (Plus insights).
+
+CUSTOM TASKS
+Add your own recurring tasks with any interval.
+
+Private by design: everything lives on your device. No account needed.
+English and Arabic, full RTL.
+
+TENDHOME PLUS (optional subscription)
+• Unlimited tasks
+• Annual cost insights
+• Seasonal checklists
+Weekly plan with a free trial. Cancel anytime.

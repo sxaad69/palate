@@ -1,0 +1,1 @@
+{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#221133","foregroundImage":"./assets/icon.png"},"package":"com.hulm.app"},"icon":"./assets/icon.png","ios":{"bundleIdentifier":"com.hulm.app","supportsTablet":true},"name":"Hulm","orientation":"portrait","slug":"hulm","splash":{"backgroundColor":"#221133"},"userInterfaceStyle":"automatic","version":"1.0.0"}}

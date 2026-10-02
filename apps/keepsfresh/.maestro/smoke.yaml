@@ -1,0 +1,46 @@
+appId: com.keepsfresh.pantry
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding (3 slides + language pick) ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "KeepsFresh"
+- assertVisible: "Nothing goes to waste"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Get started"
+
+# --- Pantry tab: empty state, add an item with smart default ---
+- assertVisible: "Your pantry is empty"
+- tapOn: "Add item"
+- assertVisible: "Add item"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "e.g. Milk"
+- inputText: "Milk"
+- tapOn: "Save"
+
+# --- Back in pantry: item listed under "This week" (7-day default) ---
+- assertVisible: "Milk"
+- assertVisible: "This week"
+
+# --- Alerts tab: nothing expiring within 2 days ---
+- tapOn: "Alerts"
+- assertVisible: "Use soon"
+- assertVisible: "Nothing expiring soon."
+
+# --- Stats tab ---
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Stats"
+- assertVisible: "Waste saved"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Go Pro — unlimited items"
+- assertVisible: "Cancel anytime"
+- tapOn: "Cancel"
+- assertVisible: "Profile"
+
+- takeScreenshot: screenshots/shot-04.png

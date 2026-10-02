@@ -1,0 +1,35 @@
+appId: com.fastuna.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding: goal chips + preset picker ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Fastuna"
+- assertVisible: "Fast on your schedule"
+- tapOn: "Lose weight"
+- tapOn: "Continue"
+
+# --- Timer tab: start a fast, see the live countdown ---
+- assertVisible: "Start fasting"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Start fasting"
+- assertVisible: "End fast"
+
+# --- Presets tab: the wedge presets must be visible ---
+- tapOn: "Presets"
+- assertVisible: "Ramadan"
+- assertVisible: "Night shift"
+
+# --- History tab: stats cards ---
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "History"
+- assertVisible: "Total fasts"
+
+# --- Profile tab: streak + settings ---
+- tapOn: "Profile"
+- assertVisible: "Day streak"
+- assertVisible: "Language"
+
+- takeScreenshot: screenshots/shot-04.png

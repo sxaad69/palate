@@ -1,0 +1,39 @@
+TITLE (max 30 chars)
+ScrubDeck: Nursing Flashcards
+
+SHORT DESCRIPTION (max 80 chars)
+NCLEX-style flashcards with spaced repetition. Know it cold.
+
+FULL DESCRIPTION
+Stop building decks. Start studying.
+
+ScrubDeck comes pre-loaded with NCLEX-style flashcards for nursing and
+medical exams — powered by real spaced repetition (SM-2), the algorithm
+that brings each card back right before you'd forget it.
+
+PRE-LOADED DECKS
+• Fundamentals — vitals, labs, nursing process, priorities
+• Pharmacology — drug suffixes (-olol, -pril, -statin…), antidotes, high-alert meds
+• Med-Surg — MI, stroke, DKA, shock, heart failure
+• Maternal & Peds — APGAR, preeclampsia, growth milestones
+
+STUDY THAT ADAPTS
+Flip a card, grade yourself honestly: Again / Hard / Good / Easy. The
+scheduler does the rest — no planning, no cramming.
+
+BUILT FOR NURSING STUDENTS
+• High-yield, priority, and lab-value tags on every card
+• Drug-suffix decoder cards for pharm
+• Streaks and per-deck mastery rings
+• Make your own decks and cards
+
+Private by design: everything lives on your device. No account needed.
+English and Arabic, full RTL.
+
+Study aid only — not medical advice.
+
+SCRUBDECK PLUS (optional subscription)
+• All 4 study decks unlocked
+• Unlimited daily reviews
+• Custom decks & cards
+Weekly plan with a free trial. Cancel anytime.

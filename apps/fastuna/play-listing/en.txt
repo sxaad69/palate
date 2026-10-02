@@ -1,0 +1,33 @@
+# Fastuna — Google Play Listing (English)
+
+## App name
+Fastuna: Fasting Tracker
+
+## Short description (80 chars)
+Intermittent fasting tracker with Ramadan, night-shift & gentle presets.
+
+## Full description
+Fastuna is the intermittent fasting tracker built for real life — not just the standard 16:8.
+
+**FASTING TIMER**
+Start a fast in one tap and watch the live countdown ring. See exactly what stage you're in — settling in, fat burning, deep burn, ketosis — in plain language, no jargon.
+
+**PRESETS FOR REAL SCHEDULES**
+- 16:8, 18:6, 20:4, OMAD — the classics
+- **Ramadan** — dawn-to-sunset fasting with adjustable suhoor/iftar times
+- **Night shift** — an inverted schedule that fasts through daytime sleep
+- **Gentle 14:10** — a softer start, popular with women 45+
+
+**STREAKS & ACHIEVEMENTS**
+Build a daily streak, earn achievements, and see your total fasts, hours fasted, and completion rate at a glance.
+
+**PRIVATE BY DEFAULT**
+Your fasts live on your device. An optional cloud backup keeps them safe.
+
+**BILINGUAL**
+Full English and Arabic with right-to-left layout.
+
+Fastuna is a wellness tracker, not medical advice. Consult a professional before fasting, especially if pregnant, nursing, diabetic, or managing a health condition.
+
+---
+Fastuna Pro (optional subscription): unlimited fasts, full history, all wedge presets, streak repair. 7-day free trial, then weekly billing. Cancel anytime.

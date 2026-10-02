@@ -1,0 +1,43 @@
+TITLE (max 30 chars)
+LanceLedger: Freelance Finance
+
+SHORT DESCRIPTION (max 80 chars)
+Track income, expenses & which clients actually make you money.
+
+FULL DESCRIPTION
+Know your number.
+
+LanceLedger is the dead-simple finance tracker built for freelancers,
+solopreneurs, and gig workers — not accountants.
+
+TRACK INCOME & EXPENSES IN SECONDS
+Log an expense or income in under 10 seconds: amount, category, client,
+done. No chart of accounts, no accounting degree required.
+
+WHICH CLIENTS MAKE YOU MONEY?
+Tag transactions with a client and LanceLedger ranks them by real profit —
+income minus expenses. Stop guessing which work is worth it.
+
+TAX SHIELD
+Set your tax rate once. LanceLedger computes a running set-aside from your
+real profit, so quarterly estimates stop being a panic. You'll always know
+exactly how much to move to your tax savings.
+
+DEDUCTIBLE EXPENSES, ONE-TAP REPORT
+Flag deductible business expenses as you go. At tax time, export a clean
+CSV report your accountant will love — no shoebox, no scramble.
+
+MONTHLY P&L & CATEGORY BREAKDOWN
+See this month's profit at a glance and exactly where the money went, by
+category.
+
+Private by design: your data lives on your device, with optional encrypted
+cloud backup. No account needed.
+
+LanceLedger is a record-keeping tool, not tax advice. Talk to a qualified
+professional about your taxes.
+
+LANCELedger PLUS (optional subscription)
+• Unlimited clients
+• CSV export & full deductible tax report
+Weekly plan with a free trial. Cancel anytime.

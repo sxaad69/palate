@@ -1,0 +1,54 @@
+appId: com.pawscript.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding (3 slides + language pick) ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "One calm place for pet meds"
+- tapOn: "Continue"
+- assertVisible: "Doses, right on time"
+- tapOn: "Continue"
+- assertVisible: "Walk into the vet prepared"
+- tapOn: "Get started"
+
+# --- Pets tab: empty state, add a pet ---
+- assertVisible: "My pets"
+- assertVisible: "No pets yet"
+- tapOn: "Add pet"
+- assertVisible: "Species"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn:
+    id: "pet-name-input"
+- inputText: "Rex"
+- tapOn: "Save"
+- assertVisible: "Rex"
+- assertVisible: "Medications"
+- tapOn: "✕"
+
+# --- Pets home shows the new card ---
+- assertVisible: "Rex"
+- assertVisible: "0 doses today"
+
+# --- Doses tab ---
+- tapOn: "Doses"
+- assertVisible: "All caught up"
+
+# --- Records tab ---
+- takeScreenshot: screenshots/shot-03.png
+- tapOn: "Records"
+- assertVisible: "Vaccinations"
+- assertVisible: "Vet visits"
+
+# --- Stats tab ---
+- tapOn: "Stats"
+- assertVisible: "No medications yet"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Unlock Pro"
+- assertVisible: "cancel anytime"
+
+- takeScreenshot: screenshots/shot-04.png

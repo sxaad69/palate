@@ -1,0 +1,331 @@
+import { I18nManager } from 'react-native';
+
+// Minimal dictionary — ponytail: full i18n framework is overkill for v1.
+// English is the fallback.
+const en = {
+  appName: 'Pawscript',
+  tagline: 'Never miss a dose for your best friend',
+  continue: 'Continue',
+  getStarted: 'Get started',
+  skip: 'Skip',
+  save: 'Save',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  edit: 'Edit',
+  add: 'Add',
+  close: 'Close',
+  retry: 'Retry',
+  today: 'Today',
+  notSet: '—',
+
+  // Tabs
+  tabPets: 'Pets',
+  tabDoses: 'Doses',
+  tabRecords: 'Records',
+  tabStats: 'Stats',
+  tabProfile: 'Profile',
+
+  // Onboarding
+  slide1Title: 'One calm place for pet meds',
+  slide1Body: 'Track every medication, vaccination, and vet visit for all your pets — no more scattered notes.',
+  slide2Title: 'Doses, right on time',
+  slide2Body: 'Local reminders for every dose. Tap “given” and watch the streaks grow.',
+  slide3Title: 'Walk into the vet prepared',
+  slide3Body: 'A one-tap prep sheet: meds, adherence, weight, vaccines. Share it with your vet.',
+  notifTitle: 'Enable dose reminders',
+  notifBody: 'We remind you locally when a dose is due. Nothing leaves your device.',
+  enableReminders: 'Enable reminders',
+  chooseLanguage: 'Choose your language',
+
+  // Pets home
+  myPets: 'My pets',
+  addPet: 'Add pet',
+  noPetsTitle: 'No pets yet',
+  noPetsBody: 'Add your first pet to start tracking meds, vaccines, and vet visits.',
+  dosesToday: 'doses today',
+  petName: 'Name',
+  species: 'Species',
+  speciesDog: 'Dog',
+  speciesCat: 'Cat',
+  speciesBird: 'Bird',
+  speciesRabbit: 'Rabbit',
+  speciesOther: 'Other',
+  breed: 'Breed (optional)',
+  birthdate: 'Birthdate (YYYY-MM-DD, optional)',
+  notes: 'Notes',
+  photo: 'Photo',
+  addPhoto: 'Add photo',
+
+  // Pet detail
+  medications: 'Medications',
+  addMedication: 'Add medication',
+  noMedsTitle: 'No medications',
+  noMedsBody: 'Add one to get dose reminders and track adherence.',
+  weightLog: 'Weight log',
+  logWeight: 'Log weight',
+  weightKg: 'Weight (kg)',
+  noWeights: 'No weight entries yet.',
+  weightTrend: 'trend',
+  vetVisits: 'Vet visits',
+  addVisit: 'Log visit',
+  vaccinations: 'Vaccinations',
+  addVaccine: 'Add vaccination',
+  prepSheet: 'Vet-visit prep sheet',
+  sharePrep: 'Share with vet',
+  deletePet: 'Remove pet',
+  deletePetConfirm: 'Remove this pet and all its records? This cannot be undone.',
+
+  // Med form
+  medName: 'Medication name',
+  doseAmount: 'Dose (e.g. 1 tablet)',
+  frequency: 'Frequency',
+  freqDaily: 'Daily',
+  freqTwice: 'Twice daily',
+  freqThree: 'Three times daily',
+  freqWeekly: 'Weekly',
+  times: 'Times (HH:MM)',
+  addTime: 'Add time',
+  startDate: 'Start date (YYYY-MM-DD)',
+  endDate: 'End date (YYYY-MM-DD, optional)',
+  invalidTime: 'Use HH:MM, e.g. 09:00',
+  invalidDate: 'Use YYYY-MM-DD',
+
+  // Reminders
+  dueNow: 'Due now',
+  laterToday: 'Later today',
+  allCaughtUp: 'All caught up',
+  allCaughtUpBody: 'No doses due right now. Enjoy the quiet.',
+  given: 'Given',
+  skipDose: 'Skip',
+  undo: 'Undo',
+  overdue: 'Overdue',
+  skipped: 'Skipped',
+  upcoming: 'Upcoming',
+  addMedsFirst: 'Add a medication to a pet to see doses here.',
+
+  // Records
+  vetName: 'Vet / clinic',
+  reason: 'Reason',
+  visitDate: 'Date (YYYY-MM-DD)',
+  dueDate: 'Due date (YYYY-MM-DD, optional)',
+  givenDate: 'Given on (YYYY-MM-DD)',
+  vaccineName: 'Vaccination name',
+  overdueBadge: 'Overdue',
+  dueSoon: 'Due soon',
+  upToDate: 'Up to date',
+  emptyVisitsTitle: 'No vet visits yet',
+  emptyVisitsBody: 'Log visits so you always remember what the vet said.',
+  emptyVaccinesTitle: 'No vaccinations recorded',
+  emptyVaccinesBody: 'Add shots and boosters — we’ll warn you before they’re due.',
+
+  // Stats
+  adherence7d: 'Adherence — last 7 days',
+  dosesThisWeek: 'Doses given this week',
+  dayStreak: 'day streak',
+  noStatsTitle: 'No medications yet',
+  noStatsBody: 'Add a medication to see adherence and streaks.',
+
+  // Profile / paywall
+  appearance: 'Appearance',
+  themeLight: 'Light',
+  themeDark: 'Dark',
+  themeSystem: 'System',
+  language: 'Language',
+  eraseData: 'Erase all data',
+  eraseConfirm: 'Delete everything? This cannot be undone.',
+  disclaimer: 'Pawscript reminds; it does not prescribe. Always follow your vet’s instructions.',
+  unlockPro: 'Unlock Pro',
+  paywallTitle: 'Unlimited pets & vet prep sheets',
+  paywallSubtitle: 'Weekly plan · free trial · cancel anytime',
+  freePlan: 'Free: 1 pet, dose reminders',
+  proPlan: 'Pro: unlimited pets, vet-visit prep sheet, export',
+  startTrial: 'Start free trial',
+  restore: 'Restore purchase',
+  proActive: 'Pro is active',
+  petLimitTitle: 'One pet on the free plan',
+  petLimitBody: 'Add unlimited pets and unlock the vet-visit prep sheet with Pro.',
+  prepSheetProOnly: 'The vet-visit prep sheet is a Pro feature.',
+  version: 'Version',
+
+  // Prep sheet
+  prepTitle: 'Vet visit prep sheet',
+  prepMeds: 'Current medications',
+  prepAdherence: 'Adherence (7d)',
+  prepWeight: 'Weight',
+  prepVaccines: 'Vaccination status',
+  prepVisits: 'Recent visits',
+  prepNotes: 'Notes',
+  prepGenerated: 'Generated by Pawscript',
+} as const;
+
+const ar: Record<keyof typeof en, string> = {
+  appName: 'Pawscript',
+  tagline: 'لا تفوّت جرعة أبدًا لصديقك المفضل',
+  continue: 'متابعة',
+  getStarted: 'ابدأ',
+  skip: 'تخطي',
+  save: 'حفظ',
+  cancel: 'إلغاء',
+  delete: 'حذف',
+  edit: 'تعديل',
+  add: 'إضافة',
+  close: 'إغلاق',
+  retry: 'إعادة المحاولة',
+  today: 'اليوم',
+  notSet: '—',
+
+  tabPets: 'الحيوانات',
+  tabDoses: 'الجرعات',
+  tabRecords: 'السجلات',
+  tabStats: 'الإحصائيات',
+  tabProfile: 'الحساب',
+
+  slide1Title: 'مكان هادئ واحد لأدوية حيوانك',
+  slide1Body: 'تابع كل دواء ولقاح وزيارة بيطرية لجميع حيواناتك — لا مزيد من الملاحظات المبعثرة.',
+  slide2Title: 'الجرعات في وقتها تمامًا',
+  slide2Body: 'تذكيرات محلية لكل جرعة. اضغط «تم إعطاؤها» وشاهد الالتزام يتحسّن.',
+  slide3Title: 'ادخل إلى الطبيب البيطري مستعدًا',
+  slide3Body: 'ملخص جاهز بضغطة واحدة: الأدوية والالتزام والوزن واللقاحات. شاركه مع طبيبك.',
+  notifTitle: 'تفعيل تذكيرات الجرعات',
+  notifBody: 'سنذكّرك محليًا عندما تحين الجرعة. لا يغادر أي شيء جهازك.',
+  enableReminders: 'تفعيل التذكيرات',
+  chooseLanguage: 'اختر لغتك',
+
+  myPets: 'حيواناتي',
+  addPet: 'إضافة حيوان',
+  noPetsTitle: 'لا توجد حيوانات بعد',
+  noPetsBody: 'أضف حيوانك الأول لبدء تتبع الأدوية واللقاحات والزيارات البيطرية.',
+  dosesToday: 'جرعات اليوم',
+  petName: 'الاسم',
+  species: 'النوع',
+  speciesDog: 'كلب',
+  speciesCat: 'قط',
+  speciesBird: 'طير',
+  speciesRabbit: 'أرنب',
+  speciesOther: 'آخر',
+  breed: 'السلالة (اختياري)',
+  birthdate: 'تاريخ الميلاد (YYYY-MM-DD، اختياري)',
+  notes: 'ملاحظات',
+  photo: 'صورة',
+  addPhoto: 'إضافة صورة',
+
+  medications: 'الأدوية',
+  addMedication: 'إضافة دواء',
+  noMedsTitle: 'لا توجد أدوية',
+  noMedsBody: 'أضف دواءً للحصول على تذكيرات الجرعات وتتبع الالتزام.',
+  weightLog: 'سجل الوزن',
+  logWeight: 'تسجيل الوزن',
+  weightKg: 'الوزن (كجم)',
+  noWeights: 'لا توجد قياسات وزن بعد.',
+  weightTrend: 'الاتجاه',
+  vetVisits: 'الزيارات البيطرية',
+  addVisit: 'تسجيل زيارة',
+  vaccinations: 'اللقاحات',
+  addVaccine: 'إضافة لقاح',
+  prepSheet: 'ملخص الزيارة البيطرية',
+  sharePrep: 'مشاركة مع الطبيب',
+  deletePet: 'إزالة الحيوان',
+  deletePetConfirm: 'إزالة هذا الحيوان وكل سجلاته؟ لا يمكن التراجع.',
+
+  medName: 'اسم الدواء',
+  doseAmount: 'الجرعة (مثال: قرص واحد)',
+  frequency: 'التكرار',
+  freqDaily: 'يوميًا',
+  freqTwice: 'مرتين يوميًا',
+  freqThree: 'ثلاث مرات يوميًا',
+  freqWeekly: 'أسبوعيًا',
+  times: 'الأوقات (HH:MM)',
+  addTime: 'إضافة وقت',
+  startDate: 'تاريخ البدء (YYYY-MM-DD)',
+  endDate: 'تاريخ الانتهاء (YYYY-MM-DD، اختياري)',
+  invalidTime: 'استخدم HH:MM، مثال: 09:00',
+  invalidDate: 'استخدم YYYY-MM-DD',
+
+  dueNow: 'مستحقة الآن',
+  laterToday: 'لاحقًا اليوم',
+  allCaughtUp: 'كل شيء على ما يرام',
+  allCaughtUpBody: 'لا توجد جرعات مستحقة الآن. استمتع بالهدوء.',
+  given: 'تم إعطاؤها',
+  skipDose: 'تخطي',
+  undo: 'تراجع',
+  overdue: 'متأخرة',
+  skipped: 'تم تخطيها',
+  upcoming: 'قادمة',
+  addMedsFirst: 'أضف دواءً لأحد حيواناتك لرؤية الجرعات هنا.',
+
+  vetName: 'الطبيب / العيادة',
+  reason: 'السبب',
+  visitDate: 'التاريخ (YYYY-MM-DD)',
+  dueDate: 'تاريخ الاستحقاق (YYYY-MM-DD، اختياري)',
+  givenDate: 'أُعطي بتاريخ (YYYY-MM-DD)',
+  vaccineName: 'اسم اللقاح',
+  overdueBadge: 'متأخر',
+  dueSoon: 'مستحق قريبًا',
+  upToDate: 'محدّث',
+  emptyVisitsTitle: 'لا توجد زيارات بعد',
+  emptyVisitsBody: 'سجّل الزيارات لتتذكر دائمًا ما قاله الطبيب.',
+  emptyVaccinesTitle: 'لا توجد لقاحات مسجلة',
+  emptyVaccinesBody: 'أضف اللقاحات والجرعات المعززة — وسننبهك قبل استحقاقها.',
+
+  adherence7d: 'الالتزام — آخر ٧ أيام',
+  dosesThisWeek: 'الجرعات المعطاة هذا الأسبوع',
+  dayStreak: 'يوم متتالٍ',
+  noStatsTitle: 'لا توجد أدوية بعد',
+  noStatsBody: 'أضف دواءً لرؤية الالتزام والسلاسل المتتالية.',
+
+  appearance: 'المظهر',
+  themeLight: 'فاتح',
+  themeDark: 'داكن',
+  themeSystem: 'النظام',
+  language: 'اللغة',
+  eraseData: 'مسح كل البيانات',
+  eraseConfirm: 'هل تريد حذف كل شيء؟ لا يمكن التراجع.',
+  disclaimer: 'بوسكريبت يذكّر فقط ولا يصف الدواء. اتبع تعليمات طبيبك البيطري دائمًا.',
+  unlockPro: 'فتح Pro',
+  paywallTitle: 'حيوانات غير محدودة وملخصات الزيارات',
+  paywallSubtitle: 'خطة أسبوعية · تجربة مجانية · إلغاء في أي وقت',
+  freePlan: 'مجاني: حيوان واحد، تذكيرات الجرعات',
+  proPlan: 'Pro: حيوانات غير محدودة، ملخص الزيارة، تصدير',
+  startTrial: 'ابدأ التجربة المجانية',
+  restore: 'استعادة الشراء',
+  proActive: 'Pro مفعّل',
+  petLimitTitle: 'حيوان واحد في الخطة المجانية',
+  petLimitBody: 'أضف حيوانات غير محدودة وافتح ملخص الزيارة البيطرية مع Pro.',
+  prepSheetProOnly: 'ملخص الزيارة البيطرية ميزة Pro.',
+  version: 'الإصدار',
+
+  prepTitle: 'ملخص الزيارة البيطرية',
+  prepMeds: 'الأدوية الحالية',
+  prepAdherence: 'الالتزام (٧ أيام)',
+  prepWeight: 'الوزن',
+  prepVaccines: 'حالة اللقاحات',
+  prepVisits: 'الزيارات الأخيرة',
+  prepNotes: 'ملاحظات',
+  prepGenerated: 'تم الإنشاء بواسطة Pawscript',
+};
+
+export type Lang = 'en' | 'ar';
+export type Strings = typeof en;
+
+let lang: Lang = I18nManager.isRTL ? 'ar' : 'en';
+
+export function setLang(l: Lang) {
+  lang = l;
+  const rtl = l === 'ar';
+  if (I18nManager.isRTL !== rtl) {
+    I18nManager.forceRTL(rtl);
+    // ponytail: full reload-on-toggle is a launch concern; v1 sets at onboarding.
+  }
+}
+
+export function getLang(): Lang {
+  return lang;
+}
+
+export function t(): Strings {
+  return lang === 'ar' ? (ar as unknown as Strings) : en;
+}
+
+export function isRTL(): boolean {
+  return lang === 'ar';
+}

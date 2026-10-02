@@ -1,0 +1,53 @@
+appId: com.threegood.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding (English path) ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Three good things"
+- tapOn: "Continue"
+- assertVisible: "How it works"
+- tapOn: "Continue"
+- assertVisible: "Make it yours"
+- tapOn: "Begin my ritual"
+
+# --- Today ritual: fill the 3 prompts and complete ---
+- assertVisible: "Today's ritual"
+- assertVisible: "day streak"
+- tapOn: "I am grateful for…"
+- takeScreenshot: screenshots/shot-02.png
+- inputText: "Morning coffee with my sister"
+- tapOn: "Complete the ritual"
+# second and third inputs: tap the next visible placeholder
+- tapOn:
+    text: "I am grateful for…"
+    index: 1
+- inputText: "The rain stopping before my walk"
+- tapOn:
+    text: "I am grateful for…"
+    index: 2
+- inputText: "Finishing the report early"
+- tapOn: "Complete the ritual"
+- assertVisible: "Ritual complete"
+- assertVisible: "Morning coffee with my sister"
+
+# --- Jar tab: visualization + milestones ---
+- tapOn: "Jar"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "Glow jar"
+- assertVisible: "of 7 days"
+
+# --- Letter tab ---
+- tapOn: "Letter"
+- assertVisible: "Weekly letter"
+- assertVisible: "Share this letter"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Go Pro"
+- assertVisible: "Cancel anytime"
+
+- takeScreenshot: screenshots/shot-04.png

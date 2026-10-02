@@ -1,0 +1,1 @@
+{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#FFFBF4","foregroundImage":"./assets/android-icon-foreground.png"},"package":"com.threegood.app"},"icon":"./assets/icon.png","name":"ThreeGood","orientation":"portrait","plugins":["expo-notifications"],"slug":"threegood","userInterfaceStyle":"automatic","version":"1.0.0","web":{"favicon":"./assets/favicon.png"}}}

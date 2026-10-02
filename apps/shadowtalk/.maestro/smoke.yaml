@@ -1,0 +1,48 @@
+appId: com.shadowsay.app
+---
+# Fresh install state on every run.
+# The emulator has no real microphone: this flow exercises UI states only —
+# it never taps "Record". TTS playback is on-device and fails silently.
+- launchApp:
+    clearState: true
+
+# --- Onboarding: language pick → 3 slides → direction pick ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "ShadowSay"
+- tapOn: "English"
+- tapOn: "Continue"
+- assertVisible: "Hear it like a native"
+- tapOn: "Continue"
+- assertVisible: "Shadow it out loud"
+- tapOn: "Continue"
+- assertVisible: "Compare and score"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Continue"
+- assertVisible: "Which direction will you practice?"
+- tapOn: "Arabic → English"
+- tapOn: "Start practicing"
+
+# --- Packs tab ---
+- assertVisible: "Travel"
+- assertVisible: "Arabic for English Speakers"
+- tapOn: "Travel"
+
+# --- Practice: phrase card visible, play the on-device model, close ---
+- assertVisible: "Where is the nearest subway station?"
+- tapOn: "Play model"
+- takeScreenshot: screenshots/shot-03.png
+- tapOn:
+    id: "practice-close"
+
+# --- Progress tab ---
+- tapOn: "Progress"
+- assertVisible: "day streak"
+
+# --- Profile tab: appearance + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- tapOn: "Go Pro"
+- assertVisible: "Cancel anytime"
+- tapOn: "Maybe later"
+
+- takeScreenshot: screenshots/shot-04.png

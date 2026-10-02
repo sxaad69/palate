@@ -1,0 +1,40 @@
+appId: com.restory.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Restory"
+- assertVisible: "Your sleep writes your days"
+- tapOn: "Continue"
+- tapOn: "Continue"
+- tapOn: "Begin"
+
+# --- Today tab: sleep-first check-in ---
+- assertVisible: "How did you sleep?"
+- assertVisible: "How are you feeling?"
+- takeScreenshot: screenshots/shot-02.png
+- tapOn: "Good"
+
+# --- Insights tab: Pro-locked in v1 ---
+- tapOn: "Insights"
+- assertVisible: "Unlock Restory Pro"
+- tapOn: "Unlock Restory Pro"
+- assertVisible: "Cancel anytime"
+- tapOn: "Continue"
+
+# --- Progress tab: streaks + history ---
+- tapOn: "Progress"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "day streak"
+
+# --- Profile tab: appearance + reminder + paywall entry ---
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- assertVisible: "Bedtime reminder"
+- tapOn: "Unlock your rest story"
+- assertVisible: "Cancel anytime"
+
+- takeScreenshot: screenshots/shot-04.png

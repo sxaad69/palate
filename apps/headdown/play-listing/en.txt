@@ -1,0 +1,38 @@
+TITLE (max 30 chars)
+HeadDown: Focus Timer & Guard
+
+SHORT DESCRIPTION (max 80 chars)
+Focus timer with a distraction guard. Do the work.
+
+FULL DESCRIPTION
+Your attention is the product. Guard it.
+
+HeadDown is a focus timer with a distraction guard — honest about what a
+phone app can and can't do.
+
+FOCUS SESSIONS
+25, 50, or 90 minutes (custom on Plus). Label what you're working on,
+start the timer, head down.
+
+THE DISTRACTION GUARD
+Drift to another app mid-session and it's detected and logged as a
+distraction — with a timestamp. No hiding from yourself.
+
+FOCUS SCORE
+Every session gets a score: focused minutes ÷ total. Watch it climb with
+streaks, 7-day charts, and total deep-work hours.
+
+STRICT MODE (Plus)
+Three app exits break the session. Real stakes for real focus.
+
+SESSION DEBRIEF
+End with a debrief: your score, when you drifted, and what you got done.
+
+Private by design: everything lives on your device. No account needed.
+English and Arabic, full RTL.
+
+HEADDOWN PLUS (optional subscription)
+• Strict mode
+• Custom session durations
+• Unlimited history & insights
+Weekly plan with a free trial. Cancel anytime.

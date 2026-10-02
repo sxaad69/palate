@@ -1,0 +1,44 @@
+appId: com.dosedone.app
+---
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# --- Onboarding ---
+- takeScreenshot: screenshots/shot-01.png
+- assertVisible: "Never miss a dose again"
+- tapOn: "Get started"
+
+# --- Today (empty state) ---
+- assertVisible: "Today's doses"
+- assertVisible: "No medicines yet"
+
+# --- Add a medicine via Meds tab ---
+- tapOn: "Medicines"
+- tapOn: "Add medicine"
+- assertVisible: "Medicine name"
+- takeScreenshot: screenshots/shot-02.png
+- inputText: "Vitamin D"
+- tapOn: "Save medicine"
+
+# --- Back on Today: the dose card appears with a TAKE button ---
+- tapOn: "Today"
+- assertVisible: "Vitamin D"
+- tapOn: "TAKE"
+- assertVisible: "Taken"
+
+# --- Progress tab ---
+- tapOn: "Progress"
+- takeScreenshot: screenshots/shot-03.png
+- assertVisible: "How I am doing"
+
+# --- Family tab (Plus gate) ---
+- tapOn: "Family"
+- assertVisible: "For family"
+
+# --- Settings tab ---
+- tapOn: "Settings"
+- assertVisible: "Language"
+- assertVisible: "Appearance"
+
+- takeScreenshot: screenshots/shot-04.png

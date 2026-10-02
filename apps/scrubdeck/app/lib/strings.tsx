@@ -1,0 +1,176 @@
+import React, { createContext, useContext, useEffect } from 'react';
+import { I18nManager } from 'react-native';
+import { useTheme } from '../theme/ThemeProvider';
+
+const en = {
+  dir: 'ltr' as 'ltr' | 'rtl',
+  // Onboarding
+  ob1Title: 'Know it cold for the exam',
+  ob1Body: 'NCLEX-style flashcards built for nursing students — no blank decks to fill yourself.',
+  ob2Title: 'Spaced repetition does the scheduling',
+  ob2Body: 'Grade each card honestly. The algorithm brings cards back right before you\u2019d forget them.',
+  ob3Title: 'A few minutes a day',
+  ob3Body: 'Short daily sessions beat cramming. Your streak keeps you honest.',
+  obStart: 'Start studying',
+  // Home
+  today: 'Today',
+  dueCards: 'cards due',
+  startSession: 'Start session',
+  allCaughtUp: 'All caught up! Come back tomorrow.',
+  dayStreak: 'day streak',
+  reviewsToday: 'reviews today',
+  freeCapNote: 'Free plan: 20 reviews/day',
+  // Study
+  tapToFlip: 'Tap to reveal',
+  again: 'Again',
+  hard: 'Hard',
+  good: 'Good',
+  easy: 'Easy',
+  sessionDone: 'Session complete!',
+  reviewed: 'reviewed',
+  keepItUp: 'Your future patients thank you.',
+  backHome: 'Back home',
+  of: 'of',
+  // Decks
+  decks: 'Decks',
+  plus: 'Plus',
+  cards: 'cards',
+  mastered: 'mastered',
+  newDeck: 'New deck',
+  deckName: 'Deck name',
+  addCard: 'Add card',
+  frontSide: 'Front (question)',
+  backSide: 'Back (answer)',
+  save: 'Save',
+  needName: 'Give the deck a name first.',
+  needBoth: 'Fill in both sides of the card.',
+  deleteDeck: 'Delete deck',
+  deleteDeckConfirm: 'Delete this deck and its cards?',
+  cancel: 'Cancel',
+  customEmpty: 'No cards yet — add your first one.',
+  // Stats
+  stats: 'Progress',
+  totalReviews: 'Total reviews',
+  retention: '7-day retention',
+  activeDays: 'Active days',
+  perDeck: 'Mastery by deck',
+  // Paywall
+  payTitle: 'ScrubDeck Plus',
+  payBody: 'Every deck, unlimited reviews. The knowledge is yours — Plus just opens the library.',
+  f1: 'All 4 study decks unlocked',
+  f2: 'Unlimited daily reviews',
+  f3: 'Custom decks & cards',
+  weeklyTrial: 'Start free trial',
+  payNote: 'Weekly plan · free trial · cancel anytime',
+  upgrade: 'Go Plus',
+  later: 'Later',
+  lockedTitle: 'Plus deck',
+  lockedBody: 'This deck is part of ScrubDeck Plus.',
+  capTitle: 'Daily limit reached',
+  capBody: 'Free plan: 20 reviews per day. Go Plus for unlimited.',
+  // Settings
+  settings: 'Settings',
+  language: 'Language',
+  english: 'English',
+  arabic: 'العربية',
+  appearance: 'Appearance',
+  light: 'Light',
+  dark: 'Dark',
+  system: 'System',
+  studyNote: 'Study aid only — not medical advice. Always follow your program\u2019s curriculum and clinical guidelines.',
+  eraseAll: 'Erase all progress',
+  eraseConfirm: 'Erase all progress and custom decks? This cannot be undone.',
+  version: 'ScrubDeck 1.0',
+};
+
+export type Strings = typeof en;
+
+const ar: Strings = {
+  dir: 'rtl',
+  ob1Title: 'أتقنه تمامًا للامتحان',
+  ob1Body: 'بطاقات تعليمية بأسلوب NCLEX مصممة لطلاب التمريض — لا حزم فارغة تملؤها بنفسك.',
+  ob2Title: 'التكرار المتباعد يجدول لك',
+  ob2Body: 'قيّم كل بطاقة بصدق. الخوارزمية تعيد البطاقات قبل أن تنساها مباشرة.',
+  ob3Title: 'بضع دقائق يوميًا',
+  ob3Body: 'الجلسات اليومية القصيرة تتفوق على الحشو. سلسلتك تبقيك صادقًا.',
+  obStart: 'ابدأ الدراسة',
+  today: 'اليوم',
+  dueCards: 'بطاقة مستحقة',
+  startSession: 'ابدأ الجلسة',
+  allCaughtUp: 'انتهيت من كل شيء! عد غدًا.',
+  dayStreak: 'يوم متتالي',
+  reviewsToday: 'مراجعة اليوم',
+  freeCapNote: 'الخطة المجانية: ٢٠ مراجعة/يوم',
+  tapToFlip: 'اضغط للكشف',
+  again: 'مجددًا',
+  hard: 'صعب',
+  good: 'جيد',
+  easy: 'سهل',
+  sessionDone: 'اكتملت الجلسة!',
+  reviewed: 'تمت مراجعتها',
+  keepItUp: 'مرضاك المستقبليون يشكرونك.',
+  backHome: 'عودة للرئيسية',
+  of: 'من',
+  decks: 'الحزم',
+  plus: 'بلس',
+  cards: 'بطاقة',
+  mastered: 'أُتقنت',
+  newDeck: 'حزمة جديدة',
+  deckName: 'اسم الحزمة',
+  addCard: 'إضافة بطاقة',
+  frontSide: 'الوجه (سؤال)',
+  backSide: 'الخلف (إجابة)',
+  save: 'حفظ',
+  needName: 'سمِّ الحزمة أولًا.',
+  needBoth: 'املأ وجهي البطاقة.',
+  deleteDeck: 'حذف الحزمة',
+  deleteDeckConfirm: 'حذف هذه الحزمة وبطاقاتها؟',
+  cancel: 'إلغاء',
+  customEmpty: 'لا بطاقات بعد — أضف الأولى.',
+  stats: 'التقدم',
+  totalReviews: 'إجمالي المراجعات',
+  retention: 'الاحتفاظ (٧ أيام)',
+  activeDays: 'الأيام النشطة',
+  perDeck: 'الإتقان حسب الحزمة',
+  payTitle: 'سكراب‌ديك بلس',
+  payBody: 'كل الحزم، مراجعات غير محدودة. المعرفة لك — بلس يفتح المكتبة فقط.',
+  f1: 'جميع حزم الدراسة الأربع مفتوحة',
+  f2: 'مراجعات يومية غير محدودة',
+  f3: 'حزم وبطاقات مخصصة',
+  weeklyTrial: 'ابدأ التجربة المجانية',
+  payNote: 'خطة أسبوعية · تجربة مجانية · ألغِ في أي وقت',
+  upgrade: 'اشترك في بلس',
+  later: 'لاحقًا',
+  lockedTitle: 'حزمة بلس',
+  lockedBody: 'هذه الحزمة جزء من سكراب‌ديك بلس.',
+  capTitle: 'بلغت الحد اليومي',
+  capBody: 'الخطة المجانية: ٢٠ مراجعة يوميًا. اشترك في بلس بلا حدود.',
+  settings: 'الإعدادات',
+  language: 'اللغة',
+  english: 'English',
+  arabic: 'العربية',
+  appearance: 'المظهر',
+  light: 'فاتح',
+  dark: 'داكن',
+  system: 'النظام',
+  studyNote: 'وسيلة دراسة فقط — ليست نصيحة طبية. اتبع دائمًا منهج برنامجك والإرشادات السريرية.',
+  eraseAll: 'مسح كل التقدم',
+  eraseConfirm: 'مسح كل التقدم والحزم المخصصة؟ لا يمكن التراجع.',
+  version: 'سكراب‌ديك ١٫٠',
+};
+
+const Ctx = createContext<Strings>(en);
+
+export function StringsProvider({ children }: { children: React.ReactNode }) {
+  const { lang } = useTheme();
+  const value = lang === 'ar' ? ar : en;
+  useEffect(() => {
+    I18nManager.forceRTL(lang === 'ar');
+    I18nManager.allowRTL(true);
+  }, [lang]);
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
+export function useStrings(): { t: Strings } {
+  return { t: useContext(Ctx) };
+}
