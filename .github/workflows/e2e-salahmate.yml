@@ -83,6 +83,12 @@ jobs:
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
 
+      - name: Install emulator system dependencies
+        # qemu links libpulse at load time; the runner image does not ship it.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libpulse0
+
       - name: Run Maestro smoke test on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
