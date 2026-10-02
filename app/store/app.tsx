@@ -1,15 +1,12 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
+import type { MealNutrition, ScaledMeal } from '../lib/nutrition';
 
-export interface MealNutrition {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-}
+export type { MealNutrition };
+export { mealTotals } from '../lib/nutrition';
 
 // A logged meal carries its own per-plate nutrition snapshot, so what the
 // user saw (e.g. an AI estimate on the Scan screen) is what gets logged.
-export interface LoggedMeal {
+export interface LoggedMeal extends ScaledMeal {
   id: string;
   dishId: string;
   nameEn: string;
@@ -17,8 +14,6 @@ export interface LoggedMeal {
   cuisine: string;
   region: string;
   mealType: string;
-  plates: number;
-  nutrition: MealNutrition;
   tags: string[];
   allergens: string[];
 }
@@ -106,16 +101,4 @@ export function useApp(): AppState {
   const state = useContext(AppContext);
   if (!state) throw new Error('useApp must be used within AppProvider');
   return state;
-}
-
-export function mealTotals(meals: LoggedMeal[]): MealNutrition {
-  return meals.reduce<MealNutrition>(
-    (acc, m) => ({
-      calories: acc.calories + m.nutrition.calories * m.plates,
-      protein: acc.protein + m.nutrition.protein * m.plates,
-      carbs: acc.carbs + m.nutrition.carbs * m.plates,
-      fat: acc.fat + m.nutrition.fat * m.plates,
-    }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 },
-  );
 }
