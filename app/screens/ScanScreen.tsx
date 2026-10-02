@@ -15,7 +15,7 @@ type Phase = 'idle' | 'analyzing' | 'result';
 
 // Simulated AI result — a real vision model plugs in here later.
 // Nutrition is an AI estimate snapshot, stored on the meal when logged.
-const SIMULATED_RESULT: Omit<LoggedMeal, 'id' | 'mealType' | 'plates'> = {
+const SIMULATED_RESULT: Omit<LoggedMeal, 'id' | 'mealType' | 'plates' | 'loggedDate'> = {
   dishId: 'ap-kabsa',
   nameEn: 'Chicken Kabsa',
   nameAr: 'كبسة دجاج',

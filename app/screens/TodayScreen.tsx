@@ -170,6 +170,53 @@ function MealRow({
   );
 }
 
+function XpProgress() {
+  const { colors, spacing, radii } = useTheme();
+  const { level, streak } = useApp();
+  const progress = level.xpForNext
+    ? Math.min(level.xpIntoLevel / level.xpForNext, 1)
+    : 1;
+  return (
+    <View style={{ marginBottom: spacing.md }}>
+      {streak > 0 && (
+        <View style={{ marginBottom: spacing.sm, alignItems: 'flex-start' }}>
+          <Chip
+            label={`🔥 ${streak}-day streak`}
+          />
+        </View>
+      )}
+      <View style={[styles.sectionHead, { marginBottom: spacing.xs }]}>
+        <Text variant="caption" style={{ fontWeight: '600' }}>
+          Level {level.level} · {level.name}
+        </Text>
+        <Text variant="caption" color="textSecondary">
+          {level.xpForNext
+            ? `${level.xpIntoLevel}/${level.xpForNext} XP`
+            : 'MAX LEVEL'}
+        </Text>
+      </View>
+      <View
+        style={{
+          height: spacing.sm,
+          borderRadius: radii.full,
+          backgroundColor: colors.border,
+        }}
+        accessibilityRole="progressbar"
+        accessibilityLabel={`Level ${level.level} ${level.name}`}
+      >
+        <View
+          style={{
+            height: spacing.sm,
+            borderRadius: radii.full,
+            backgroundColor: colors.accent,
+            width: `${progress * 100}%`,
+          }}
+        />
+      </View>
+    </View>
+  );
+}
+
 export function TodayScreen({ navigation }: Props) {
   const { spacing } = useTheme();
   const { meals } = useApp();
@@ -187,6 +234,8 @@ export function TodayScreen({ navigation }: Props) {
         </Text>
 
         <CalorieRing consumed={totals.calories} target={CALORIE_TARGET} />
+
+        <XpProgress />
 
         <View
           style={[styles.macros, { gap: spacing.md, marginBottom: spacing.lg }]}

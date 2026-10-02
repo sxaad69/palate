@@ -5,7 +5,7 @@ import { Screen } from '../components/Screen';
 import { Text } from '../components/Text';
 import { Card } from '../components/Card';
 import { useTheme } from '../theme/ThemeProvider';
-import { mealTotals, useApp } from '../store/app';
+import { mealTotals, useApp, BADGES } from '../store/app';
 
 // ponytail: static sample week — real history comes from the backend later.
 const PAST_WEEK = [1650, 1420, 1780, 1510, 1890, 1340];
@@ -100,9 +100,43 @@ function StatRow({
   );
 }
 
+function BadgesCard() {
+  const { spacing } = useTheme();
+  const { unlockedBadges } = useApp();
+  return (
+    <Card style={{ marginBottom: spacing.md }}>
+      <Text variant="h3" style={{ marginBottom: spacing.sm }}>
+        🏆 Badges
+      </Text>
+      <View style={[styles.badgeRow, { gap: spacing.sm }]}>
+        {BADGES.map((badge) => {
+          const earned = unlockedBadges.includes(badge.id);
+          return (
+            <View
+              key={badge.id}
+              style={[styles.badge, { opacity: earned ? 1 : 0.35 }]}
+              accessibilityRole="image"
+              accessibilityLabel={`${badge.name}: ${earned ? 'earned' : 'locked'}`}
+            >
+              <Text style={{ fontSize: 32 }}>{badge.emoji}</Text>
+              <Text
+                variant="caption"
+                color="textSecondary"
+                style={styles.badgeCaption}
+              >
+                {badge.caption}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </Card>
+  );
+}
+
 export function ProgressScreen() {
   const { colors, spacing } = useTheme();
-  const { meals } = useApp();
+  const { meals, streak } = useApp();
   const totals = mealTotals(meals);
   const week = [...PAST_WEEK, Math.round(totals.calories)];
   const avgProtein = Math.round(
@@ -121,7 +155,11 @@ export function ProgressScreen() {
         </Card>
 
         <Card style={{ marginBottom: spacing.md }}>
-          <StatRow icon="flame-outline" label="Current streak" value="6 days" />
+          <StatRow
+            icon="flame-outline"
+            label="Current streak"
+            value={streak === 1 ? '1 day' : `${streak} days`}
+          />
           <StatRow icon="globe-outline" label="Top cuisine" value="Saudi" />
           <StatRow
             icon="barbell-outline"
@@ -129,6 +167,8 @@ export function ProgressScreen() {
             value={`${avgProtein}g`}
           />
         </Card>
+
+        <BadgesCard />
 
         <Card>
           <View style={[styles.insightHead, { marginBottom: spacing.xs }]}>
@@ -164,4 +204,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   insightHead: { flexDirection: 'row', alignItems: 'center' },
+  badgeRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' },
+  badge: { alignItems: 'center', minWidth: 56 },
+  badgeCaption: { textAlign: 'center', marginTop: 4 },
 });
