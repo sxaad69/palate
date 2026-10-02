@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palate — App Design Prototype</title>
+<style>
+  :root{
+    --saffron-500:#E8930C; --saffron-600:#D97706; --saffron-700:#B45309;
+    --saffron-100:#FAEBCF; --saffron-400:#E9A63B;
+    --success:#16A34A; --danger:#DC2626; --info:#0284C7;
+  }
+  html[data-theme="light"]{
+    --bg:#FAF9F7; --surface:#FFFFFF; --surface-alt:#F5F3F0;
+    --border:#E7E2DC; --border-strong:#D6CFC6;
+    --text:#1C1917; --text-2:#57534E; --text-3:#A8A095;
+    --accent:#D97706; --accent-soft:#FAEBCF; --accent-text:#FFFFFF;
+    --page:#EDE9E4; --shadow:0 20px 60px rgba(28,25,23,.14);
+  }
+  html[data-theme="dark"]{
+    --bg:#131210; --surface:#1E1C19; --surface-alt:#262320;
+    --border:#332F2B; --border-strong:#4A443D;
+    --text:#F5F3F0; --text-2:#A8A095; --text-3:#6B6259;
+    --accent:#E9A63B; --accent-soft:rgba(232,147,12,.16); --accent-text:#1C1917;
+    --page:#0C0B0A; --shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--page); color:var(--text);
+    min-height:100vh; transition:background .3s;
+  }
+  header{
+    max-width:1400px; margin:0 auto; padding:28px 32px 8px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg,var(--saffron-500),var(--saffron-700));
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; color:#fff; font-weight:700;
+  }
+  .brand h1{font-size:22px; letter-spacing:-.3px;}
+  .brand p{font-size:13px; color:var(--text-2);}
+  .controls{display:flex; gap:10px; align-items:center;}
+  .toggle{
+    border:1px solid var(--border-strong); background:var(--surface); color:var(--text);
+    padding:9px 16px; border-radius:999px; font-size:14px; cursor:pointer; font-weight:500;
+  }
+  .toggle:hover{border-color:var(--accent);}
+  .screens{
+    max-width:1400px; margin:0 auto; padding:24px 32px 80px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:36px; justify-items:center;
+  }
+  .screen-block{display:flex; flex-direction:column; align-items:center; gap:12px;}
+  .screen-label{font-size:14px; font-weight:600; color:var(--text-2);}
+  .screen-label small{display:block; font-weight:400; font-size:12px; color:var(--text-3); text-align:center;}
+  .phone{
+    width:320px; height:660px; border-radius:44px; background:var(--bg);
+    border:1px solid var(--border-strong);
+    box-shadow:var(--shadow); overflow:hidden; position:relative;
+    display:flex; flex-direction:column;
+  }
+  .notch{
+    position:absolute; top:12px; left:50%; transform:translateX(-50%);
+    width:110px; height:26px; background:#000; border-radius:999px; z-index:5;
+  }
+  .screen{flex:1; overflow:hidden; display:flex; flex-direction:column; position:relative;}
+  .scroll{flex:1; overflow-y:auto; padding:0 20px 20px;}
+  .scroll::-webkit-scrollbar{width:0;}
+  /* common components */
+  .h1{font-size:24px; font-weight:700; line-height:32px; letter-spacing:-.3px;}
+  .h2{font-size:20px; font-weight:500; line-height:28px;}
+  .body{font-size:16px; line-height:24px;}
+  .small{font-size:14px; line-height:20px;}
+  .caption{font-size:12px; line-height:16px; color:var(--text-3);}
+  .muted{color:var(--text-2);}
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    min-height:52px; border-radius:16px; font-size:16px; font-weight:600;
+    border:none; cursor:pointer; width:100%;
+  }
+  .btn-primary{background:var(--accent); color:var(--accent-text);}
+  html[data-theme="light"] .btn-primary{color:#fff;}
+  .btn-secondary{background:var(--surface-alt); color:var(--text); border:1px solid var(--border);}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:16px; margin-bottom:12px;
+  }
+  .chip{
+    display:inline-flex; align-items:center; padding:5px 12px; border-radius:999px;
+    background:var(--accent-soft); color:var(--accent); font-size:12px; font-weight:600;
+  }
+  .chip.gray{background:var(--surface-alt); color:var(--text-2);}
+  .row{display:flex; align-items:center; justify-content:space-between;}
+  .tabbar{
+    display:flex; border-top:1px solid var(--border); background:var(--surface);
+    padding:10px 8px 22px;
+  }
+  .tab{flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    font-size:11px; color:var(--text-3); font-weight:500;}
+  .tab.active{color:var(--accent);}
+  .tab .ico{font-size:20px;}
+  .fab{
+    width:60px; height:60px; border-radius:50%; margin-top:-28px;
+    background:linear-gradient(135deg,var(--saffron-500),var(--saffron-700));
+    display:flex; align-items:center; justify-content:center; font-size:26px; color:#fff;
+    box-shadow:0 8px 20px rgba(217,119,6,.4); border:4px solid var(--bg); cursor:pointer;
+  }
+  .ring-wrap{display:flex; align-items:center; gap:18px; padding:8px 0 4px;}
+  .ring{position:relative; width:110px; height:110px; flex-shrink:0;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .center{position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;}
+  .meal{display:flex; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);}
+  .meal:last-child{border-bottom:none;}
+  .thumb{width:52px; height:52px; border-radius:14px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:26px;}
+  .macro-bar{height:8px; border-radius:99px; background:var(--surface-alt); overflow:hidden; margin-top:6px;}
+  .macro-fill{height:100%; border-radius:99px;}
+  .goal-card{border:2px solid var(--border); border-radius:16px; padding:16px; margin-bottom:10px;
+    cursor:pointer; display:flex; gap:12px; align-items:center; background:var(--surface);}
+  .goal-card.sel{border-color:var(--accent); background:var(--accent-soft);}
+  .goal-card .ico{font-size:26px;}
+  .scan-frame{
+    margin:16px 0; border-radius:20px; overflow:hidden; position:relative;
+    background:linear-gradient(160deg,#3a2c1a,#1c1712); height:300px;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;
+  }
+  .scan-line{position:absolute; left:16px; right:16px; height:3px; border-radius:2px;
+    background:var(--saffron-400); box-shadow:0 0 18px var(--saffron-400);
+    animation:scan 2.2s ease-in-out infinite;}
+  @keyframes scan{0%,100%{top:30px;}50%{top:250px;}}
+  .dish-emoji{font-size:72px; filter:drop-shadow(0 8px 16px rgba(0,0,0,.4));}
+  .stepper{display:flex; align-items:center; gap:16px;}
+  .step-btn{width:44px; height:44px; border-radius:50%; border:1px solid var(--border-strong);
+    background:var(--surface); font-size:20px; cursor:pointer; color:var(--text);
+    display:flex; align-items:center; justify-content:center;}
+  .bar-chart{display:flex; align-items:flex-end; gap:10px; height:150px; padding-top:10px;}
+  .bar-col{flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .bar{width:100%; border-radius:8px 8px 4px 4px; background:var(--surface-alt);}
+  .bar.fill{background:linear-gradient(180deg,var(--saffron-400),var(--saffron-600));}
+  .pro-item{display:flex; gap:12px; align-items:flex-start; padding:12px 0;}
+  .pro-item .ico{font-size:22px;}
+  .hidden{display:none !important;}
+  .fade{animation:fade .4s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px);}to{opacity:1;}}
+  .analyzing{text-align:center; padding:30px 0;}
+  .spinner{width:44px; height:44px; border-radius:50%; margin:0 auto 14px;
+    border:4px solid var(--border); border-top-color:var(--accent); animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  footer{max-width:1400px; margin:0 auto; padding:0 32px 40px; color:var(--text-3); font-size:13px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">P</div>
+    <div>
+      <h1>Palate — Design Prototype</h1>
+      <p>AI food logger for world cuisines · v1 · Android-first</p>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="toggle" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+  </div>
+</header>
+
+<div class="screens">
+
+  <!-- 1. ONBOARDING -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen">
+        <div class="scroll" style="padding-top:64px; display:flex; flex-direction:column;">
+          <div style="text-align:center; margin-bottom:8px;">
+            <div class="logo" style="width:72px;height:72px;font-size:38px;border-radius:22px;margin:0 auto 16px;">P</div>
+            <div class="h1">Finally, a food tracker<br>that knows your food.</div>
+            <p class="body muted" style="margin-top:10px;">Snap any dish — kabsa, biryani, jollof —<br>and get real nutrition in seconds.</p>
+          </div>
+          <div style="margin:20px 0 8px;" class="h2">What's your goal?</div>
+          <div class="goal-card sel"><span class="ico">⚖️</span><div><div class="small" style="font-weight:600;">Lose weight</div><div class="caption">Steady, sustainable pace</div></div></div>
+          <div class="goal-card"><span class="ico">💪</span><div><div class="small" style="font-weight:600;">Build healthy habits</div><div class="caption">Eat better, no strict diet</div></div></div>
+          <div class="goal-card"><span class="ico">📊</span><div><div class="small" style="font-weight:600;">Track macros</div><div class="caption">Protein, carbs &amp; fat targets</div></div></div>
+          <div style="flex:1;"></div>
+          <button class="btn btn-primary" style="margin:12px 0 8px;">Continue →</button>
+          <p class="caption" style="text-align:center;">Free forever · No card required</p>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">1 · Onboarding<small>Goal pick → instant personalization</small></div>
+  </div>
+
+  <!-- 2. TODAY -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen">
+        <div class="scroll" style="padding-top:56px;">
+          <div class="caption">FRIDAY, OCT 2</div>
+          <div class="h1" style="margin:2px 0 6px;">Today</div>
+          <div class="card">
+            <div class="ring-wrap">
+              <div class="ring">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                  <circle cx="55" cy="55" r="46" fill="none" stroke="var(--surface-alt)" stroke-width="11"/>
+                  <circle cx="55" cy="55" r="46" fill="none" stroke="var(--accent)" stroke-width="11"
+                    stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="110"/>
+                </svg>
+                <div class="center"><div class="h2">1,240</div><div class="caption">of 2,000 kcal</div></div>
+              </div>
+              <div>
+                <div class="small" style="font-weight:600;">62% of daily goal</div>
+                <div class="caption" style="margin:4px 0 8px;">760 kcal remaining</div>
+                <span class="chip">🔥 3-day streak</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:14px; margin-top:10px;">
+              <div style="flex:1;"><div class="caption">Protein</div><div class="small" style="font-weight:600;">82g / 120g</div>
+                <div class="macro-bar"><div class="macro-fill" style="width:68%; background:#16A34A;"></div></div></div>
+              <div style="flex:1;"><div class="caption">Carbs</div><div class="small" style="font-weight:600;">140g / 220g</div>
+                <div class="macro-bar"><div class="macro-fill" style="width:64%; background:#E8930C;"></div></div></div>
+              <div style="flex:1;"><div class="caption">Fat</div><div class="small" style="font-weight:600;">38g / 65g</div>
+                <div class="macro-bar"><div class="macro-fill" style="width:58%; background:#0284C7;"></div></div></div>
+            </div>
+          </div>
+          <div class="row" style="margin:6px 0 4px;"><div class="h2">Meals</div><span class="caption">+ Add</span></div>
+          <div class="meal">
+            <div class="thumb" style="background:#FAEBCF;">🍛</div>
+            <div style="flex:1;"><div class="small" style="font-weight:600;">Chicken Kabsa</div>
+              <div class="caption">Lunch · <span class="chip gray" style="font-size:10px; padding:2px 8px;">Gulf</span></div></div>
+            <div class="small" style="font-weight:600;">640 kcal</div>
+          </div>
+          <div class="meal">
+            <div class="thumb" style="background:#E8F5E9;">🥗</div>
+            <div style="flex:1;"><div class="small" style="font-weight:600;">Fattoush</div>
+              <div class="caption">Lunch · <span class="chip gray" style="font-size:10px; padding:2px 8px;">Levantine</span></div></div>
+            <div class="small" style="font-weight:600;">180 kcal</div>
+          </div>
+          <div class="meal">
+            <div class="thumb" style="background:#FFF3E0;">🥣</div>
+            <div style="flex:1;"><div class="small" style="font-weight:600;">Ful Medames</div>
+              <div class="caption">Breakfast · <span class="chip gray" style="font-size:10px; padding:2px 8px;">Egyptian</span></div></div>
+            <div class="small" style="font-weight:600;">420 kcal</div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><span class="ico">🏠</span>Today</div>
+          <div class="tab"><span class="fab">📷</span></div>
+          <div class="tab"><span class="ico">📊</span>Progress</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">2 · Today<small>Calorie ring · cuisine-tagged meals</small></div>
+  </div>
+
+  <!-- 3. AI SCAN -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen">
+        <div class="scroll" style="padding-top:56px;">
+          <div class="h1">Snap your meal</div>
+          <p class="body muted" style="margin:6px 0 4px;">Point at any dish — Palate recognizes it, even if it's not in Western databases.</p>
+          <div class="scan-frame" id="scanFrame">
+            <div class="scan-line" id="scanLine"></div>
+            <div class="dish-emoji">🍛</div>
+            <div class="small" style="color:#fff; font-weight:600;">Align dish in frame</div>
+          </div>
+          <div id="scanIdle">
+            <button class="btn btn-primary" onclick="analyze()">📷 Analyze meal</button>
+            <p class="caption" style="text-align:center; margin-top:10px;">or <u>type what you ate</u> · <u>scan barcode</u></p>
+          </div>
+          <div id="scanBusy" class="hidden analyzing">
+            <div class="spinner"></div>
+            <div class="small" style="font-weight:600;">Identifying dish…</div>
+            <div class="caption">Matching against 96 MENA dishes + AI vision</div>
+          </div>
+          <div id="scanDone" class="hidden fade">
+            <div class="card" style="border-color:var(--accent);">
+              <div class="row"><div class="h2">Chicken Kabsa</div><span class="chip">Gulf</span></div>
+              <p class="caption" style="margin:4px 0 10px;">كبسة دجاج · 94% match</p>
+              <div class="row small"><span class="muted">Calories</span><b>640 kcal</b></div>
+              <div class="row small"><span class="muted">Protein</span><b>42g</b></div>
+              <div class="row small"><span class="muted">Carbs</span><b>58g</b></div>
+              <div class="row small"><span class="muted">Fat</span><b>22g</b></div>
+            </div>
+            <button class="btn btn-primary" style="margin-bottom:8px;">✓ Log this meal</button>
+            <button class="btn btn-secondary" onclick="resetScan()">Not quite right?</button>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ico">🏠</span>Today</div>
+          <div class="tab active"><span class="fab">📷</span></div>
+          <div class="tab"><span class="ico">📊</span>Progress</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">3 · AI Scan<small>Tap "Analyze meal" to see it work</small></div>
+  </div>
+
+  <!-- 4. DISH DETAIL -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen">
+        <div class="scroll" style="padding-top:56px;">
+          <div class="row"><span class="caption">← Back</span><span class="chip">Gulf · كبسة</span></div>
+          <div class="h1" style="margin:8px 0 2px;">Chicken Kabsa</div>
+          <p class="body muted">Spiced basmati rice with tender chicken — Saudi Arabia's national dish.</p>
+          <div class="card" style="margin-top:14px;">
+            <div class="small" style="font-weight:600; margin-bottom:10px;">Portion</div>
+            <div class="row">
+              <div class="stepper">
+                <button class="step-btn" onclick="step(-1)">−</button>
+                <div class="h2" id="portion">1</div>
+                <button class="step-btn" onclick="step(1)">+</button>
+              </div>
+              <div class="caption">plate<br>(~350g)</div>
+            </div>
+            <div style="margin-top:14px;">
+              <div class="row small" style="padding:6px 0; border-bottom:1px solid var(--border);"><span class="muted">Calories</span><b id="cals">640 kcal</b></div>
+              <div class="row small" style="padding:6px 0; border-bottom:1px solid var(--border);"><span class="muted">Protein</span><b id="prot">42g</b></div>
+              <div class="row small" style="padding:6px 0; border-bottom:1px solid var(--border);"><span class="muted">Carbs</span><b id="carbs">58g</b></div>
+              <div class="row small" style="padding:6px 0;"><span class="muted">Fat</span><b id="fat">22g</b></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="small" style="font-weight:600; margin-bottom:6px;">Allergens &amp; tags</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="chip gray">high-protein</span><span class="chip gray">dairy-free</span><span class="chip gray">contains: none major</span>
+            </div>
+          </div>
+          <div style="flex:1;"></div>
+          <button class="btn btn-primary" style="margin-top:8px;">✓ Log 1 plate</button>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">4 · Dish detail<small>Portion stepper → live nutrition</small></div>
+  </div>
+
+  <!-- 5. PROGRESS -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen">
+        <div class="scroll" style="padding-top:56px;">
+          <div class="h1">Progress</div>
+          <p class="body muted" style="margin:4px 0 12px;">This week</p>
+          <div class="card">
+            <div class="row"><div class="small" style="font-weight:600;">Calories vs goal</div><span class="chip">−2,140 total</span></div>
+            <div class="bar-chart">
+              <div class="bar-col"><div class="bar fill" style="height:72%;"></div><span class="caption">M</span></div>
+              <div class="bar-col"><div class="bar fill" style="height:58%;"></div><span class="caption">T</span></div>
+              <div class="bar-col"><div class="bar fill" style="height:84%;"></div><span class="caption">W</span></div>
+              <div class="bar-col"><div class="bar fill" style="height:66%;"></div><span class="caption">T</span></div>
+              <div class="bar-col"><div class="bar fill" style="height:92%;"></div><span class="caption">F</span></div>
+              <div class="bar-col"><div class="bar" style="height:30%;"></div><span class="caption">S</span></div>
+              <div class="bar-col"><div class="bar" style="height:12%;"></div><span class="caption">S</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="small" style="font-weight:600; margin-bottom:8px;">Your week in food</div>
+            <div class="row small" style="padding:5px 0;"><span class="muted">Most logged cuisine</span><b>🍛 Gulf (5×)</b></div>
+            <div class="row small" style="padding:5px 0;"><span class="muted">Logging streak</span><b>🔥 3 days</b></div>
+            <div class="row small" style="padding:5px 0;"><span class="muted">Avg. protein</span><b>96g / day</b></div>
+          </div>
+          <div class="card" style="border-color:var(--accent); background:var(--accent-soft);">
+            <div class="small" style="font-weight:600;">💡 Insight</div>
+            <p class="small muted" style="margin-top:4px;">Your protein is 20% higher on days you log kabsa. Keep it up.</p>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ico">🏠</span>Today</div>
+          <div class="tab"><span class="fab">📷</span></div>
+          <div class="tab active"><span class="ico">📊</span>Progress</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">5 · Progress<small>Weekly bars · cuisine insights</small></div>
+  </div>
+
+  <!-- 6. PAYWALL -->
+  <div class="screen-block">
+    <div class="phone"><div class="notch"></div>
+      <div class="screen" style="background:linear-gradient(180deg, var(--accent-soft), var(--bg) 55%);">
+        <div class="scroll" style="padding-top:64px; display:flex; flex-direction:column;">
+          <div style="text-align:center;">
+            <div class="logo" style="width:64px;height:64px;font-size:32px;border-radius:20px;margin:0 auto 14px;">P</div>
+            <div class="h1">Palate Pro</div>
+            <p class="body muted" style="margin-top:6px;">Your food, fully understood.</p>
+          </div>
+          <div style="margin:18px 0;">
+            <div class="pro-item"><span class="ico">📸</span><div><div class="small" style="font-weight:600;">Unlimited AI scans</div><div class="caption">Snap every meal, no daily cap</div></div></div>
+            <div class="pro-item"><span class="ico">🌍</span><div><div class="small" style="font-weight:600;">Every cuisine pack</div><div class="caption">Indian, Filipino, West African &amp; more as they launch</div></div></div>
+            <div class="pro-item"><span class="ico">📊</span><div><div class="small" style="font-weight:600;">Deep insights</div><div class="caption">Micronutrients, trends &amp; personal patterns</div></div></div>
+            <div class="pro-item"><span class="ico">👨‍👩‍👧</span><div><div class="small" style="font-weight:600;">Family profiles</div><div class="caption">Track for up to 4 people</div></div></div>
+          </div>
+          <div style="flex:1;"></div>
+          <div class="card" style="text-align:center; border-color:var(--accent);">
+            <div class="h2">$4.99<span class="small muted">/month</span></div>
+            <div class="caption">or $39.99/year · cancel anytime</div>
+          </div>
+          <button class="btn btn-primary" style="margin-bottom:8px;">Start 7-day free trial</button>
+          <p class="caption" style="text-align:center;">Free plan stays free forever.<br>No card required for trial.</p>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">6 · Paywall<small>$4.99/mo · cuisine packs as the hook</small></div>
+  </div>
+
+</div>
+
+<footer>
+  Palate design prototype · Saffron + warm stone system · Light/dark via the toggle · AR/RTL ships in the app (layout uses logical properties throughout).
+</footer>
+
+<script>
+  function toggleTheme(){
+    const h = document.documentElement;
+    h.dataset.theme = h.dataset.theme === 'light' ? 'dark' : 'light';
+  }
+  function analyze(){
+    document.getElementById('scanIdle').classList.add('hidden');
+    document.getElementById('scanBusy').classList.remove('hidden');
+    setTimeout(()=>{
+      document.getElementById('scanBusy').classList.add('hidden');
+      document.getElementById('scanDone').classList.remove('hidden');
+    }, 2200);
+  }
+  function resetScan(){
+    document.getElementById('scanDone').classList.add('hidden');
+    document.getElementById('scanIdle').classList.remove('hidden');
+  }
+  let portion = 1;
+  const base = {cals:640, prot:42, carbs:58, fat:22};
+  function step(d){
+    portion = Math.min(4, Math.max(0.5, portion + d*0.5));
+    document.getElementById('portion').textContent = portion;
+    document.getElementById('cals').textContent = Math.round(base.cals*portion)+' kcal';
+    document.getElementById('prot').textContent = Math.round(base.prot*portion)+'g';
+    document.getElementById('carbs').textContent = Math.round(base.carbs*portion)+'g';
+    document.getElementById('fat').textContent = Math.round(base.fat*portion)+'g';
+  }
+  document.querySelectorAll('.goal-card').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      document.querySelectorAll('.goal-card').forEach(x=>x.classList.remove('sel'));
+      c.classList.add('sel');
+    });
+  });
+</script>
+</body>
+</html>
