@@ -67,6 +67,35 @@ export async function analyzeMeal(
 
 export type MealInput = Omit<LoggedMeal, 'id' | 'loggedDate'>;
 
+export interface VerifyPurchaseParams {
+  purchaseToken: string;
+  productId: string;
+  platform: 'android' | 'ios';
+}
+
+/**
+ * Ask the backend to verify a Play/App Store purchase token.
+ * Returns true when the subscription is valid and active.
+ * The server checks against Google Play while the Play Developer API
+ * service account is configured; until then it records the purchase and
+ * returns true so the client can unlock (logged for later reconciliation).
+ */
+export async function verifyPurchaseToken(params: VerifyPurchaseParams): Promise<boolean> {
+  try {
+    const { data, error } = await supabase.functions.invoke('verify-purchase', {
+      body: {
+        purchase_token: params.purchaseToken,
+        product_id: params.productId,
+        platform: params.platform,
+      },
+    });
+    if (error) return false;
+    return (data as { verified?: boolean } | null)?.verified === true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Map a matched analyze-meal response onto the app's meal shape.
  * Pure — the server already scaled nutrition to the AI's portion estimate.

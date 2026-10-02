@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Screen } from '../components/Screen';
@@ -6,6 +6,15 @@ import { Text } from '../components/Text';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { useTheme } from '../theme/ThemeProvider';
+import {
+  initBilling,
+  closeBilling,
+  getProProduct,
+  subscribe,
+  restorePurchases,
+  isPro,
+  type ProProduct,
+} from '../lib/billing';
 
 const FEATURES = [
   {
@@ -32,7 +41,65 @@ const FEATURES = [
 
 export function PaywallScreen() {
   const { colors, spacing, radii } = useTheme();
-  const [comingSoon, setComingSoon] = useState(false);
+  const [billingReady, setBillingReady] = useState(false);
+  const [product, setProduct] = useState<ProProduct | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [alreadyPro, setAlreadyPro] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (await isPro()) {
+        if (mounted) setAlreadyPro(true);
+        return;
+      }
+      const ok = await initBilling(async () => {
+        // Purchase listener fires after verification; refresh pro state.
+        if (mounted && (await isPro())) setAlreadyPro(true);
+        if (mounted) {
+          setBusy(false);
+          setMessage(null);
+        }
+      });
+      if (!mounted) return;
+      setBillingReady(ok);
+      if (ok) setProduct(await getProProduct());
+      else setMessage('Purchases are not available on this device yet.');
+    })();
+    return () => {
+      mounted = false;
+      closeBilling();
+    };
+  }, []);
+
+  const onSubscribe = useCallback(async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      await subscribe();
+      // Result arrives via purchaseUpdatedListener.
+    } catch (e) {
+      setBusy(false);
+      const msg = e instanceof Error ? e.message : 'Purchase failed.';
+      setMessage(
+        msg.includes('cancelled') || msg.includes('E_USER_CANCELLED')
+          ? 'Purchase cancelled.'
+          : msg,
+      );
+    }
+  }, []);
+
+  const onRestore = useCallback(async () => {
+    setBusy(true);
+    setMessage(null);
+    const found = await restorePurchases();
+    setBusy(false);
+    if (found) setAlreadyPro(true);
+    else setMessage('No previous purchase found.');
+  }, []);
+
+  const price = product?.displayPrice ?? '$4.99';
 
   return (
     <Screen>
@@ -110,45 +177,46 @@ export function PaywallScreen() {
         >
           <View style={styles.priceRow}>
             <View>
-              <Text variant="h1">$4.99</Text>
+              <Text variant="h1">{price}</Text>
               <Text variant="bodySmall" color="textSecondary">
                 per month · cancel anytime
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.trial,
-                {
-                  backgroundColor: colors.accent,
-                  borderRadius: radii.full,
-                  paddingHorizontal: spacing.sm,
-                  paddingVertical: spacing.xs,
-                },
-              ]}
-            >
-              <Text variant="caption" color="textInverse">
-                7-day free trial
               </Text>
             </View>
           </View>
         </Card>
 
-        <Button
-          title={comingSoon ? 'Coming soon' : 'Start free trial'}
-          disabled={comingSoon}
-          onPress={() => setComingSoon(true)}
-        />
+        {alreadyPro ? (
+          <Card style={{ marginBottom: spacing.md }}>
+            <Text variant="body" style={{ textAlign: 'center' }}>
+              You're on Palate Pro — enjoy unlimited scans.
+            </Text>
+          </Card>
+        ) : (
+          <Button
+            title={busy ? 'Working…' : 'Subscribe'}
+            disabled={busy || !billingReady}
+            onPress={onSubscribe}
+          />
+        )}
+        {message ? (
+          <Text
+            variant="bodySmall"
+            color="textSecondary"
+            style={{ textAlign: 'center', marginTop: spacing.sm }}
+          >
+            {message}
+          </Text>
+        ) : null}
         <View style={{ marginTop: spacing.sm }}>
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Restore purchase"
-            onPress={() => setComingSoon(true)}
+            onPress={onRestore}
+            disabled={busy}
             style={styles.restore}
           >
             <Text variant="bodySmall" color="textSecondary">
-              {comingSoon
-                ? 'Purchases open at launch — stay tuned.'
-                : 'Restore purchase'}
+              Restore purchase
             </Text>
           </Pressable>
         </View>
@@ -177,6 +245,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  trial: { alignSelf: 'flex-start' },
   restore: { alignItems: 'center', paddingVertical: 12, minHeight: 48 },
 });
