@@ -1,6 +1,7 @@
 // Typed client for the Palate backend (Supabase Edge Functions).
 // The app never holds provider keys; analyze-meal runs server-side.
 import { supabase } from './supabase';
+import type { LoggedMeal } from '../store/app';
 
 export interface DishGuess {
   dish_name: string;
@@ -62,4 +63,34 @@ export async function analyzeMeal(
     throw new FreeScansExhaustedError();
   }
   return data as AnalyzeMealResult;
+}
+
+export type MealInput = Omit<LoggedMeal, 'id' | 'loggedDate'>;
+
+/**
+ * Map a matched analyze-meal response onto the app's meal shape.
+ * Pure — the server already scaled nutrition to the AI's portion estimate.
+ */
+export function mealInputFromAnalysis(
+  result: Extract<AnalyzeMealResult, { matched: true }>,
+  mealType: string,
+): MealInput {
+  const r = Math.round;
+  return {
+    dishId: result.dish.id,
+    nameEn: result.dish.name_en,
+    nameAr: result.dish.name_ar ?? '',
+    cuisine: result.dish.cuisine ?? 'Custom',
+    region: result.dish.region ?? 'Unknown',
+    mealType,
+    plates: 1,
+    nutrition: {
+      calories: r(result.nutrition.calories),
+      protein: r(result.nutrition.protein_g),
+      carbs: r(result.nutrition.carbs_g),
+      fat: r(result.nutrition.fat_g),
+    },
+    tags: ['ai-scan'],
+    allergens: [],
+  };
 }

@@ -57,6 +57,8 @@ interface AppState {
   freeScansLeft: number;
   /** Decrements one scan if any remain. Returns false when exhausted. */
   useFreeScan: () => boolean;
+  /** Overwrite from the server's scans_left — the server is the authority. */
+  syncFreeScansLeft: (n: number) => void;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -192,6 +194,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return true;
   };
 
+  // Server-side scans_left wins over the local counter when reachable.
+  const syncFreeScansLeft = (n: number) => {
+    setFreeScansLeft(Math.max(0, Math.floor(n)));
+  };
+
   const addMeal = (meal: Omit<LoggedMeal, 'id' | 'loggedDate'>) => {
     const today = todayStr();
     const newMeal: LoggedMeal = {
@@ -254,6 +261,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       unlockedBadges,
       freeScansLeft,
       useFreeScan,
+      syncFreeScansLeft,
     }),
     [goal, onboarded, meals, xp, streak, unlockedBadges, lastLogDate, proteinGoalDays, proteinGoalHitDate, goalBonusDate, freeScansLeft],
   );

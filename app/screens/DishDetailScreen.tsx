@@ -4,10 +4,12 @@ import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Screen } from '../components/Screen';
 import { Text } from '../components/Text';
+import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
 import { useTheme } from '../theme/ThemeProvider';
 import { useApp } from '../store/app';
+import { todayStr } from '../lib/gamification';
 import type { TodayStackParamList } from '../navigation';
 
 type Props = NativeStackScreenProps<TodayStackParamList, 'DishDetail'>;
@@ -53,10 +55,19 @@ function StepperButton({
 
 export function DishDetailScreen({ route, navigation }: Props) {
   const { colors, spacing, radii } = useTheme();
-  const { meals } = useApp();
+  const { meals, addMeal } = useApp();
   const [plates, setPlates] = useState(1);
 
-  const meal = meals.find((m) => m.id === route.params.mealId);
+  const params = route.params;
+  const previewInput = 'preview' in params ? params.preview : null;
+  const isPreview = previewInput !== null;
+  // A preview is an AI scan result not yet logged — confirming logs it
+  // with the portion the user picked on the stepper below.
+  const meal = isPreview
+    ? { ...previewInput, id: 'preview', loggedDate: todayStr() }
+    : ('mealId' in params
+        ? (meals.find((m) => m.id === params.mealId) ?? null)
+        : null);
   if (!meal) {
     return (
       <Screen>
@@ -100,6 +111,11 @@ export function DishDetailScreen({ route, navigation }: Props) {
         <Text variant="body" color="textSecondary">
           {meal.nameAr}
         </Text>
+        {isPreview && (
+          <Text variant="caption" color="textTertiary" style={{ marginTop: spacing.xs }}>
+            AI estimate — confirm before logging
+          </Text>
+        )}
         <View style={[styles.chipRow, { marginVertical: spacing.md }]}>
           <Chip label={meal.cuisine} />
           <Chip label={meal.region} />
@@ -189,6 +205,18 @@ export function DishDetailScreen({ route, navigation }: Props) {
                 <Chip key={t} label={t} />
               ))}
             </View>
+          </View>
+        )}
+
+        {previewInput && (
+          <View style={{ marginBottom: spacing.lg }}>
+            <Button
+              title="Log this meal"
+              onPress={() => {
+                addMeal({ ...previewInput, plates });
+                navigation.popToTop();
+              }}
+            />
           </View>
         )}
       </ScrollView>

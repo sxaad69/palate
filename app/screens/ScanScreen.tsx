@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TextInput as RNTextInput,
+  View,
+} from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
@@ -10,12 +15,19 @@ import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
 import { useTheme } from '../theme/ThemeProvider';
 import { useApp, type LoggedMeal } from '../store/app';
+import {
+  analyzeMeal,
+  mealInputFromAnalysis,
+  FreeScansExhaustedError,
+  type DishGuess,
+} from '../lib/api';
+import { getDeviceId } from '../lib/device';
 import type { RootTabParamList } from '../navigation';
 
-type Phase = 'idle' | 'analyzing' | 'result';
+type Phase = 'idle' | 'analyzing' | 'result' | 'unknown';
 
-// Simulated AI result — a real vision model plugs in here later.
-// Nutrition is an AI estimate snapshot, stored on the meal when logged.
+// Fallback when the camera or backend is unavailable — the demo never
+// dead-ends. Nutrition is an AI estimate snapshot, stored when logged.
 const SIMULATED_RESULT: Omit<LoggedMeal, 'id' | 'mealType' | 'plates' | 'loggedDate'> = {
   dishId: 'ap-kabsa',
   nameEn: 'Chicken Kabsa',
@@ -35,12 +47,47 @@ function mealTypeForNow(): string {
   return 'Snack';
 }
 
+function Field({
+  label,
+  ...props
+}: { label: string } & React.ComponentProps<typeof RNTextInput>) {
+  const { colors, spacing, radii, typography } = useTheme();
+  return (
+    <View style={{ marginBottom: spacing.md }}>
+      <Text
+        variant="bodySmall"
+        color="textSecondary"
+        style={{ marginBottom: spacing.xs }}
+      >
+        {label}
+      </Text>
+      <RNTextInput
+        placeholderTextColor={colors.textTertiary}
+        style={[
+          typography.body,
+          {
+            backgroundColor: colors.surfaceAlt,
+            borderRadius: radii.md,
+            padding: spacing.sm,
+            color: colors.textPrimary,
+          },
+        ]}
+        {...props}
+      />
+    </View>
+  );
+}
+
 export function ScanScreen() {
   const { colors, spacing, radii } = useTheme();
-  const { addMeal, freeScansLeft, useFreeScan } = useApp();
+  const { addMeal, freeScansLeft, useFreeScan, syncFreeScansLeft } = useApp();
   const tabNav = useNavigation<NavigationProp<RootTabParamList>>();
   const [permission, requestPermission] = useCameraPermissions();
   const [phase, setPhase] = useState<Phase>('idle');
+  const [unknownGuess, setUnknownGuess] = useState<DishGuess | null>(null);
+  const [customName, setCustomName] = useState('');
+  const [customCals, setCustomCals] = useState('');
+  const cameraRef = useRef<CameraView>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(
@@ -50,19 +97,109 @@ export function ScanScreen() {
     [],
   );
 
-  // One tap = one scan. Exhausted free scans route to the paywall.
-  const analyze = () => {
+  const goPaywall = () => tabNav.navigate('Profile', { screen: 'Paywall' });
+
+  const resetScan = () => {
+    setPhase('idle');
+    setUnknownGuess(null);
+    setCustomName('');
+    setCustomCals('');
+  };
+
+  // Demo path: no camera or backend unreachable. Consumes a local scan.
+  const runSimulatedScan = () => {
     if (!useFreeScan()) {
-      tabNav.navigate('Profile', { screen: 'Paywall' });
+      goPaywall();
+      setPhase('idle');
       return;
     }
     setPhase('analyzing');
+    if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setPhase('result'), 2000);
+  };
+
+  // Real path: capture a photo, send it to analyze-meal, route on the result.
+  const analyze = async () => {
+    if (freeScansLeft <= 0) {
+      goPaywall();
+      return;
+    }
+    if (timer.current) clearTimeout(timer.current);
+    setPhase('analyzing');
+    try {
+      let base64: string | null = null;
+      if (permission?.granted && cameraRef.current) {
+        try {
+          const photo = await cameraRef.current.takePictureAsync({
+            base64: true,
+            quality: 0.7,
+            exif: false,
+          });
+          base64 = photo?.base64 ?? null;
+        } catch (e) {
+          console.warn('camera capture failed, using demo scan', e);
+        }
+      }
+      if (!base64) {
+        runSimulatedScan();
+        return;
+      }
+
+      const res = await analyzeMeal(base64, await getDeviceId());
+      syncFreeScansLeft(res.scans_left); // server is the authority
+      if (res.matched) {
+        resetScan();
+        tabNav.navigate('Today', {
+          screen: 'DishDetail',
+          params: {
+            preview: mealInputFromAnalysis(res, mealTypeForNow()),
+          },
+        });
+        return;
+      }
+      setUnknownGuess(res.ai);
+      setCustomName(res.ai.dish_name);
+      setCustomCals('');
+      setPhase('unknown');
+    } catch (e) {
+      if (e instanceof FreeScansExhaustedError) {
+        syncFreeScansLeft(0);
+        resetScan();
+        goPaywall();
+        return;
+      }
+      console.warn('analyze-meal failed, falling back to demo scan', e);
+      runSimulatedScan();
+    }
   };
 
   const logMeal = () => {
     addMeal({ ...SIMULATED_RESULT, mealType: mealTypeForNow(), plates: 1 });
-    setPhase('idle');
+    resetScan();
+    tabNav.navigate('Today');
+  };
+
+  const customCalsNum = parseInt(customCals, 10);
+  const canLogCustom =
+    customName.trim().length > 0 &&
+    Number.isFinite(customCalsNum) &&
+    customCalsNum > 0;
+
+  const logCustomMeal = () => {
+    if (!canLogCustom) return;
+    addMeal({
+      dishId: 'custom',
+      nameEn: customName.trim(),
+      nameAr: '',
+      cuisine: 'Custom',
+      region: 'Unknown',
+      mealType: mealTypeForNow(),
+      plates: 1,
+      nutrition: { calories: customCalsNum, protein: 0, carbs: 0, fat: 0 },
+      tags: ['custom'],
+      allergens: [],
+    });
+    resetScan();
     tabNav.navigate('Today');
   };
 
@@ -82,6 +219,7 @@ export function ScanScreen() {
               <ActivityIndicator size="large" color={colors.accent} />
             ) : permission.granted ? (
               <CameraView
+                ref={cameraRef}
                 style={[
                   styles.frame,
                   { borderRadius: radii.xl, marginBottom: spacing.lg },
@@ -203,7 +341,60 @@ export function ScanScreen() {
               <Button
                 title="Scan again"
                 variant="ghost"
-                onPress={() => setPhase('idle')}
+                onPress={resetScan}
+              />
+            </View>
+          </Card>
+        )}
+
+        {phase === 'unknown' && unknownGuess && (
+          <Card style={styles.resultCard}>
+            <Text variant="h2" style={{ marginBottom: spacing.xs }}>
+              Couldn&apos;t identify this dish
+            </Text>
+            <Text
+              variant="bodySmall"
+              color="textSecondary"
+              style={{ marginBottom: spacing.md }}
+            >
+              The AI guessed &ldquo;{unknownGuess.dish_name}&rdquo; (
+              {Math.round(unknownGuess.confidence * 100)}% confident), but
+              it&apos;s not in our nutrition database yet. Log it manually
+              instead:
+            </Text>
+            <Field
+              label="Dish name"
+              value={customName}
+              onChangeText={setCustomName}
+              autoCapitalize="words"
+              returnKeyType="next"
+              accessibilityLabel="Dish name"
+            />
+            <Field
+              label="Calories (estimate)"
+              value={customCals}
+              onChangeText={setCustomCals}
+              keyboardType="numeric"
+              returnKeyType="done"
+              accessibilityLabel="Estimated calories"
+            />
+            <Text
+              variant="caption"
+              color="textTertiary"
+              style={{ marginBottom: spacing.md }}
+            >
+              Macros aren&apos;t estimated for custom meals.
+            </Text>
+            <Button
+              title="Log custom meal"
+              disabled={!canLogCustom}
+              onPress={logCustomMeal}
+            />
+            <View style={{ marginTop: spacing.sm }}>
+              <Button
+                title="Scan again"
+                variant="ghost"
+                onPress={resetScan}
               />
             </View>
           </Card>
