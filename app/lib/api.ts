@@ -43,10 +43,19 @@ export async function analyzeMeal(
   deviceId: string,
   forceAdapter?: string,
 ): Promise<AnalyzeMealResult> {
+  // Best-effort Play Integrity token; null when unavailable (not a blocker).
+  let integrityToken: string | null = null;
+  try {
+    const { getIntegrityToken } = await import('./integrity');
+    integrityToken = await getIntegrityToken();
+  } catch {
+    // ignore — unattested
+  }
   const { data, error } = await supabase.functions.invoke('analyze-meal', {
     body: {
       image_base64: imageBase64,
       device_id: deviceId,
+      ...(integrityToken ? { integrity_token: integrityToken } : {}),
       ...(forceAdapter ? { _force_adapter: forceAdapter } : {}),
     },
   });

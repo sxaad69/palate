@@ -119,13 +119,13 @@ Deno.serve(async (req) => {
     return Response.json({ error: "method_not_allowed" }, { status: 405, headers: cors });
   }
 
-  let body: { image_base64?: string; device_id?: string; _force_adapter?: string };
+  let body: { image_base64?: string; device_id?: string; integrity_token?: string; _force_adapter?: string };
   try {
     body = await req.json();
   } catch {
     return Response.json({ error: "bad_json" }, { status: 400, headers: cors });
   }
-  const { image_base64, device_id, _force_adapter } = body;
+  const { image_base64, device_id, integrity_token, _force_adapter } = body;
   if (!image_base64 || !device_id) {
     return Response.json({ error: "image_base64 and device_id required" }, { status: 400, headers: cors });
   }
@@ -134,6 +134,59 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+
+  // Play Integrity: verify the token when the Play API key is configured.
+  // Until then, log attestation presence for later analysis (not a gate).
+  const integrityKey = Deno.env.get("PLAY_INTEGRITY_API_KEY");
+  let attested = false;
+  if (integrity_token && integrityKey) {
+    try {
+      const verifyRes = await fetch(
+        `https://playintegrity.googleapis.com/v1/${Deno.env.get("PLAY_PACKAGE_NAME") ?? "com.palate.app"}:decodeIntegrityToken?key=${integrityKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ integrityToken: integrity_token }),
+        },
+      );
+      if (verifyRes.ok) {
+        const verdict = await verifyRes.json();
+        const deviceVerdict: string[] = verdict?.deviceIntegrity?.deviceRecognitionVerdict ?? [];
+        const appVerdict: string = verdict?.appIntegrity?.appRecognitionVerdict ?? "";
+        attested =
+          deviceVerdict.includes("MEETS_DEVICE_INTEGRITY") &&
+          (appVerdict === "PLAY_RECOGNIZED" || appVerdict === "UNRECOGNIZED_VERSION");
+      }
+    } catch (e) {
+      console.error("integrity verify failed:", e);
+    }
+  }
+  if (integrity_token && !integrityKey) {
+    console.log("integrity token present but PLAY_INTEGRITY_API_KEY not configured (provisional accept)");
+  }
+
+  // Rate limiting: 10 requests per IP per 60s window (fixed windows).
+  // ponytail: crude but effective v1; tighten per-endpoint if abuse appears.
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("cf-connecting-ip") ??
+    "unknown";
+  const windowStart = new Date(Math.floor(Date.now() / 60000) * 60000).toISOString();
+  const { data: bucket } = await supabase
+    .from("rate_limits")
+    .select("count")
+    .eq("ip", ip)
+    .eq("window_start", windowStart)
+    .maybeSingle();
+  const hits = bucket?.count ?? 0;
+  if (hits >= 10) {
+    return Response.json({ error: "rate_limited" }, { status: 429, headers: cors });
+  }
+  if (bucket) {
+    await supabase.from("rate_limits").update({ count: hits + 1 }).eq("ip", ip).eq("window_start", windowStart);
+  } else {
+    await supabase.from("rate_limits").insert({ ip, window_start: windowStart, count: 1 });
+  }
 
   // Anti-abuse: free-scan ledger per device, enforced server-side.
   // ponytail: read-then-write races under concurrent scans; ceiling = a few extra free scans, acceptable v1.
