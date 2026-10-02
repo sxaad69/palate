@@ -96,6 +96,61 @@ export async function verifyPurchaseToken(params: VerifyPurchaseParams): Promise
   }
 }
 
+export interface ServerMealInput {
+  dishId?: string;
+  nameEn: string;
+  nameAr?: string;
+  cuisine?: string;
+  region?: string;
+  mealType?: string;
+  tags?: string[];
+  allergens?: string[];
+  plates?: number;
+  portion_g?: number;
+  nutrition: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber?: number | null;
+    sodium?: number | null;
+  };
+}
+
+/** Persist a meal server-side. Fire-and-forget friendly: returns the server id or null. */
+export async function logMealToServer(
+  deviceId: string,
+  meal: ServerMealInput,
+  date: string,
+): Promise<string | null> {
+  try {
+    const { data, error } = await supabase.functions.invoke('meals', {
+      body: { action: 'log', device_id: deviceId, date, meal },
+    });
+    if (error) return null;
+    return (data as { id?: string } | null)?.id ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Fetch the day's meals from the server. Returns null on failure (caller keeps cache). */
+export async function fetchMealsFromServer(
+  deviceId: string,
+  date: string,
+): Promise<LoggedMeal[] | null> {
+  try {
+    const { data, error } = await supabase.functions.invoke('meals', {
+      body: { action: 'list', device_id: deviceId, date },
+    });
+    if (error) return null;
+    const meals = (data as { meals?: unknown } | null)?.meals;
+    return Array.isArray(meals) ? (meals as LoggedMeal[]) : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Map a matched analyze-meal response onto the app's meal shape.
  * Pure — the server already scaled nutrition to the AI's portion estimate.

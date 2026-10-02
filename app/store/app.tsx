@@ -8,6 +8,8 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { MealNutrition, ScaledMeal } from '../lib/nutrition';
+import { getDeviceId } from '../lib/device';
+import { logMealToServer, fetchMealsFromServer, type MealInput } from '../lib/api';
 import {
   BADGES,
   DEFAULT_CALORIE_GOAL,
@@ -64,48 +66,11 @@ interface AppState {
 const AppContext = createContext<AppState | null>(null);
 
 const STORAGE_KEY = '@palate/gamification/v1';
+const MEALS_CACHE_KEY = '@palate/meals/v1';
 const FREE_SCANS = 3;
 
 // ponytail: one tiny context is the whole "store" — no state library for
 // a handful of values and a list.
-const SEED_MEALS: Omit<LoggedMeal, 'id' | 'loggedDate'>[] = [
-  {
-    dishId: 'na-ful-medames',
-    nameEn: 'Ful Medames',
-    nameAr: 'فول مدمس',
-    cuisine: 'Egyptian',
-    region: 'North Africa',
-    mealType: 'Breakfast',
-    plates: 1,
-    nutrition: { calories: 295, protein: 14, carbs: 42, fat: 8 },
-    tags: ['vegan', 'high-fiber', 'breakfast-staple'],
-    allergens: [],
-  },
-  {
-    dishId: 'ap-kabsa',
-    nameEn: 'Kabsa',
-    nameAr: 'كبسة',
-    cuisine: 'Saudi',
-    region: 'Arabian Peninsula',
-    mealType: 'Lunch',
-    plates: 1,
-    nutrition: { calories: 620, protein: 38, carbs: 68, fat: 22 },
-    tags: ['rice', 'chicken', 'national-dish'],
-    allergens: [],
-  },
-  {
-    dishId: 'sl-hummus',
-    nameEn: 'Hummus',
-    nameAr: 'حمص',
-    cuisine: 'Levantine',
-    region: 'Levant',
-    mealType: 'Snack',
-    plates: 1,
-    nutrition: { calories: 177, protein: 8, carbs: 20, fat: 8 },
-    tags: ['vegan', 'gluten-free', 'mezze'],
-    allergens: ['sesame'],
-  },
-];
 
 interface PersistedGamification {
   xp: number;
@@ -121,13 +86,7 @@ interface PersistedGamification {
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [goal, setGoal] = useState<string | null>(null);
   const [onboarded, setOnboarded] = useState(false);
-  const [meals, setMeals] = useState<LoggedMeal[]>(() =>
-    SEED_MEALS.map((m, i) => ({
-      ...m,
-      id: `seed-${i + 1}`,
-      loggedDate: todayStr(),
-    })),
-  );
+  const [meals, setMeals] = useState<LoggedMeal[]>([]);
 
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -171,7 +130,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     })();
   }, []);
 
-  // Save on every change, but never before the initial load completes.
+  // Meals: local cache first for instant paint, then server for truth.
+  // Server wins on id conflicts (it holds the canonical ids).
+  useEffect(() => {
+    (async () => {
+      try {
+        const cached = await AsyncStorage.getItem(MEALS_CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed)) setMeals(parsed);
+        }
+      } catch {
+        // ignore — start empty
+      }
+      try {
+        const deviceId = await getDeviceId();
+        const serverMeals = await fetchMealsFromServer(deviceId, todayStr());
+        if (serverMeals) {
+          setMeals((prev) => {
+            const serverIds = new Set(serverMeals.map((m) => m.id));
+            const localOnly = prev.filter((m) => !serverIds.has(m.id) && m.id.startsWith('meal-'));
+            const merged = [...serverMeals, ...localOnly];
+            AsyncStorage.setItem(MEALS_CACHE_KEY, JSON.stringify(merged)).catch(() => {});
+            return merged;
+          });
+        }
+      } catch {
+        // offline — keep cache
+      }
+    })();
+  }, []);
   useEffect(() => {
     if (!hydratedRef.current) return;
     const data: PersistedGamification = {
@@ -207,6 +195,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       loggedDate: today,
     };
     const nextMeals = [...meals, newMeal];
+    setMeals(nextMeals);
+    // Local cache first (offline-safe), server second (fire-and-forget).
+    AsyncStorage.setItem(MEALS_CACHE_KEY, JSON.stringify(nextMeals)).catch(() => {});
+    getDeviceId()
+      .then((deviceId) =>
+        logMealToServer(deviceId, { ...meal, portion_g: (meal as { portion_g?: number }).portion_g }, today),
+      )
+      .catch(() => {});
     const todaysMeals = nextMeals.filter((m) => m.loggedDate === today);
     const dayCals = todaysMeals.reduce(
       (s, m) => s + m.nutrition.calories * m.plates,
