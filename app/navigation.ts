@@ -1,3 +1,5 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
+
 export type TodayStackParamList = {
   TodayHome: undefined;
   DishDetail: { mealId: string };
@@ -20,5 +22,5 @@ export type RootTabParamList = {
   Today: undefined;
   Scan: undefined;
   Progress: undefined;
-  Profile: undefined;
+  Profile: NavigatorScreenParams<ProfileStackParamList> | undefined;
 };

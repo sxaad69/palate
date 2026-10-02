@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import { Screen } from '../components/Screen';
@@ -36,8 +37,9 @@ function mealTypeForNow(): string {
 
 export function ScanScreen() {
   const { colors, spacing, radii } = useTheme();
-  const { addMeal } = useApp();
+  const { addMeal, freeScansLeft, useFreeScan } = useApp();
   const tabNav = useNavigation<NavigationProp<RootTabParamList>>();
+  const [permission, requestPermission] = useCameraPermissions();
   const [phase, setPhase] = useState<Phase>('idle');
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -48,7 +50,12 @@ export function ScanScreen() {
     [],
   );
 
-  const simulate = () => {
+  // One tap = one scan. Exhausted free scans route to the paywall.
+  const analyze = () => {
+    if (!useFreeScan()) {
+      tabNav.navigate('Profile', { screen: 'Paywall' });
+      return;
+    }
     setPhase('analyzing');
     timer.current = setTimeout(() => setPhase('result'), 2000);
   };
@@ -59,35 +66,65 @@ export function ScanScreen() {
     tabNav.navigate('Today');
   };
 
+  const scansChip =
+    freeScansLeft > 0 ? (
+      <View style={{ alignItems: 'center', marginBottom: spacing.md }}>
+        <Chip label={`✨ ${freeScansLeft} free scan${freeScansLeft === 1 ? '' : 's'} left`} />
+      </View>
+    ) : null;
+
   return (
     <Screen>
       <View style={styles.center}>
         {phase === 'idle' && (
           <>
-            <View
-              style={[
-                styles.frame,
-                {
-                  borderColor: colors.borderStrong,
-                  borderRadius: radii.xl,
-                  padding: spacing.lg,
-                  marginBottom: spacing.lg,
-                },
-              ]}
-            >
-              <Ionicons
-                name="camera-outline"
-                size={56}
-                color={colors.textTertiary}
+            {permission === null ? (
+              <ActivityIndicator size="large" color={colors.accent} />
+            ) : permission.granted ? (
+              <CameraView
+                style={[
+                  styles.frame,
+                  { borderRadius: radii.xl, marginBottom: spacing.lg },
+                ]}
+                facing="back"
               />
-              <Text
-                variant="bodySmall"
-                color="textTertiary"
-                style={{ textAlign: 'center', marginTop: spacing.sm }}
-              >
-                Camera preview appears here
-              </Text>
-            </View>
+            ) : (
+              <>
+                <View
+                  style={[
+                    styles.frame,
+                    {
+                      borderColor: colors.borderStrong,
+                      borderRadius: radii.xl,
+                      padding: spacing.lg,
+                      marginBottom: spacing.lg,
+                      borderWidth: 2,
+                      borderStyle: 'dashed',
+                    },
+                  ]}
+                >
+                  <Ionicons
+                    name="camera-outline"
+                    size={56}
+                    color={colors.textTertiary}
+                  />
+                  <Text
+                    variant="bodySmall"
+                    color="textTertiary"
+                    style={{ textAlign: 'center', marginTop: spacing.sm }}
+                  >
+                    Palate needs camera access to snap your meals
+                  </Text>
+                </View>
+                <View style={{ width: '100%', marginBottom: spacing.sm }}>
+                  <Button
+                    title="Grant camera access"
+                    onPress={requestPermission}
+                  />
+                </View>
+              </>
+            )}
+            {scansChip}
             <Text
               variant="bodySmall"
               color="textSecondary"
@@ -96,7 +133,10 @@ export function ScanScreen() {
               Point at any dish — Palate recognizes cuisines from around the
               world, not just Western food.
             </Text>
-            <Button title="Simulate scan" onPress={simulate} />
+            <Button
+              title={permission?.granted ? 'Analyze meal' : 'Simulate scan'}
+              onPress={analyze}
+            />
           </>
         )}
 
@@ -178,10 +218,9 @@ const styles = StyleSheet.create({
   frame: {
     width: 280,
     height: 280,
-    borderWidth: 2,
-    borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   resultCard: { width: '100%' },
   resultHead: { flexDirection: 'row', alignItems: 'flex-start' },

@@ -267,15 +267,40 @@ export function TodayScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        {meals.map((meal) => (
-          <MealRow
-            key={meal.id}
-            meal={meal}
-            onPress={() =>
-              navigation.navigate('DishDetail', { mealId: meal.id })
-            }
-          />
-        ))}
+        {meals.length === 0 ? (
+          <Card style={{ alignItems: 'center', paddingVertical: spacing.xl }}>
+            <Text variant="h1" style={{ marginBottom: spacing.sm }}>
+              🍽️
+            </Text>
+            <Text
+              variant="body"
+              style={{ textAlign: 'center', marginBottom: spacing.xs }}
+            >
+              Nothing logged yet
+            </Text>
+            <Text
+              variant="bodySmall"
+              color="textSecondary"
+              style={{ textAlign: 'center', marginBottom: spacing.md }}
+            >
+              Snap your first meal and Palate will do the rest.
+            </Text>
+            <Button
+              title="Snap your meal"
+              onPress={() => tabNav.navigate('Scan')}
+            />
+          </Card>
+        ) : (
+          meals.map((meal) => (
+            <MealRow
+              key={meal.id}
+              meal={meal}
+              onPress={() =>
+                navigation.navigate('DishDetail', { mealId: meal.id })
+              }
+            />
+          ))
+        )}
 
         <View style={{ marginVertical: spacing.lg }}>
           <Button title="Snap your meal" onPress={() => tabNav.navigate('Scan')} />

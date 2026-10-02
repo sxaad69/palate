@@ -6,6 +6,14 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Palate uses your camera to snap meals and identify dishes with AI."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true
     },

@@ -53,11 +53,16 @@ interface AppState {
   level: LevelInfo;
   streak: number;
   unlockedBadges: string[];
+  // free AI scans: 3 per install, then the paywall
+  freeScansLeft: number;
+  /** Decrements one scan if any remain. Returns false when exhausted. */
+  useFreeScan: () => boolean;
 }
 
 const AppContext = createContext<AppState | null>(null);
 
 const STORAGE_KEY = '@palate/gamification/v1';
+const FREE_SCANS = 3;
 
 // ponytail: one tiny context is the whole "store" — no state library for
 // a handful of values and a list.
@@ -108,6 +113,7 @@ interface PersistedGamification {
   proteinGoalDays: number;
   proteinGoalHitDate: string | null;
   goalBonusDate: string | null;
+  freeScansLeft: number;
 }
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -130,6 +136,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     null,
   );
   const [goalBonusDate, setGoalBonusDate] = useState<string | null>(null);
+  const [freeScansLeft, setFreeScansLeft] = useState(FREE_SCANS);
 
   // Load persisted gamification once on start; corrupted data → fresh start.
   const hydratedRef = useRef(false);
@@ -151,6 +158,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             setProteinGoalHitDate(d.proteinGoalHitDate ?? null);
           if (typeof d.goalBonusDate === 'string' || d.goalBonusDate === null)
             setGoalBonusDate(d.goalBonusDate ?? null);
+          if (typeof d.freeScansLeft === 'number')
+            setFreeScansLeft(Math.max(0, d.freeScansLeft));
         }
       } catch {
         // ignore — start fresh
@@ -171,9 +180,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       proteinGoalDays,
       proteinGoalHitDate,
       goalBonusDate,
+      freeScansLeft,
     };
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data)).catch(() => {});
-  }, [xp, streak, lastLogDate, unlockedBadges, proteinGoalDays, proteinGoalHitDate, goalBonusDate]);
+  }, [xp, streak, lastLogDate, unlockedBadges, proteinGoalDays, proteinGoalHitDate, goalBonusDate, freeScansLeft]);
+
+  // One tap = one scan. Returns false when the free scans are exhausted.
+  const useFreeScan = () => {
+    if (freeScansLeft <= 0) return false;
+    setFreeScansLeft((n) => n - 1);
+    return true;
+  };
 
   const addMeal = (meal: Omit<LoggedMeal, 'id' | 'loggedDate'>) => {
     const today = todayStr();
@@ -235,8 +252,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       level: levelForXp(xp),
       streak,
       unlockedBadges,
+      freeScansLeft,
+      useFreeScan,
     }),
-    [goal, onboarded, meals, xp, streak, unlockedBadges, lastLogDate, proteinGoalDays, proteinGoalHitDate, goalBonusDate],
+    [goal, onboarded, meals, xp, streak, unlockedBadges, lastLogDate, proteinGoalDays, proteinGoalHitDate, goalBonusDate, freeScansLeft],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
