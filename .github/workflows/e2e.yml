@@ -51,18 +51,19 @@ jobs:
         working-directory: app/android
         run: ./gradlew assembleDebug --no-daemon
 
-      - name: Install Maestro
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
-
-      # The Gradle build + SDK + emulator image exceed the runner's free disk.
-      # Drop toolchains we never use to make room for the system image.
-      - name: Free up disk space for the emulator
+      # The Gradle build leaves the runner nearly full (~56 MB free), which
+      # breaks every later step that downloads anything. Reclaim space from
+      # toolchains we never use BEFORE installing Maestro / the emulator.
+      - name: Free up disk space
         run: |
           sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup || true
           sudo docker image prune --all --force || true
           df -h / | tail -1
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
 
       - name: Run Maestro smoke test on emulator
         uses: reactivecircus/android-emulator-runner@v2
