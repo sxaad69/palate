@@ -16,7 +16,7 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -46,6 +46,19 @@ jobs:
         run: npx expo prebuild --platform android --clean
         env:
           CI: 'true'
+
+      # Gradle downloads ~1 GB of dependencies on a cold runner; cache them
+      # across runs so the build doesn't eat 39 of our 90 minutes every time.
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/transforms-4
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('app/package-lock.json', 'app/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
 
       - name: Build debug APK
         working-directory: app/android
