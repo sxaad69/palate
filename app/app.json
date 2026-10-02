@@ -12,7 +12,8 @@
         {
           "cameraPermission": "Palate uses your camera to snap meals and identify dishes with AI."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "ios": {
       "supportsTablet": true
