@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from './navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useTheme } from './theme/ThemeProvider';
 import { AppProvider, useApp } from './store/app';
 import { OnboardingScreen } from './screens/OnboardingScreen';
@@ -131,11 +132,13 @@ function Root() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppProvider>
-        <ThemedStatusBar />
-        <Root />
-      </AppProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <AppProvider>
+          <ThemedStatusBar />
+          <Root />
+        </AppProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

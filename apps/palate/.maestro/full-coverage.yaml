@@ -1,0 +1,130 @@
+appId: com.palate.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (16 total):
+#   onboarding-01-hero.png            onboarding, no goal selected
+#   onboarding-02-habits-selected.png "Build healthy habits" selected
+#   onboarding-03-macros-selected.png "Track macros" selected
+#   onboarding-04-lose-selected.png  "Lose weight" selected (continues)
+#   today-01-empty.png                Today tab, nothing logged
+#   scan-01-idle.png                  Scan tab idle (permission-independent)
+#   scan-02-analyzing.png             "Identifying your dish…"
+#   scan-03-result.png                Chicken Kabsa result card
+#   today-02-with-meal.png            Today tab with 1 logged meal
+#   dishdetail-01.png                 Dish detail, 1 plate
+#   dishdetail-02-portion.png         Dish detail, 1.5 plates
+#   progress-01.png                   Progress tab (chart, streak, badges)
+#   profile-01.png                    Profile tab (light)
+#   paywall-01.png                    Paywall
+#   paywall-02-restore.png            Paywall after "Restore purchase"
+#   profile-02-dark.png               Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Palate"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01-hero.png
+- assertVisible: "Palate"
+- assertVisible: "The food logger that knows your food — from kabsa to biryani."
+
+# Tap each goal to capture every selection state
+- tapOn: "Build healthy habits"
+- takeScreenshot: screenshots/onboarding-02-habits-selected.png
+
+- tapOn: "Track macros"
+- takeScreenshot: screenshots/onboarding-03-macros-selected.png
+
+- tapOn: "Lose weight"
+- takeScreenshot: screenshots/onboarding-04-lose-selected.png
+
+- tapOn: "Continue"
+
+# ================= Today tab (empty) =================
+- takeScreenshot: screenshots/today-01-empty.png
+- assertVisible: "Protein"
+- assertVisible: "Carbs"
+- assertVisible: "Nothing logged yet"
+
+# ================= Scan tab =================
+- tapOn: "Snap your meal"
+- assertVisible: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
+- takeScreenshot: screenshots/scan-01-idle.png
+
+# Trigger a scan. Button label depends on camera permission state
+# ("Simulate scan" when not granted, "Analyze meal" when granted) —
+# tap whichever is present. Either path ends at the demo result.
+- tapOn:
+    text: "Simulate scan"
+    optional: true
+- tapOn:
+    text: "Analyze meal"
+    optional: true
+- assertVisible: "Identifying your dish"
+- takeScreenshot: screenshots/scan-02-analyzing.png
+
+# Demo scan resolves after ~2s
+- extendedWaitUntil:
+    visible: "Log this meal"
+    timeout: 15000
+- takeScreenshot: screenshots/scan-03-result.png
+- assertVisible: "Chicken Kabsa"
+
+- tapOn: "Log this meal"
+
+# ================= Today tab (with meal) =================
+- extendedWaitUntil:
+    visible: "1 logged"
+    timeout: 15000
+- takeScreenshot: screenshots/today-02-with-meal.png
+- assertVisible: "Chicken Kabsa"
+
+# ================= Dish detail =================
+- tapOn: "Chicken Kabsa"
+- assertVisible: "Portion"
+- takeScreenshot: screenshots/dishdetail-01.png
+
+- tapOn: "Increase portion"
+- assertVisible: "1.5 plates"
+- takeScreenshot: screenshots/dishdetail-02-portion.png
+
+# System back returns to Today
+- back
+
+# ================= Progress tab =================
+- tapOn: "Progress"
+- assertVisible: "Current streak"
+- takeScreenshot: screenshots/progress-01.png
+- assertVisible: "Badges"
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "Palate Pro"
+
+# ================= Paywall =================
+- tapOn: "Palate Pro"
+- assertVisible: "Subscribe"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Restore is safe: no Play Store on emulator, always reports nothing found
+- tapOn: "Restore purchase"
+- assertVisible: "No previous purchase found."
+- takeScreenshot: screenshots/paywall-02-restore.png
+
+# Back to Profile
+- back
+
+# ================= Dark mode =================
+- tapOn: "Appearance"
+- assertVisible: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png
