@@ -17,6 +17,10 @@ on:
       - '.github/workflows/e2e-fastuna.yml'
   workflow_dispatch:
 
+concurrency:
+  group: android-emulator
+  cancel-in-progress: false
+
 # actions/cache needs actions:write to SAVE caches (restore works without it,
 # which is why restores silently missed and the repo shows 0 caches).
 # contents:write is needed for the screenshot auto-commit step.
