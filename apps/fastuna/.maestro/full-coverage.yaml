@@ -47,15 +47,13 @@ appId: com.fastuna.app
 - takeScreenshot: screenshots/onboarding-02-goal.png
 
 # Scroll to the wedge presets and pick Ramadan (the differentiator)
-- scroll:
-    direction: DOWN
+- scroll
 - tapOn: "Ramadan"
 - takeScreenshot: screenshots/onboarding-03-ramadan.png
 - assertVisible: "Dawn-to-sunset fasting"
 
 # Scroll to Continue and finish onboarding
-- scroll:
-    direction: DOWN
+- scroll
 - tapOn: "Continue"
 
 # ================= Timer tab (idle) =================
