@@ -19,7 +19,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
@@ -108,7 +108,8 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_6
-          emulator-options: -partition-size 2048 -no-snapshot -no-audio -no-boot-anim -no-window -gpu swiftshader_indirect -memory 2048
+          emulator-options: -partition-size 2048 -no-snapshot -no-audio -no-boot-anim -no-window -gpu swiftshader_indirect -memory 2048 -camera-back none -camera-front none
+          disable-animations: true
           script: |
             cd "$GITHUB_WORKSPACE/apps/palate"
             mkdir -p screenshots
