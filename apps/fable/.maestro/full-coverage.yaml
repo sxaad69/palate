@@ -22,6 +22,8 @@ appId: com.fable.breath
 
 # Fresh install state on every run
 - launchApp:
+    appId: "com.fable.breath"
+    clearState: true
 - tapOn:
     text: "Wait"
     optional: true

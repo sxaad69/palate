@@ -24,6 +24,8 @@ appId: com.palate.app
 
 # Fresh install state on every run
 - launchApp:
+    appId: "com.palate.app"
+    clearState: true
 - tapOn:
     text: "Wait"
     optional: true

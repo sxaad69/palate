@@ -25,6 +25,8 @@ appId: com.dryspell.app
 
 # Fresh install state on every run
 - launchApp:
+    appId: "com.dryspell.app"
+    clearState: true
 - tapOn:
     text: "Wait"
     optional: true
