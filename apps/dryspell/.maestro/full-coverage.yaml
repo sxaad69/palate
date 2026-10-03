@@ -53,7 +53,7 @@ appId: com.dryspell.app
 - tapOn: "Continue"
 
 # ================= Onboarding: daily spend =================
-- assertVisible: "how much did it cost you per day"
+- assertVisible: "Roughly how much did it cost you per day?"
 - takeScreenshot: screenshots/onboarding-03-spend.png
 # The h1 and the TextInput share the same accessibility string — index 1
 # targets the input field (h1 comes first in the hierarchy)

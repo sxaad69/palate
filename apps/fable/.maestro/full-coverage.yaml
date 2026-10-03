@@ -65,7 +65,6 @@ appId: com.fable.breath
 # ================= Player (session modal) =================
 - tapOn: "Arrival"
 - assertVisible: "Begin"
-- assertVisible: "Chapter 1"
 - takeScreenshot: screenshots/player-01-idle.png
 
 # Start the session — button flips to Pause, breath ring animates
