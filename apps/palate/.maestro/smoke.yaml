@@ -24,8 +24,8 @@ appId: com.palate.app
 # Jump to Scan via the CTA button (also exercises cross-tab navigation)
 - tapOn: "Snap your meal"
 
-# --- Scan tab: camera permission prompt (fresh state => not granted) ---
-- assertVisible: "Grant camera access"
+# --- Scan tab (permission-independent copy; the camera prompt varies by device) ---
+- assertVisible: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
 
 # --- Progress tab ---
 - takeScreenshot: screenshots/shot-03.png
