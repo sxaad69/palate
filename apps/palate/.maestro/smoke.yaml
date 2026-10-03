@@ -4,6 +4,11 @@ appId: com.palate.app
 - launchApp:
     clearState: true
 
+# Cold boot on software-rendered emulator is slow — wait for first render
+- extendedWaitUntil:
+    visible: "Palate"
+    timeout: 90000
+
 # --- Onboarding ---
 - takeScreenshot: screenshots/shot-01.png
 - assertVisible: "Palate"
