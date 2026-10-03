@@ -30,7 +30,6 @@ appId: com.fable.breath
 - tapOn:
     text: "Close app"
     optional: true
-    clearState: true
 
 # Cold boot on software-rendered emulator is slow and variable — allow 3 min
 - extendedWaitUntil:
