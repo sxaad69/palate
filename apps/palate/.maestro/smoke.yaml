@@ -12,7 +12,7 @@ appId: com.palate.app
 # --- Onboarding ---
 - takeScreenshot: screenshots/shot-01.png
 - assertVisible: "Palate"
-- assertVisible: "The food logger that knows your food"
+- assertVisible: "The food logger that knows your food — from kabsa to biryani."
 - tapOn: "Lose weight"
 - tapOn: "Continue"
 
