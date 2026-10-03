@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from './navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -16,6 +16,7 @@ import { SOSScreen } from './screens/SOS';
 import { PaywallScreen } from './screens/Paywall';
 import { ProfileScreen } from './screens/Profile';
 import { GoalsScreen } from './screens/Goals';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -108,6 +109,7 @@ function Root() {
 
 export default function App() {
   return (
+    <SafeAreaProvider>
     <ThemeProvider>
       <LocaleProvider>
         <SobrietyProvider>
@@ -116,5 +118,6 @@ export default function App() {
         </SobrietyProvider>
       </LocaleProvider>
     </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

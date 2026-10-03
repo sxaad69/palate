@@ -1,0 +1,113 @@
+appId: com.tendhome.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. Assertions prove functionality;
+# screenshots are the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01-hero.png        step 1: "Small tasks now beat big repairs later"
+#   onboarding-02-library.png     step 2: "A library, not a blank list"
+#   onboarding-03-reminders.png   step 3: "We remind you at the right time"
+#   home-01-attention.png         Home tab: due tasks queue ("Needs attention")
+#   taskdetail-01.png             Task detail: facts, mark-done, history empty
+#   taskdetail-02-done.png        Task detail after "Mark done" (history entry)
+#   home-02-after.png             Home tab after completing one task
+#   tasks-01-library.png          Tasks tab: library, enabled count
+#   costs-01.png                  Costs tab: year/total, Plus-locked insights
+#   settings-01.png               Settings tab (light)
+#   settings-02-dark.png          Settings tab in dark mode
+#   paywall-01.png                Paywall: TendHome Plus
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.tendhome.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Small tasks now beat big repairs later"
+    timeout: 180000
+
+# ================= Onboarding (3 steps) =================
+- takeScreenshot: screenshots/onboarding-01-hero.png
+- assertVisible: "Small tasks now beat big repairs later"
+
+- tapOn: "→"
+- takeScreenshot: screenshots/onboarding-02-library.png
+- assertVisible: "A library, not a blank list"
+
+- tapOn: "→"
+- takeScreenshot: screenshots/onboarding-03-reminders.png
+- assertVisible: "We remind you at the right time"
+
+- tapOn: "Tend my home"
+
+# ================= Home tab (attention queue) =================
+- extendedWaitUntil:
+    visible: "Needs attention"
+    timeout: 15000
+- takeScreenshot: screenshots/home-01-attention.png
+# Pre-seeded library tasks start never-done, hence due now
+- assertVisible: "Replace HVAC filter"
+- assertVisible: "Test smoke detectors"
+
+# ================= Task detail =================
+- tapOn: "Replace HVAC filter"
+- assertVisible: "Why it matters"
+- assertVisible: "Mark done"
+- assertVisible: "History"
+- takeScreenshot: screenshots/taskdetail-01.png
+- assertVisible: "No completions yet."
+
+# Mark done: proves the completion is recorded (history entry appears)
+- tapOn: "Mark done"
+- assertNotVisible: "No completions yet."
+- takeScreenshot: screenshots/taskdetail-02-done.png
+
+# System back returns to Home; completed task leaves the attention queue
+- back
+- takeScreenshot: screenshots/home-02-after.png
+- assertNotVisible: "Replace HVAC filter"
+- assertVisible: "Test smoke detectors"
+
+# ================= Tasks tab (library) =================
+- tapOn: "Tasks"
+- assertVisible: "Task library"
+- assertVisible: "enabled"
+- takeScreenshot: screenshots/tasks-01-library.png
+- assertVisible: "Add custom task"
+
+# ================= Costs tab =================
+- tapOn: "Costs"
+- assertVisible: "Spent this year"
+- assertVisible: "Total spent"
+- takeScreenshot: screenshots/costs-01.png
+- assertVisible: "Annual insights are a Plus feature."
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Language"
+- assertVisible: "Appearance"
+- assertVisible: "Due-date reminders"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "TendHome 1.0"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- tapOn: "Light"
+
+# ================= Paywall =================
+- tapOn: "Go Plus"
+- assertVisible: "TendHome Plus"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Back to Settings
+- back

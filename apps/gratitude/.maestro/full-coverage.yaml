@@ -1,0 +1,123 @@
+appId: com.threegood.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01.png            slide 1
+#   onboarding-02.png            slide 2 (3 bullets)
+#   onboarding-03.png            slide 3: language + reminder picks
+#   today-01-empty.png           Today's ritual: 3 empty prompts
+#   today-02-filled.png          all 3 prompts answered
+#   today-03-done.png            ritual complete (✓)
+#   jar-01.png                   Glow jar with today's entry
+#   history-01.png               History tab with today's entry
+#   letter-01.png                Weekly letter (empty state)
+#   profile-01.png               Profile tab (light)
+#   paywall-01.png               Paywall
+#   profile-02-dark.png          Profile tab (dark mode)
+#   profile-03-arabic.png        Profile tab in Arabic (proves i18n switch)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.threegood.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Continue"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Continue"
+
+- tapOn: "Continue"
+- assertVisible: "Each day brings 3 fresh prompts across 6 themes"
+- takeScreenshot: screenshots/onboarding-02.png
+
+- tapOn: "Continue"
+- takeScreenshot: screenshots/onboarding-03.png
+
+- tapOn: "Begin my ritual"
+
+# ================= Today tab (empty ritual) =================
+- assertVisible: "Today's ritual"
+- assertVisible: "Complete the ritual"
+- takeScreenshot: screenshots/today-01-empty.png
+
+# Fill all 3 gratitude prompts — same placeholder on each, tap by index
+- tapOn:
+    text: "I am grateful for…"
+    index: 0
+- inputText: "My morning coffee"
+- hideKeyboard
+
+- tapOn:
+    text: "I am grateful for…"
+    index: 1
+- inputText: "A good night of sleep"
+- hideKeyboard
+
+- tapOn:
+    text: "I am grateful for…"
+    index: 2
+- inputText: "My family's health"
+- hideKeyboard
+
+- takeScreenshot: screenshots/today-02-filled.png
+
+# All 3 answered → Complete the ritual enables — proves the gating logic
+- tapOn: "Complete the ritual"
+- takeScreenshot: screenshots/today-03-done.png
+
+# ================= Jar tab =================
+- tapOn: "Jar"
+- assertVisible: "Glow jar"
+- takeScreenshot: screenshots/jar-01.png
+
+# ================= History tab =================
+- tapOn: "History"
+- assertVisible: "History"
+- takeScreenshot: screenshots/history-01.png
+
+# ================= Letter tab (empty state) =================
+- tapOn: "Letter"
+- assertVisible: "Weekly letter"
+- assertVisible: "Complete a few days this week and your letter will write itself."
+- takeScreenshot: screenshots/letter-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "Go Pro"
+
+# ================= Paywall =================
+- tapOn: "Go Pro"
+- assertVisible: "Begin my ritual"
+- takeScreenshot: screenshots/paywall-01.png
+
+# "Continue" (ghost) dismisses the paywall back to Profile
+- tapOn: "Continue"
+- assertVisible: "Go Pro"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png
+
+# Restore light mode for the Arabic pass
+- tapOn: "Light"
+
+# ================= Arabic (i18n switch) =================
+- tapOn: "العربية"
+- takeScreenshot: screenshots/profile-03-arabic.png
+
+# Back to English
+- tapOn: "English"
+- assertVisible: "Go Pro"

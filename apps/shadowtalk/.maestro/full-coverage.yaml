@@ -1,0 +1,110 @@
+appId: com.shadowsay.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01-lang.png            language pick: "ShadowSay"
+#   onboarding-02-slide1.png           "Hear it like a native"
+#   onboarding-03-slide2.png           "Shadow it out loud"
+#   onboarding-04-slide3.png           "Compare and score"
+#   onboarding-05-direction.png        direction pick, nothing selected
+#   onboarding-06-direction-selected.png  "English → Arabic" selected
+#   packs-01.png                      Packs tab (4 packs, Travel free)
+#   practice-01-idle.png              Practice: phrase card, Play model + Record
+#   practice-02-model-playing.png     after tapping Play model (TTS)
+#   progress-01.png                   Progress tab
+#   profile-01.png                    Profile tab (light)
+#   paywall-01.png                    Paywall
+#   profile-02-dark.png               Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.shadowsay.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "ShadowSay"
+    timeout: 180000
+
+# ================= Onboarding (5 steps) =================
+- takeScreenshot: screenshots/onboarding-01-lang.png
+- assertVisible: "ShadowSay"
+- assertVisible: "Shadow. Speak. Sound native."
+- assertVisible: "Pick your app language"
+
+- tapOn: "Continue"
+- assertVisible: "Hear it like a native"
+- takeScreenshot: screenshots/onboarding-02-slide1.png
+
+- tapOn: "Continue"
+- assertVisible: "Shadow it out loud"
+- takeScreenshot: screenshots/onboarding-03-slide2.png
+
+- tapOn: "Continue"
+- assertVisible: "Compare and score"
+- takeScreenshot: screenshots/onboarding-04-slide3.png
+
+- tapOn: "Continue"
+- assertVisible: "Which direction will you practice?"
+- takeScreenshot: screenshots/onboarding-05-direction.png
+
+- tapOn: "English → Arabic"
+- takeScreenshot: screenshots/onboarding-06-direction-selected.png
+
+- tapOn: "Start practicing"
+
+# ================= Packs tab =================
+- assertVisible: "Travel"
+- assertVisible: "Arabic for English Speakers"
+- takeScreenshot: screenshots/packs-01.png
+
+# Practice: free pack for en-ar direction is "Arabic for English Speakers"
+- tapOn: "Arabic for English Speakers"
+- assertVisible: "Play model"
+- assertVisible: "Record"
+- takeScreenshot: screenshots/practice-01-idle.png
+
+# Play model uses on-device TTS — safe on emulator, no permission needed
+- tapOn: "Play model"
+- takeScreenshot: screenshots/practice-02-model-playing.png
+
+# Close practice (X) — returns to Packs
+- tapOn: "✕"
+- assertVisible: "Travel"
+
+# ================= Progress tab =================
+- tapOn: "Progress"
+- assertVisible: "day streak"
+- takeScreenshot: screenshots/progress-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "ShadowSay"
+
+# ================= Paywall =================
+- tapOn: "Go Pro"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# "Maybe later" dismisses the paywall back to Profile
+- tapOn: "Maybe later"
+- assertVisible: "Appearance"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png
+- assertVisible: "Dark"
+
+# Restore light mode
+- tapOn: "Light"
+- assertVisible: "Appearance"

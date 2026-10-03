@@ -1,0 +1,138 @@
+appId: com.meetbrief.notes
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01-detail.png      slide 1: "Never miss a detail"
+#   onboarding-02-actions.png     slide 2: "Actions, not walls of text"
+#   onboarding-03-mic.png         slide 3: "Private by design" + mic rationale
+#   meetings-01-empty.png         Meetings tab, empty state
+#   record-01-idle.png            Record tab idle ("Tap to start recording")
+#   record-02-recording.png       Recording in progress (silence on emulator)
+#   record-03-paused.png          Recording paused
+#   detail-01.png                 Meeting detail: summary + action items
+#   detail-02-action-added.png    Detail after adding + checking an action item
+#   meetings-02-with-meeting.png  Meetings list shows the saved recording
+#   stats-01.png                  Stats tab with 1 meeting of data
+#   profile-01.png                Profile tab (light)
+#   paywall-01.png                Paywall ("MeetBrief Pro", free trial)
+#   profile-02-dark.png           Profile tab (dark mode)
+
+# Fresh install state on every run. The CI workflow grants RECORD_AUDIO via
+# adb before this runs — the emulator has no real mic, so the flow records
+# silence and asserts UI states, never audio content.
+- launchApp:
+    appId: "com.meetbrief.notes"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "MeetBrief"
+    timeout: 180000
+
+# ================= Onboarding (3 slides + mic rationale) =================
+- takeScreenshot: screenshots/onboarding-01-detail.png
+- assertVisible: "MeetBrief"
+- assertVisible: "Never miss a detail"
+
+- tapOn: "Continue"
+- assertVisible: "Actions, not walls of text"
+- takeScreenshot: screenshots/onboarding-02-actions.png
+
+- tapOn: "Continue"
+- assertVisible: "Private by design"
+- assertVisible: "Allow microphone access"
+- takeScreenshot: screenshots/onboarding-03-mic.png
+
+- tapOn: "Allow microphone access"
+- tapOn: "Get started"
+
+# ================= Meetings tab (empty) =================
+- assertVisible: "Meetings"
+- assertVisible: "No meetings yet"
+- takeScreenshot: screenshots/meetings-01-empty.png
+
+# ================= Record tab =================
+- tapOn: "Record"
+- assertVisible: "Tap to start recording"
+- takeScreenshot: screenshots/record-01-idle.png
+
+# Name the meeting before recording (title locks once recording starts)
+- tapOn: "Meeting title"
+- inputText: "Coverage test meeting"
+
+# Dismiss the keyboard, then start recording. The big red record button has
+# no visible text — its accessibility label ("Record") collides with the tab
+# and header titles, so a text tap is ambiguous; tap it by position instead.
+# It sits centered in the middle of the screen (~52% down).
+- back
+- tapOn:
+    point: "50%,52%"
+- assertVisible: "Recording"
+- takeScreenshot: screenshots/record-02-recording.png
+
+# Pause / resume flip the phase label — proves transport controls work
+- tapOn: "Pause"
+- assertVisible: "Paused"
+- takeScreenshot: screenshots/record-03-paused.png
+
+- tapOn: "Resume"
+- assertVisible: "Recording"
+
+# Stop saves the meeting (silence audio on emulator) and opens the detail
+- tapOn: "Stop & save"
+- extendedWaitUntil:
+    visible: "Coverage test meeting"
+    timeout: 15000
+
+# ================= Meeting detail =================
+- assertVisible: "Summary"
+- assertVisible: "Action items"
+- takeScreenshot: screenshots/detail-01.png
+
+# Add an action item, then tap it to toggle done — proves the checklist works
+- tapOn: "e.g. Send the proposal by Friday"
+- inputText: "Coverage action"
+- tapOn: "+"
+- assertVisible: "Coverage action"
+- tapOn: "Coverage action"
+- takeScreenshot: screenshots/detail-02-action-added.png
+
+# Back to the meetings list
+- tapOn: "‹"
+
+# ================= Meetings tab (with meeting) =================
+- tapOn: "Meetings"
+- assertVisible: "Coverage test meeting"
+- takeScreenshot: screenshots/meetings-02-with-meeting.png
+
+# ================= Stats tab =================
+- tapOn: "Stats"
+- assertVisible: "Meetings recorded"
+- takeScreenshot: screenshots/stats-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Upgrade to Pro"
+- assertVisible: "MeetBrief Pro"
+- assertVisible: "free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+- tapOn: "✕"
+- assertVisible: "Profile"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

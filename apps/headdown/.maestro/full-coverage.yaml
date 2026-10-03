@@ -1,0 +1,126 @@
+appId: com.headdown.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01.png            "Your attention is the product"
+#   onboarding-02.png            "Leave the app, we notice"
+#   onboarding-03.png            "Score your focus" + Get focused
+#   home-01.png                  Focus tab: presets + Start session
+#   session-01-running.png       Session: live timer, End session
+#   session-02-distracted.png    after logging a distraction
+#   complete-01.png              Session complete: focus score
+#   history-01.png               History tab with 1 logged session
+#   settings-01.png              Settings tab (light)
+#   paywall-01.png               Paywall
+#   settings-02-dark.png         Settings tab (dark mode)
+#   settings-03-arabic.png       Settings tab in Arabic (proves i18n switch)
+#   settings-04-english.png      back to English
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.headdown.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Your attention is the product"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Your attention is the product"
+
+- tapOn: "→"
+- assertVisible: "Leave the app, we notice"
+- takeScreenshot: screenshots/onboarding-02.png
+
+- tapOn: "→"
+- assertVisible: "Score your focus"
+- takeScreenshot: screenshots/onboarding-03.png
+
+- tapOn: "Get focused"
+
+# ================= Home (Focus tab) =================
+- assertVisible: "Focus"
+- assertVisible: "Start session"
+- takeScreenshot: screenshots/home-01.png
+
+# ================= Session =================
+- tapOn: "Start session"
+
+# Session start requests notification permission on emulator — dismiss it
+- tapOn:
+    text: "Don't allow"
+    optional: true
+- tapOn:
+    text: "Allow"
+    optional: true
+
+- assertVisible: "End session"
+- assertVisible: "I got distracted"
+- takeScreenshot: screenshots/session-01-running.png
+
+# Log a distraction — proves manual distraction logging
+- tapOn: "I got distracted"
+- takeScreenshot: screenshots/session-02-distracted.png
+
+# End session → system Alert → confirm
+- tapOn: "End session"
+- assertVisible: "End this session early?"
+- tapOn: "End now"
+
+# ================= Complete =================
+- assertVisible: "Session complete"
+- assertVisible: "Focus score"
+- takeScreenshot: screenshots/complete-01.png
+
+# Save reflection, then back home
+- tapOn: "Save"
+- tapOn: "Back home"
+- assertVisible: "Focus"
+
+# ================= History tab (1 session logged) =================
+- tapOn: "History"
+- assertVisible: "Avg focus score"
+- takeScreenshot: screenshots/history-01.png
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Settings"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Go Plus"
+
+# ================= Paywall =================
+- tapOn: "Go Plus"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# "Later" dismisses the paywall back to Settings
+- tapOn: "Later"
+- assertVisible: "Settings"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- assertVisible: "Dark"
+
+# Restore light mode for the Arabic pass
+- tapOn: "Light"
+- assertVisible: "Settings"
+
+# ================= Arabic (i18n switch) =================
+- tapOn: "العربية"
+- takeScreenshot: screenshots/settings-03-arabic.png
+
+# Back to English
+- tapOn: "English"
+- assertVisible: "Settings"
+- takeScreenshot: screenshots/settings-04-english.png

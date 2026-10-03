@@ -1,0 +1,104 @@
+appId: com.twopurse.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (11 total):
+#   onboarding-01-fights.png      slide 1: "Money fights, solved gently"
+#   onboarding-02-currency.png    slide 2: currency picker (USD selected)
+#   onboarding-03-moneydate.png   slide 3: "A monthly money date"
+#   envelopes-01.png              Envelopes home: starter envelopes + summary
+#   expense-01-sheet.png          Add-expense bottom sheet
+#   envelopes-02-expense.png      Envelopes home reflecting the $25 expense
+#   envelope-01-edit.png          Edit-envelope sheet: recent spending + rollover
+#   moneydate-01.png              Money date: review + rollover card
+#   profile-01.png                Profile tab (light)
+#   paywall-01.png                Paywall ("TwoPurse Pro")
+#   profile-02-dark.png           Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.twopurse.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "TwoPurse"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01-fights.png
+- assertVisible: "TwoPurse"
+- assertVisible: "Money fights, solved gently"
+
+- tapOn: "Continue"
+- assertVisible: "Currency"
+- tapOn: "USD"
+- takeScreenshot: screenshots/onboarding-02-currency.png
+- tapOn: "Continue"
+
+- assertVisible: "A monthly money date"
+- takeScreenshot: screenshots/onboarding-03-moneydate.png
+- tapOn: "Get started"
+
+# ================= Envelopes home =================
+- assertVisible: "Envelopes"
+- assertVisible: "Groceries"
+- assertVisible: "left to spend"
+- takeScreenshot: screenshots/envelopes-01.png
+
+# ================= Add expense =================
+- tapOn: "Add expense"
+- assertVisible: "Add expense"
+- assertVisible: "Who spent it?"
+- takeScreenshot: screenshots/expense-01-sheet.png
+
+- tapOn:
+    id: "amountInput"
+- inputText: "25"
+- tapOn:
+    id: "saveExpenseBtn"
+
+# Home reflects the new expense
+- assertVisible: "Envelopes"
+- takeScreenshot: screenshots/envelopes-02-expense.png
+
+# ================= Edit envelope =================
+- tapOn: "Groceries"
+- assertVisible: "Edit envelope"
+- assertVisible: "This month\u2019s spending"
+- assertVisible: "Roll leftover into savings"
+- takeScreenshot: screenshots/envelope-01-edit.png
+
+- tapOn: "Save"
+- assertVisible: "Envelopes"
+
+# ================= Money date tab =================
+- tapOn: "Money date"
+- assertVisible: "Reviewing"
+- assertVisible: "Roll over & close month"
+- takeScreenshot: screenshots/moneydate-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Get TwoPurse Pro"
+- assertVisible: "TwoPurse Pro"
+- takeScreenshot: screenshots/paywall-01.png
+
+- tapOn: "Continue with free"
+- assertVisible: "Profile"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

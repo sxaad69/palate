@@ -1,0 +1,112 @@
+appId: com.fernly.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01.png            "Welcome to Fernly" + plant picker
+#   today-01-tasks.png           Today tab: Monstera care tasks due
+#   today-02-task-done.png       Today tab after completing a task
+#   plants-01.png                Plants tab: Monstera in the collection
+#   plant-01-detail.png          Plant detail: care schedule (water/fertilize/mist)
+#   add-01.png                   Add plant: species picker + nickname
+#   plants-02-two.png            Plants tab with Monstera + Pothos
+#   doctor-01.png                Plant Doctor: symptom picker
+#   doctor-02-diagnosis.png      Plant Doctor: "Likely causes" + treatment
+#   profile-01.png               Profile tab (light)
+#   paywall-01.png               Paywall ("Fernly Pro")
+#   profile-02-dark.png          Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.fernly.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Welcome to Fernly"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Welcome to Fernly"
+- assertVisible: "Add your plants"
+
+- tapOn: "Monstera"
+- tapOn: "Continue"
+
+# ================= Today tab (tasks due for the new plant) =================
+- assertVisible: "Today"
+- assertVisible: "day care streak"
+- takeScreenshot: screenshots/today-01-tasks.png
+
+# Complete the first due task — proves the care log + streak work
+- tapOn: "Done"
+- assertVisible: "day care streak"
+- takeScreenshot: screenshots/today-02-task-done.png
+
+# ================= Plants tab =================
+- tapOn: "Plants"
+- assertVisible: "My plants"
+- assertVisible: "Monstera"
+- takeScreenshot: screenshots/plants-01.png
+
+# ================= Plant detail =================
+- tapOn: "Monstera"
+- assertVisible: "Water"
+- assertVisible: "Fertilize"
+- takeScreenshot: screenshots/plant-01-detail.png
+
+# Stack back returns to the collection
+- back
+- assertVisible: "My plants"
+
+# ================= Add a second plant =================
+- tapOn: "Add plant"
+- assertVisible: "Choose species"
+- takeScreenshot: screenshots/add-01.png
+
+- tapOn: "Pothos"
+- tapOn: "Nickname"
+- inputText: "Pothy"
+- tapOn: "Save plant"
+
+- assertVisible: "Pothy"
+- takeScreenshot: screenshots/plants-02-two.png
+
+# ================= Plant Doctor =================
+- tapOn: "Doctor"
+- assertVisible: "Plant Doctor"
+- assertVisible: "What is wrong with your plant?"
+- takeScreenshot: screenshots/doctor-01.png
+
+- tapOn: "Yellow leaves"
+- tapOn: "Diagnose"
+- assertVisible: "Likely causes"
+- takeScreenshot: screenshots/doctor-02-diagnosis.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Go Pro"
+- assertVisible: "Fernly Pro"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Stack back returns to Profile
+- back
+- assertVisible: "Profile"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

@@ -1,0 +1,141 @@
+appId: com.lanceledger.app
+---
+# Full-coverage E2E for LanceLedger: every screen, every major interactive
+# state, screenshot after each significant state change.
+#
+# Screenshot map (14 total):
+#   onboarding-01.png            "Know your number", currency + 25% tax
+#   onboarding-02-tax.png        tax stepper tapped to 30%
+#   today-01-empty.png           Dashboard, no transactions
+#   add-01-expense.png           Add expense form
+#   add-02-filled.png            expense form filled (250, Coffee beans)
+#   add-03-saved.png             "Saved ✓" confirmation
+#   today-02-expense.png         Dashboard with the expense logged
+#   add-04-income.png            Add income form (kind chip switched)
+#   add-05-income-saved.png      income saved confirmation
+#   today-03-both.png            Dashboard with expense + income
+#   clients-01-empty.png         Clients tab, empty state
+#   clients-02-added.png         client "Acme Corp" added
+#   reports-01.png               Reports tab
+#   settings-01.png              Settings tab (light)
+#   paywall-01.png               Paywall
+#   settings-02-dark.png         Settings tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.lanceledger.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Know your number"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Know your number"
+- assertVisible: "What currency do you work in?"
+
+# Tax stepper: 25% -> 30%
+- tapOn: "+"
+- assertVisible: "30%"
+- takeScreenshot: screenshots/onboarding-02-tax.png
+
+- tapOn: "Start tracking"
+
+# ================= Dashboard (empty) =================
+- extendedWaitUntil:
+    visible: "Add expense"
+    timeout: 30000
+- takeScreenshot: screenshots/today-01-empty.png
+- assertVisible: "income"
+- assertVisible: "expenses"
+
+# ================= Add expense =================
+- tapOn: "Add"
+- assertVisible: "Amount"
+- takeScreenshot: screenshots/add-01-expense.png
+
+- tapOn: "0.00"
+- inputText: "250"
+- hideKeyboard
+- tapOn: "Vendor / note"
+- inputText: "Coffee beans"
+- hideKeyboard
+- assertVisible: "Coffee beans"
+- takeScreenshot: screenshots/add-02-filled.png
+
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: "Saved"
+    timeout: 15000
+- takeScreenshot: screenshots/add-03-saved.png
+
+# Saved -> navigates back to Dashboard
+- tapOn: "Today"
+- assertVisible: "Coffee beans"
+- takeScreenshot: screenshots/today-02-expense.png
+
+# ================= Add income =================
+- tapOn: "Add"
+- tapOn: "Add income"
+- assertVisible: "Client name"
+- takeScreenshot: screenshots/add-04-income.png
+
+- tapOn: "0.00"
+- inputText: "1200"
+- hideKeyboard
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: "Saved"
+    timeout: 15000
+- takeScreenshot: screenshots/add-05-income-saved.png
+
+- tapOn: "Today"
+- assertVisible: "Coffee beans"
+- takeScreenshot: screenshots/today-03-both.png
+
+# ================= Clients =================
+- tapOn: "Clients"
+- assertVisible: "No clients yet"
+- takeScreenshot: screenshots/clients-01-empty.png
+
+- tapOn: "+ Add client"
+- tapOn: "Client name"
+- inputText: "Acme Corp"
+- hideKeyboard
+- tapOn: "Save"
+- assertVisible: "Acme Corp"
+- takeScreenshot: screenshots/clients-02-added.png
+
+# ================= Reports =================
+- tapOn: "Reports"
+- assertVisible: "Reports"
+- takeScreenshot: screenshots/reports-01.png
+- assertVisible: "Deductible expenses"
+
+# ================= Settings =================
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Get LanceLedger Plus"
+
+# ================= Paywall =================
+- tapOn: "Get LanceLedger Plus"
+- assertVisible: "Go further with LanceLedger Plus"
+- takeScreenshot: screenshots/paywall-01.png
+- assertVisible: "Weekly"
+
+# Back to Settings
+- back
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- assertVisible: "Dark"

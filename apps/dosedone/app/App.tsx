@@ -15,6 +15,7 @@ import { ProgressScreen } from './screens/Progress';
 import { FamilyScreen } from './screens/Family';
 import { PaywallScreen } from './screens/Paywall';
 import { SettingsScreen } from './screens/Settings';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -120,7 +121,8 @@ function Root() {
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
       <LocaleProvider>
         <MedsProvider>
           <StatusBar style="auto" />
@@ -128,5 +130,6 @@ export default function App() {
         </MedsProvider>
       </LocaleProvider>
     </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

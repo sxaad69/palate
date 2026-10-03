@@ -1,0 +1,118 @@
+appId: com.salahmate.app
+---
+# Full-coverage E2E for SalahMate: every screen, every major interactive
+# state, screenshot after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01.png        "Your day, anchored in prayer"
+#   today-01.png             Today tab: next prayer + prayer list
+#   today-02-done.png        Fajr marked done, score updated
+#   habits-01-empty.png      Habits tab, empty state
+#   habits-02-add.png        add-habit form
+#   habits-03-added.png      Habits tab with the new habit
+#   dhikr-01.png             Dhikr counter, fresh
+#   dhikr-02-counted.png     Dhikr counter after taps
+#   progress-01.png          Progress tab (streak, score)
+#   settings-01.png          Settings tab (light)
+#   paywall-01.png           Paywall
+#   settings-02-dark.png     Settings tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.salahmate.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Your day, anchored in prayer"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Your day, anchored in prayer"
+- assertVisible: "Begin"
+
+# Skip device location (falls back to Riyadh); avoids the system permission dialog
+- tapOn:
+    text: "Use my location for prayer times"
+    optional: true
+- tapOn: "Begin"
+
+# Dismiss the Android location permission dialog if it still appears
+- tapOn:
+    text: "Don't allow"
+    optional: true
+- tapOn:
+    text: "While using the app"
+    optional: true
+
+# ================= Today tab =================
+- extendedWaitUntil:
+    visible: "Next prayer"
+    timeout: 60000
+- takeScreenshot: screenshots/today-01.png
+- assertVisible: "Today's prayers"
+
+# Mark Fajr done (first prayer row; the habits hint below also mentions Fajr,
+# but the prayer list renders first in the hierarchy)
+- tapOn: "Fajr"
+- assertVisible: "Today's score"
+- takeScreenshot: screenshots/today-02-done.png
+
+# ================= Habits tab =================
+- tapOn: "Habits"
+- assertVisible: "No habits yet"
+- takeScreenshot: screenshots/habits-01-empty.png
+
+- tapOn: "+ Add habit"
+- assertVisible: "Habit (e.g. Read 2 pages)"
+- takeScreenshot: screenshots/habits-02-add.png
+
+- tapOn: "Habit (e.g. Read 2 pages)"
+- inputText: "Read one page"
+- hideKeyboard
+- tapOn: "Save habit"
+- assertVisible: "Read one page"
+- takeScreenshot: screenshots/habits-03-added.png
+
+# ================= Dhikr tab =================
+- tapOn: "Dhikr"
+- assertVisible: "Tap to count"
+- takeScreenshot: screenshots/dhikr-01.png
+
+- tapOn: "Tap to count"
+- tapOn: "Tap to count"
+- tapOn: "Tap to count"
+- assertVisible: "Reset"
+- takeScreenshot: screenshots/dhikr-02-counted.png
+
+# ================= Progress tab =================
+- tapOn: "Progress"
+- assertVisible: "Perfect days in a row"
+- takeScreenshot: screenshots/progress-01.png
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Get SalahMate Plus"
+
+# ================= Paywall =================
+- tapOn: "Get SalahMate Plus"
+- assertVisible: "SalahMate Plus"
+- takeScreenshot: screenshots/paywall-01.png
+- assertVisible: "Start free trial"
+
+# Back to Settings
+- back
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- assertVisible: "Dark"

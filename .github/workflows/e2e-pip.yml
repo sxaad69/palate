@@ -113,7 +113,7 @@ jobs:
             cd "$GITHUB_WORKSPACE/apps/pip"
             mkdir -p screenshots
             adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk
-            maestro test .maestro/smoke.yaml
+            maestro test .maestro/full-coverage.yaml
 
       - name: Upload screenshots
         if: always()

@@ -1,0 +1,117 @@
+appId: com.keepsfresh.pantry
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (13 total):
+#   onboarding-01-waste.png       slide 1: "Nothing goes to waste"
+#   onboarding-02-soon.png        slide 2: "Use soon, not too late"
+#   onboarding-03-savings.png     slide 3: "Watch your savings grow"
+#   pantry-01-empty.png           Pantry tab, empty state
+#   add-01-form.png               Add item form (name/category/location/expiry)
+#   add-02-suggestions.png        Smart food-DB suggestions after typing "Milk"
+#   pantry-02-with-item.png       Pantry with Milk under "This week"
+#   pantry-03-used-up.png         Pantry empty again after "Used up"
+#   alerts-01-empty.png           Alerts tab, nothing expiring soon
+#   stats-01.png                  Stats tab: 1 item saved
+#   profile-01.png                Profile tab (light)
+#   paywall-01.png                Paywall (weekly plan + trial)
+#   paywall-02-restore.png        Paywall after "Restore purchase" (no-op on emulator)
+#   profile-02-dark.png           Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.keepsfresh.pantry"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "KeepsFresh"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01-waste.png
+- assertVisible: "KeepsFresh"
+- assertVisible: "Nothing goes to waste"
+
+- tapOn: "Continue"
+- assertVisible: "Use soon, not too late"
+- takeScreenshot: screenshots/onboarding-02-soon.png
+
+- tapOn: "Continue"
+- assertVisible: "Watch your savings grow"
+- takeScreenshot: screenshots/onboarding-03-savings.png
+
+- tapOn: "Get started"
+
+# ================= Pantry tab (empty) =================
+- assertVisible: "Your pantry is empty"
+- takeScreenshot: screenshots/pantry-01-empty.png
+
+# ================= Add item (smart default from food DB) =================
+- tapOn: "Add item"
+- assertVisible: "Add item"
+- assertVisible: "Item name"
+- takeScreenshot: screenshots/add-01-form.png
+
+- tapOn: "e.g. Milk"
+- inputText: "Milk"
+# Food-DB suggestions appear below the input — proves the smart-default lookup
+- assertVisible: "Milk"
+- takeScreenshot: screenshots/add-02-suggestions.png
+
+- tapOn: "Save"
+
+# ================= Pantry tab (with item) =================
+- assertVisible: "Milk"
+- assertVisible: "This week"
+- takeScreenshot: screenshots/pantry-02-with-item.png
+
+# Mark the item used up — it leaves the pantry and feeds the stats counter
+- tapOn: "Used up"
+- assertVisible: "Your pantry is empty"
+- takeScreenshot: screenshots/pantry-03-used-up.png
+
+# ================= Alerts tab =================
+- tapOn: "Alerts"
+- assertVisible: "Use soon"
+- assertVisible: "Nothing expiring soon. Nicely stocked."
+- takeScreenshot: screenshots/alerts-01-empty.png
+
+# ================= Stats tab =================
+- tapOn: "Stats"
+- assertVisible: "Waste saved"
+- assertVisible: "Money saved"
+- assertVisible: "items saved"
+- takeScreenshot: screenshots/stats-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- assertVisible: "Language"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Go Pro — unlimited items"
+- assertVisible: "Never throw food away again"
+- assertVisible: "Weekly plan · free trial · cancel anytime"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Restore is a safe no-op on the emulator (no Play Store) — paywall stays put
+- tapOn: "Restore purchase"
+- assertVisible: "Never throw food away again"
+- takeScreenshot: screenshots/paywall-02-restore.png
+
+- tapOn: "Cancel"
+- assertVisible: "Profile"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

@@ -1,0 +1,116 @@
+appId: com.dosedone.app
+---
+# Full-coverage E2E for DoseDone: every screen, every major interactive
+# state, screenshot after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01.png        "Never miss a dose again"
+#   today-01-empty.png       Today's doses, no medicines
+#   meds-01-list.png         Medicines tab, empty list
+#   medform-01.png           Add medicine form, empty
+#   medform-02-filled.png    form filled (Vitamin D, 1 pill)
+#   meds-02-list.png         Medicines tab with Vitamin D
+#   today-02-med.png         Today's doses with Vitamin D + TAKE
+#   today-03-taken.png       dose marked "Taken"
+#   progress-01.png          Progress tab (adherence, streak)
+#   family-01.png            Family tab (weekly report)
+#   settings-01.png          Settings tab (light)
+#   paywall-01.png           Paywall
+#   settings-02-dark.png     Settings tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.dosedone.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Never miss a dose again"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Never miss a dose again"
+
+# Skip the notification-permission step; enable later from Settings if needed
+- tapOn: "Skip for now"
+
+# ================= Today tab (empty) =================
+- extendedWaitUntil:
+    visible: "Today's doses"
+    timeout: 30000
+- takeScreenshot: screenshots/today-01-empty.png
+- assertVisible: "No medicines yet"
+
+# ================= Medicines tab =================
+- tapOn: "Medicines"
+- assertVisible: "Add medicine"
+- takeScreenshot: screenshots/meds-01-list.png
+
+# ================= Add medicine form =================
+- tapOn: "+ Add medicine"
+- assertVisible: "Medicine name"
+- takeScreenshot: screenshots/medform-01.png
+
+- tapOn: "Medicine name"
+- inputText: "Vitamin D"
+- tapOn: "Dose (e.g. 1 pill, 10mg)"
+- inputText: "1 pill"
+- hideKeyboard
+- takeScreenshot: screenshots/medform-02-filled.png
+
+- tapOn: "Save medicine"
+
+# Back on the Medicines list with the new med
+- assertVisible: "Vitamin D"
+- takeScreenshot: screenshots/meds-02-list.png
+
+# ================= Today tab (with med) =================
+- tapOn: "Today"
+- assertVisible: "Vitamin D"
+- takeScreenshot: screenshots/today-02-med.png
+- assertVisible: "TAKE"
+
+# ================= Take the dose =================
+- tapOn: "TAKE"
+- assertVisible: "Taken"
+- takeScreenshot: screenshots/today-03-taken.png
+- assertVisible: "Undo"
+
+# ================= Progress tab =================
+- tapOn: "Progress"
+- assertVisible: "of doses taken"
+- takeScreenshot: screenshots/progress-01.png
+- assertVisible: "day streak"
+
+# ================= Family tab =================
+- tapOn: "Family"
+- assertVisible: "For family"
+- takeScreenshot: screenshots/family-01.png
+- assertVisible: "doses taken this week"
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Get DoseDone Plus"
+
+# ================= Paywall =================
+- tapOn: "Get DoseDone Plus"
+- assertVisible: "DoseDone Plus"
+- takeScreenshot: screenshots/paywall-01.png
+- assertVisible: "Weekly"
+
+# Back to Settings
+- back
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- assertVisible: "Dark"

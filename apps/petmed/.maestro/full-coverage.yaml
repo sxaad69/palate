@@ -1,0 +1,120 @@
+appId: com.pawscript.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change.
+#
+# Screenshot map (14 total):
+#   onboarding-01-slide1.png      "One calm place for pet meds"
+#   onboarding-02-slide2.png      "Doses, right on time"
+#   onboarding-03-reminders.png   reminder step: Enable reminders / Get started
+#   pets-01-empty.png             Pets tab: "No pets yet"
+#   pets-02-add-modal.png         Add pet modal, name entered
+#   pets-03-with-pet.png          Pets tab with Buddy added
+#   doses-01-empty.png            Doses tab: "All caught up" (no meds)
+#   records-01.png                Records tab: vaccinations + vet visits
+#   stats-01-empty.png            Stats tab: "No medications yet"
+#   profile-01.png                Profile tab (light)
+#   paywall-01.png                Paywall
+#   profile-02-dark.png           Profile tab (dark mode)
+#   profile-03-arabic.png         Profile tab in Arabic (proves i18n switch)
+#   profile-04-english.png        back to English
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.pawscript.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "One calm place for pet meds"
+    timeout: 180000
+
+# ================= Onboarding (3 slides + reminder step) =================
+- takeScreenshot: screenshots/onboarding-01-slide1.png
+- assertVisible: "One calm place for pet meds"
+
+- tapOn: "Continue"
+- assertVisible: "Doses, right on time"
+- takeScreenshot: screenshots/onboarding-02-slide2.png
+
+- tapOn: "Continue"
+- assertVisible: "Walk into the vet prepared"
+- assertVisible: "Enable reminders"
+- assertVisible: "Get started"
+- takeScreenshot: screenshots/onboarding-03-reminders.png
+
+# "Get started" skips the notification permission dialog on emulator
+- tapOn: "Get started"
+
+# ================= Pets tab (empty) =================
+- assertVisible: "No pets yet"
+- takeScreenshot: screenshots/pets-01-empty.png
+
+# ================= Add pet =================
+- tapOn: "Add pet"
+- assertVisible: "Name"
+
+- tapOn:
+    id: "pet-name-input"
+- inputText: "Buddy"
+- hideKeyboard
+- takeScreenshot: screenshots/pets-02-add-modal.png
+
+# Save enables once a name is entered — proves the form validation
+- tapOn: "Save"
+- assertVisible: "Buddy"
+- takeScreenshot: screenshots/pets-03-with-pet.png
+
+# ================= Doses tab (empty — no meds yet) =================
+- tapOn: "Doses"
+- assertVisible: "All caught up"
+- takeScreenshot: screenshots/doses-01-empty.png
+
+# ================= Records tab =================
+- tapOn: "Records"
+- assertVisible: "Records"
+- takeScreenshot: screenshots/records-01.png
+
+# ================= Stats tab (empty) =================
+- tapOn: "Stats"
+- assertVisible: "No medications yet"
+- takeScreenshot: screenshots/stats-01-empty.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "Unlock Pro"
+
+# ================= Paywall =================
+- tapOn: "Unlock Pro"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Close dismisses the paywall back to Profile
+- tapOn: "Close"
+- assertVisible: "Appearance"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png
+- assertVisible: "Dark"
+
+# Restore light mode for the Arabic pass
+- tapOn: "Light"
+- assertVisible: "Appearance"
+
+# ================= Arabic (i18n switch) =================
+- tapOn: "العربية"
+- takeScreenshot: screenshots/profile-03-arabic.png
+
+# Back to English
+- tapOn: "English"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-04-english.png

@@ -1,0 +1,119 @@
+appId: com.scrubdeck.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change.
+#
+# Screenshot map (13 total):
+#   onboarding-01.png            "Know it cold for the exam"
+#   onboarding-02.png            "Spaced repetition does the scheduling"
+#   onboarding-03.png            "A few minutes a day" + Start studying
+#   home-01.png                  Today tab: due cards, Start session
+#   study-01-front.png           Study: card front, Tap to reveal
+#   study-02-back.png            Study: card back + Again/Hard/Good/Easy
+#   study-03-graded.png          next card after grading Good
+#   decks-01.png                 Decks tab
+#   decks-02-detail.png          deck detail: cards + Add card
+#   progress-01.png              Progress tab: stats + mastery bars
+#   settings-01.png              Settings tab (light)
+#   paywall-01.png               Paywall
+#   settings-02-dark.png         Settings tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.scrubdeck.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Know it cold for the exam"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Know it cold for the exam"
+
+- tapOn: "→"
+- assertVisible: "Spaced repetition does the scheduling"
+- takeScreenshot: screenshots/onboarding-02.png
+
+- tapOn: "→"
+- assertVisible: "A few minutes a day"
+- takeScreenshot: screenshots/onboarding-03.png
+
+- tapOn: "Start studying"
+
+# ================= Home (Today tab) =================
+# Seed cards are due immediately (nextDue: now), so Start session renders
+- assertVisible: "Today"
+- assertVisible: "cards due"
+- assertVisible: "Start session"
+- takeScreenshot: screenshots/home-01.png
+
+# ================= Study session =================
+- tapOn: "Start session"
+- assertVisible: "Tap to reveal"
+- takeScreenshot: screenshots/study-01-front.png
+
+- tapOn: "Tap to reveal"
+- assertVisible: "Again"
+- assertVisible: "Good"
+- takeScreenshot: screenshots/study-02-back.png
+
+# Grade Good — proves SM-2 scheduling advances to the next card
+- tapOn: "Good"
+- assertVisible: "Tap to reveal"
+- takeScreenshot: screenshots/study-03-graded.png
+
+# Close study (X) — returns to Home
+- tapOn: "✕"
+- assertVisible: "Today"
+
+# ================= Decks tab =================
+- tapOn: "Decks"
+- assertVisible: "Fundamentals"
+- takeScreenshot: screenshots/decks-01.png
+
+- tapOn: "Fundamentals"
+- assertVisible: "Add card"
+- takeScreenshot: screenshots/decks-02-detail.png
+
+# Back to deck list
+- tapOn: "← Decks"
+- assertVisible: "Fundamentals"
+
+# ================= Progress tab =================
+- tapOn: "Progress"
+- assertVisible: "Total reviews"
+- assertVisible: "day streak"
+- assertVisible: "Mastery by deck"
+- takeScreenshot: screenshots/progress-01.png
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Settings"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Go Plus"
+
+# ================= Paywall =================
+- tapOn: "Go Plus"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# "Later" dismisses the paywall back to Settings
+- tapOn: "Later"
+- assertVisible: "Settings"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- assertVisible: "Dark"
+
+# Restore light mode
+- tapOn: "Light"
+- assertVisible: "Settings"

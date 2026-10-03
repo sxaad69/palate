@@ -1,0 +1,124 @@
+appId: com.hulm.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. Assertions prove functionality;
+# screenshots are the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01-hero.png        step 1: "Dreams are for reflecting"
+#   onboarding-02-symbols.png     step 2: "Symbols, not verdicts"
+#   onboarding-03-disclaimer.png  step 3: "Not a religious ruling" + disclaimer
+#   journal-01-empty.png          Journal tab, no dreams
+#   dreamform-01.png              Dream form: inputs + mood selector
+#   journal-02-with-dream.png     Journal tab with 1 saved dream
+#   dreamdetail-01.png            Dream detail: narrative, reflect, symbols
+#   symbols-01.png                Symbols tab: lexicon list
+#   symboldetail-01.png           Symbol detail
+#   insights-01.png               Insights tab: stats (dreams logged, streak)
+#   settings-01.png               Settings tab (light)
+#   settings-02-dark.png          Settings tab in dark mode
+#   paywall-01.png                Paywall: Hulm Plus
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.hulm.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Dreams are for reflecting"
+    timeout: 180000
+
+# ================= Onboarding (3 steps) =================
+- takeScreenshot: screenshots/onboarding-01-hero.png
+- assertVisible: "Dreams are for reflecting"
+
+- tapOn: "→"
+- takeScreenshot: screenshots/onboarding-02-symbols.png
+- assertVisible: "Symbols, not verdicts"
+
+- tapOn: "→"
+- takeScreenshot: screenshots/onboarding-03-disclaimer.png
+- assertVisible: "Not a religious ruling"
+
+- tapOn: "Begin journaling"
+
+# ================= Journal tab (empty) =================
+- extendedWaitUntil:
+    visible: "No dreams yet"
+    timeout: 15000
+- takeScreenshot: screenshots/journal-01-empty.png
+- assertVisible: "Log a dream"
+
+# ================= Dream form =================
+- tapOn: "Log a dream"
+- assertVisible: "How did you wake up feeling?"
+- takeScreenshot: screenshots/dreamform-01.png
+
+# Fill title + narrative, pick a mood, save. Proves the journal write path.
+- tapOn: "e.g. The flood and the staircase"
+- inputText: "The flood and the staircase"
+- tapOn: "Write everything you remember…"
+- inputText: "I was flying over dark water and saw a snake."
+- tapOn: "Peaceful"
+- tapOn: "Save dream"
+
+# ================= Journal tab (with dream) =================
+- extendedWaitUntil:
+    visible: "The flood and the staircase"
+    timeout: 15000
+- takeScreenshot: screenshots/journal-02-with-dream.png
+- assertNotVisible: "No dreams yet"
+
+# ================= Dream detail =================
+- tapOn: "The flood and the staircase"
+- assertVisible: "Reflect"
+- takeScreenshot: screenshots/dreamdetail-01.png
+- assertVisible: "Delete dream"
+
+# Back to Journal
+- tapOn: "‹ Journal"
+
+# ================= Symbols tab =================
+- tapOn: "Symbols"
+- assertVisible: "Search symbols…"
+- takeScreenshot: screenshots/symbols-01.png
+
+# Open the first symbol → symbol detail
+- tapOn: "Water"
+- takeScreenshot: screenshots/symboldetail-01.png
+- assertVisible: "Water"
+- tapOn: "‹ Symbols"
+
+# ================= Insights tab =================
+- tapOn: "Insights"
+- assertVisible: "Dreams logged"
+- takeScreenshot: screenshots/insights-01.png
+- assertVisible: "Waking moods"
+- assertVisible: "Peaceful"
+
+# ================= Settings tab =================
+- tapOn: "Settings"
+- assertVisible: "Language"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/settings-01.png
+- assertVisible: "Hulm 1.0"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/settings-02-dark.png
+- tapOn: "Light"
+
+# ================= Paywall (via Insights upgrade) =================
+- tapOn: "Insights"
+- tapOn: "Go Plus"
+- assertVisible: "Hulm Plus"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+- tapOn: "Later"

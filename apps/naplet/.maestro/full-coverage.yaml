@@ -1,0 +1,117 @@
+appId: com.naplet.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (12 total):
+#   onboarding-01.png            "Welcome to Naplet" + baby name input
+#   today-01-empty.png           Today tab, "Nothing logged yet today."
+#   log-01.png                   Log tab: sleep / feed / diaper big buttons
+#   log-02-sleeping.png          Sleep timer running ("Sleeping…")
+#   feed-01.png                  Feed editor (type chips)
+#   feed-02-bottle.png           Feed editor: Bottle + 120ml entered
+#   diaper-01.png                Diaper editor: Dirty selected
+#   today-02-events.png          Today timeline with sleep/feed/diaper events
+#   stats-01.png                 Stats tab with a day of data
+#   profile-01.png               Profile tab (light)
+#   paywall-01.png               Paywall ("Naplet Pro", free trial)
+#   profile-02-dark.png          Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    appId: "com.naplet.app"
+    clearState: true
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Welcome to Naplet"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01.png
+- assertVisible: "Welcome to Naplet"
+- assertVisible: "Baby's name"
+
+# Personalize: the name flows into the Today header
+- tapOn: "Baby's name"
+- inputText: "Layla"
+- tapOn: "Continue"
+
+# ================= Today tab (empty) =================
+- assertVisible: "Today"
+- assertVisible: "Nothing logged yet today."
+- takeScreenshot: screenshots/today-01-empty.png
+
+# ================= Log tab =================
+- tapOn: "Log"
+- assertVisible: "Start sleep"
+- takeScreenshot: screenshots/log-01.png
+
+# Start a sleep session — button flips to "End sleep", timer shows
+- tapOn: "Start sleep"
+- assertVisible: "Sleeping…"
+- assertVisible: "End sleep"
+- takeScreenshot: screenshots/log-02-sleeping.png
+
+# End the sleep right away — proves the sleep timer round-trips
+- tapOn: "End sleep"
+- assertVisible: "Start sleep"
+
+# ================= Feed editor =================
+- tapOn: "Feed"
+- assertVisible: "Feed"
+- takeScreenshot: screenshots/feed-01.png
+
+- tapOn: "Bottle"
+- tapOn: "Amount (ml)"
+- inputText: "120"
+- takeScreenshot: screenshots/feed-02-bottle.png
+- tapOn: "Save"
+
+# ================= Diaper editor =================
+- tapOn: "Diaper"
+- assertVisible: "Diaper"
+- tapOn: "Dirty"
+- takeScreenshot: screenshots/diaper-01.png
+- tapOn: "Save"
+
+# ================= Today tab (with events) =================
+- tapOn: "Today"
+- assertVisible: "Timeline"
+- takeScreenshot: screenshots/today-02-events.png
+
+# ================= Stats tab =================
+- tapOn: "Stats"
+- assertVisible: "Stats"
+- assertVisible: "Feeds today"
+- takeScreenshot: screenshots/stats-01.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Go Pro"
+- assertVisible: "Naplet Pro"
+- assertVisible: "Start free trial"
+- takeScreenshot: screenshots/paywall-01.png
+
+# Restore is safe: no Play Store on emulator, always reports nothing found
+- tapOn: "Restore purchase"
+- assertVisible: "No previous purchase found."
+
+# Stack back returns to Profile
+- back
+- assertVisible: "Profile"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

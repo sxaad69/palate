@@ -6,7 +6,7 @@ import {
   type Theme as NavigationTheme,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from './navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider, useTheme } from './theme/ThemeProvider';
@@ -18,6 +18,7 @@ import { HistoryScreen } from './screens/HistoryScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { PaywallScreen } from './screens/PaywallScreen';
 import type { RootTabParamList } from './navigation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // One stack per tab so each tab keeps its own navigation history.
 // Built once at module level — never inside render, or stacks remount.
@@ -133,11 +134,13 @@ function Root() {
 
 export default function App() {
   return (
+    <SafeAreaProvider>
     <ThemeProvider>
       <AppProvider>
         <ThemedStatusBar />
         <Root />
       </AppProvider>
     </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
