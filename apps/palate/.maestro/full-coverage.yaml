@@ -24,6 +24,12 @@ appId: com.palate.app
 
 # Fresh install state on every run
 - launchApp:
+- tapOn:
+    text: "Wait"
+    optional: true
+- tapOn:
+    text: "Close app"
+    optional: true
     clearState: true
 
 # Cold boot on software-rendered emulator is slow and variable — allow 3 min
