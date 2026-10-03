@@ -1,0 +1,148 @@
+appId: com.dryspell.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (17 total):
+#   onboarding-01-habit.png            onboarding step 0, default "Alcohol"
+#   onboarding-02-smoking-selected.png "Smoking" chip selected
+#   onboarding-03-spend.png            onboarding step 1, spend input
+#   onboarding-04-date.png             onboarding step 2, default "Today"
+#   onboarding-04-date-yesterday.png   onboarding step 2, "Yesterday" state
+#   today-01-fresh.png                 Today tab, day 0, pledge not done
+#   today-02-pledged.png               Today tab after daily pledge
+#   sos-01-breathing.png               SOS screen, breathing pacer
+#   sos-02-rode-it-out.png             SOS after "Say your pledge out loud"
+#   timeline-01.png                    Timeline tab (recovery milestones)
+#   journal-01-empty.png               Journal tab, empty state
+#   journal-02-entry.png               Journal tab with 1 saved entry
+#   badges-01.png                      Badges tab (achievements grid)
+#   profile-01.png                     Profile tab (light)
+#   paywall-01.png                     Paywall
+#   paywall-02-restore.png             Paywall after "Restore purchase"
+#   profile-02-dark.png                Profile tab (dark mode)
+
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "A fresh start, one day at a time"
+    timeout: 180000
+
+# ================= Onboarding: habit =================
+- takeScreenshot: screenshots/onboarding-01-habit.png
+- assertVisible: "What are you stepping back from?"
+- assertVisible: "Alcohol"
+- assertVisible: "Smoking"
+- assertVisible: "Something else"
+
+# Capture a non-default selection state
+- tapOn: "Smoking"
+- takeScreenshot: screenshots/onboarding-02-smoking-selected.png
+
+- tapOn: "Continue"
+
+# ================= Onboarding: daily spend =================
+- assertVisible: "how much did it cost you per day"
+- takeScreenshot: screenshots/onboarding-03-spend.png
+# The h1 and the TextInput share the same accessibility string — index 1
+# targets the input field (h1 comes first in the hierarchy)
+- tapOn:
+    text: "Roughly how much did it cost you per day?"
+    index: 1
+- inputText: "10"
+
+- tapOn: "Continue"
+
+# ================= Onboarding: start date =================
+- assertVisible: "When was your last day?"
+- takeScreenshot: screenshots/onboarding-04-date.png
+- tapOn: "−"
+- assertVisible: "Yesterday"
+- takeScreenshot: screenshots/onboarding-04-date-yesterday.png
+
+- tapOn: "Start my count"
+
+# ================= Today tab (fresh) =================
+- extendedWaitUntil:
+    visible: "days clear"
+    timeout: 15000
+- takeScreenshot: screenshots/today-01-fresh.png
+- assertVisible: "saved so far"
+- assertVisible: "Daily pledge"
+- assertVisible: "Next milestone"
+
+# Daily pledge
+- tapOn: "Daily pledge"
+- assertVisible: "Pledged for today"
+- takeScreenshot: screenshots/today-02-pledged.png
+
+# ================= SOS =================
+- tapOn: "Craving? Tap for SOS"
+- assertVisible: "Ride it out"
+- takeScreenshot: screenshots/sos-01-breathing.png
+- assertVisible: "Your reasons"
+- assertVisible: "Do one small thing"
+
+- tapOn: "Say your pledge out loud"
+- assertVisible: "You rode it out. That's a win."
+- takeScreenshot: screenshots/sos-02-rode-it-out.png
+
+- tapOn: "Close"
+
+# ================= Timeline tab =================
+- tapOn: "Timeline"
+- assertVisible: "Recovery timeline"
+- takeScreenshot: screenshots/timeline-01.png
+- assertVisible: "24 hours clear"
+
+# ================= Journal tab =================
+- tapOn: "Journal"
+- assertVisible: "How are you feeling today?"
+- takeScreenshot: screenshots/journal-01-empty.png
+- assertVisible: "No entries yet. Writing helps"
+
+- tapOn: "How are you feeling today?"
+- inputText: "Day one. Feeling strong."
+- tapOn: "Save entry"
+- assertVisible: "Day one. Feeling strong."
+- takeScreenshot: screenshots/journal-02-entry.png
+
+# ================= Badges tab =================
+- tapOn: "Badges"
+- assertVisible: "Achievements"
+- takeScreenshot: screenshots/badges-01.png
+- assertVisible: "Unlocked"
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Language"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "Appearance"
+- assertVisible: "Get DrySpell Plus"
+
+# ================= Paywall =================
+- tapOn: "Get DrySpell Plus"
+- assertVisible: "Go further with DrySpell Plus"
+- takeScreenshot: screenshots/paywall-01.png
+- assertVisible: "Start free trial"
+
+# Restore is safe: no Play Store on emulator, always reports nothing found
+- tapOn: "Restore purchase"
+- extendedWaitUntil:
+    visible: "none found"
+    timeout: 15000
+- takeScreenshot: screenshots/paywall-02-restore.png
+
+# Back to Profile
+- tapOn: "Maybe later"
+
+# ================= Dark mode =================
+- extendedWaitUntil:
+    visible: "Appearance"
+    timeout: 15000
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png

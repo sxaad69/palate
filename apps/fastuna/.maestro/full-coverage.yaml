@@ -1,0 +1,138 @@
+appId: com.fastuna.app
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01-hero.png          onboarding, no goal selected
+#   onboarding-02-goal.png          "Lose weight" goal selected
+#   onboarding-03-ramadan.png       Ramadan wedge preset selected
+#   timer-01-idle.png               Timer tab idle (15:00:00, Start fasting)
+#   timer-02-active.png             Active fast: countdown ring + stages
+#   timer-03-adjusted.png           After -30m adjust (proves adjust works)
+#   presets-01.png                  Preset browser with wedge badges
+#   history-01-empty.png            Stats at zero, "No fasts yet"
+#   history-02-with-fast.png        After ending fast: 1 entry, "Ended early"
+#   profile-01.png                  Profile tab (light): streak, achievements
+#   paywall-01.png                  Fastuna Pro paywall
+#   paywall-02-restore.png          Paywall after "Restore purchase"
+#   profile-02-dark.png             Profile tab (dark mode)
+#   profile-03-arabic.png           Profile tab in Arabic (RTL)
+
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Welcome to Fastuna"
+    timeout: 180000
+
+# ================= Onboarding =================
+- takeScreenshot: screenshots/onboarding-01-hero.png
+- assertVisible: "Welcome to Fastuna"
+- assertVisible: "Fast on your schedule"
+- assertVisible: "What is your main goal?"
+
+# Select a goal — Continue enables only after this
+- tapOn: "Lose weight"
+- takeScreenshot: screenshots/onboarding-02-goal.png
+
+# Scroll to the wedge presets and pick Ramadan (the differentiator)
+- scroll:
+    direction: DOWN
+- tapOn: "Ramadan"
+- takeScreenshot: screenshots/onboarding-03-ramadan.png
+- assertVisible: "Dawn-to-sunset fasting"
+
+# Scroll to Continue and finish onboarding
+- scroll:
+    direction: DOWN
+- tapOn: "Continue"
+
+# ================= Timer tab (idle) =================
+# Ramadan preset = 15h, so idle shows 15:00:00
+- extendedWaitUntil:
+    visible: "Start fasting"
+    timeout: 15000
+- takeScreenshot: screenshots/timer-01-idle.png
+- assertVisible: "15:00:00"
+- assertVisible: "Fasting window"
+
+# ================= Timer tab (active fast) =================
+- tapOn: "Start fasting"
+- extendedWaitUntil:
+    visible: "End fast"
+    timeout: 15000
+- takeScreenshot: screenshots/timer-02-active.png
+- assertVisible: "Fasting for"
+- assertVisible: "Current stage"
+- assertVisible: "What's happening"
+- assertVisible: "Settling in"
+
+# Adjust start time back 30m — proves the adjust buttons work
+- tapOn: "-30m"
+- takeScreenshot: screenshots/timer-03-adjusted.png
+- assertVisible: "End fast"
+
+# ================= Presets tab =================
+- tapOn: "Presets"
+- assertVisible: "Ramadan"
+- assertVisible: "Night shift"
+- assertVisible: "Gentle"
+- takeScreenshot: screenshots/presets-01.png
+
+# ================= History tab (empty) =================
+- tapOn: "History"
+- assertVisible: "Total fasts"
+- assertVisible: "No fasts yet"
+- takeScreenshot: screenshots/history-01-empty.png
+
+# ================= End fast → History (with data) =================
+- tapOn: "Timer"
+- tapOn: "End fast"
+- assertVisible: "Start fasting"
+
+- tapOn: "History"
+- extendedWaitUntil:
+    visible: "Ended early"
+    timeout: 15000
+- takeScreenshot: screenshots/history-02-with-fast.png
+- assertVisible: "Ramadan"
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Day streak"
+- assertVisible: "Achievements"
+- assertVisible: "First fast"
+- assertVisible: "Language"
+- takeScreenshot: screenshots/profile-01.png
+- assertVisible: "Go Pro"
+
+# ================= Paywall =================
+- tapOn: "Go Pro"
+- assertVisible: "Fastuna Pro"
+- takeScreenshot: screenshots/paywall-01.png
+- assertVisible: "Start free trial"
+- assertVisible: "Unlimited fasts"
+
+# Restore is safe: no Play Store on emulator, always reports nothing found
+- tapOn: "Restore purchase"
+- assertVisible: "No previous purchase found."
+- takeScreenshot: screenshots/paywall-02-restore.png
+
+# Back to Profile
+- back
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-02-dark.png
+- assertVisible: "Day streak"
+
+# ================= Arabic (RTL) =================
+- tapOn: "ع"
+- extendedWaitUntil:
+    visible: "الملف"
+    timeout: 10000
+- takeScreenshot: screenshots/profile-03-arabic.png

@@ -1,0 +1,120 @@
+appId: com.fable.breath
+---
+# Full-coverage E2E: every screen, every major interactive state, screenshot
+# after each significant state change. All smoke.yaml assertions are kept
+# (they prove functionality); this file adds the visual proof on top.
+#
+# Screenshot map (14 total):
+#   onboarding-01-slide.png       slide 1: "Stories you breathe through"
+#   onboarding-02-slide.png       slide 2: "Chapters, not exercises"
+#   onboarding-03-slide.png       slide 3: "Your storyteller" + Begin
+#   library-01.png                Library tab, 4 arcs, no favorites
+#   library-02-favorited.png      Arrival starred (proves favorite toggle)
+#   player-01-idle.png            Player modal, session idle, "Begin"
+#   player-02-running.png         Session running, breath ring animating
+#   player-03-density-silent.png  Guidance density switched to Silent
+#   player-04-paused.png          Session paused ("Resume" visible)
+#   progress-01-empty.png         Progress tab, empty state
+#   profile-01.png                Profile tab (light, English)
+#   paywall-01.png                Paywall (perks + billing spinner)
+#   profile-02-arabic.png         Profile in Arabic (proves i18n switch)
+#   profile-03-dark.png           Profile in dark mode
+
+# Fresh install state on every run
+- launchApp:
+    clearState: true
+
+# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+- extendedWaitUntil:
+    visible: "Fable"
+    timeout: 180000
+
+# ================= Onboarding (3 slides) =================
+- takeScreenshot: screenshots/onboarding-01-slide.png
+- assertVisible: "Fable"
+- assertVisible: "Stories you breathe through"
+
+- tapOn: "Continue"
+- assertVisible: "Chapters, not exercises"
+- takeScreenshot: screenshots/onboarding-02-slide.png
+
+- tapOn: "Continue"
+- assertVisible: "Your storyteller"
+- takeScreenshot: screenshots/onboarding-03-slide.png
+
+- tapOn: "Begin"
+
+# ================= Library tab =================
+- assertVisible: "Library"
+- assertVisible: "The Tide House"
+- assertVisible: "Ember & Pine"
+- takeScreenshot: screenshots/library-01.png
+
+# Favorite toggle: star the first session (Arrival), prove the state flip
+- tapOn: "☆"
+- assertVisible: "★"
+- takeScreenshot: screenshots/library-02-favorited.png
+
+# ================= Player (session modal) =================
+- tapOn: "Arrival"
+- assertVisible: "Begin"
+- assertVisible: "Chapter 1"
+- takeScreenshot: screenshots/player-01-idle.png
+
+# Start the session — button flips to Pause, breath ring animates
+- tapOn: "Begin"
+- assertVisible: "Pause"
+- assertVisible: "breathe in"
+- takeScreenshot: screenshots/player-02-running.png
+
+# Guidance density is the core differentiator — switch to Silent
+- tapOn: "Silent"
+- takeScreenshot: screenshots/player-03-density-silent.png
+
+# Pause — button flips to Resume, proves pause works
+- tapOn: "Pause"
+- assertVisible: "Resume"
+- takeScreenshot: screenshots/player-04-paused.png
+
+# Close the modal (X) — returns to Library. Session was NOT completed,
+# so nothing is logged and Progress stays empty.
+- tapOn: "close"
+- assertVisible: "Library"
+
+# ================= Progress tab (empty) =================
+- tapOn: "Progress"
+- assertVisible: "day streak"
+- assertVisible: "No sessions yet. Start your first chapter from the library."
+- takeScreenshot: screenshots/progress-01-empty.png
+
+# ================= Profile tab =================
+- tapOn: "Profile"
+- assertVisible: "Appearance"
+- assertVisible: "Voice guidance"
+- assertVisible: "Unlock every story"
+- takeScreenshot: screenshots/profile-01.png
+
+# ================= Paywall =================
+- tapOn: "Unlock every story"
+- assertVisible: "All 12 chapters and counting"
+- assertVisible: "Cancel anytime"
+- takeScreenshot: screenshots/paywall-01.png
+
+# No Play Store on emulator: billing never connects, spinner spins.
+# "Continue" dismisses the paywall back to Profile.
+- tapOn: "Continue"
+- assertVisible: "Appearance"
+
+# ================= Arabic (i18n switch) =================
+- tapOn: "العربية"
+- assertVisible: "المظهر"
+- takeScreenshot: screenshots/profile-02-arabic.png
+
+# Back to English for the remaining assertions
+- tapOn: "English"
+- assertVisible: "Appearance"
+
+# ================= Dark mode =================
+- tapOn: "Dark"
+- takeScreenshot: screenshots/profile-03-dark.png
+- assertVisible: "Dark"

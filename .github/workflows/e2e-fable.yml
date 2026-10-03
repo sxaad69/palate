@@ -17,9 +17,16 @@ on:
       - '.github/workflows/e2e-fable.yml'
   workflow_dispatch:
 
+# actions/cache needs actions:write to SAVE caches (restore works without it,
+# which is why restores silently missed and the repo shows 0 caches).
+# contents:write is needed for the screenshot auto-commit step.
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   e2e:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
@@ -56,6 +63,21 @@ jobs:
         env:
           CI: 'true'
 
+      - name: Bundle JS in debug APK (standalone, no Metro)
+        # assembleDebug skips JS bundling by default (debug is a "debuggable variant"),
+        # producing an APK that redboxes with "Unable to load script". Force bundling.
+        working-directory: apps/fable/app
+        run: |
+          python3 - << 'EOF'
+          p = 'android/app/build.gradle'
+          s = open(p).read()
+          old = "react {\n"
+          new = "react {\n    // CI: bundle JS for debug so the APK runs standalone (no Metro)\n    debuggableVariants.set([])\n"
+          assert old in s, "react block not found"
+          open(p, 'w').write(s.replace(old, new, 1))
+          print("patched debug JS bundling")
+          EOF
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
@@ -67,7 +89,22 @@ jobs:
           restore-keys: |
             gradle-fable-${{ runner.os }}-
 
+      - name: Hash app source for APK cache
+        id: apphash
+        working-directory: apps/fable
+        run: |
+          HASH=$(git ls-files 'app' | xargs sha256sum 2>/dev/null | sha256sum | cut -d' ' -f1)
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Restore APK from cache
+        id: apkcache
+        uses: actions/cache@v4
+        with:
+          path: apps/fable/app/android/app/build/outputs/apk/debug/app-debug.apk
+          key: apk-fable-${{ steps.apphash.outputs.hash }}
+
       - name: Build debug APK
+        if: steps.apkcache.outputs.cache-hit != 'true'
         working-directory: apps/fable/app/android
         run: ./gradlew assembleDebug --no-daemon
 
@@ -108,12 +145,13 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_6
-          emulator-options: -partition-size 2048 -no-snapshot -no-audio -no-boot-anim
-          script: |
-            cd "$GITHUB_WORKSPACE/apps/fable"
-            mkdir -p screenshots
-            adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk
-            maestro test .maestro/smoke.yaml
+          emulator-options: -partition-size 2048 -no-snapshot -no-audio -no-boot-anim -no-window -gpu swiftshader_indirect -memory 2048 -camera-back none -camera-front none
+          disable-animations: true
+          # NOTE: android-emulator-runner executes each script LINE as a separate
+          # `sh -c`, so `cd` on its own line does NOT persist. Keep this as ONE
+          # line chained with && / ; — a multiline block regresses to "No such
+          # file or directory" on the adb install (seen 2026-10-03).
+          script: cd "$GITHUB_WORKSPACE/apps/fable" && mkdir -p screenshots && adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk && (for i in 01 02 03 04 05 06 07 08 09 10 11 12; do sleep 30; adb exec-out screencap -p > screenshots/step-$i.png 2>/dev/null; done &) && maestro test .maestro/full-coverage.yaml; TEST_EXIT=$?; adb exec-out screencap -p > screenshots/fail-screencap.png 2>/dev/null; adb logcat -d > screenshots/fail-logcat.txt 2>/dev/null; find . "$HOME" /tmp -name "shot-*.png" -newer app/android/app/build/outputs/apk/debug/app-debug.apk -not -path "*/screenshots/*" -exec cp {} screenshots/ \; 2>/dev/null; ls -la screenshots/ >> "${GITHUB_STEP_SUMMARY:-/dev/null}" 2>/dev/null; if [ $TEST_EXIT -ne 0 ]; then { echo "## Diagnosis - on-screen text at failure"; echo '```'; adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; adb pull /sdcard/ui.xml /tmp/uidump.xml >/dev/null 2>&1; grep -o 'text="[^"]*"' /tmp/uidump.xml 2>/dev/null | grep -v 'text=""' | sort -u | head -60; echo '```'; echo "## Diagnosis - foreground activity"; echo '```'; adb shell dumpsys activity activities 2>/dev/null | grep -E "mFocusedApp|mResumedActivity" | head -4; echo '```'; echo "## Diagnosis - Fable process log (last 60 lines)"; echo '```'; PID=$(adb shell pidof com.fable.app 2>/dev/null | tr -d '\r'); if [ -n "$PID" ]; then adb logcat -d --pid="$PID" 2>/dev/null | tail -60; else echo "com.fable.app process not running"; fi; echo '```'; } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"; fi; exit $TEST_EXIT
 
       - name: Upload screenshots
         if: always()
@@ -122,3 +160,19 @@ jobs:
           name: screenshots-fable
           path: apps/fable/screenshots/
           if-no-files-found: warn
+
+      - name: Commit screenshots to repo
+        # On green runs, commit the Maestro screenshots so they're visible
+        # in the repo without digging through Actions artifacts.
+        # [skip ci] prevents the commit from re-triggering this workflow.
+        if: success()
+        run: |
+          git config user.name "saad"
+          git config user.email "saad@fable.app"
+          git add apps/fable/screenshots/
+          if git diff --cached --quiet; then
+            echo "No screenshot changes to commit"
+          else
+            git commit -m "fable: e2e screenshots [skip ci]"
+            git push origin HEAD:main
+          fi
