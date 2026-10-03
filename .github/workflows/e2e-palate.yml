@@ -19,8 +19,9 @@ on:
 
 # actions/cache needs actions:write to SAVE caches (restore works without it,
 # which is why restores silently missed and the repo shows 0 caches).
+# contents:write is needed for the screenshot auto-commit step.
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 jobs:
@@ -159,3 +160,19 @@ jobs:
           name: screenshots-palate
           path: apps/palate/screenshots/
           if-no-files-found: warn
+
+      - name: Commit screenshots to repo
+        # On green runs, commit the Maestro screenshots so they're visible
+        # in the repo without digging through Actions artifacts.
+        # [skip ci] prevents the commit from re-triggering this workflow.
+        if: success()
+        run: |
+          git config user.name "saad"
+          git config user.email "saad@palate.app"
+          git add apps/palate/screenshots/
+          if git diff --cached --quiet; then
+            echo "No screenshot changes to commit"
+          else
+            git commit -m "palate: e2e screenshots [skip ci]"
+            git push origin HEAD:main
+          fi
