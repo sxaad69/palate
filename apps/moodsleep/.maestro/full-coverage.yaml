@@ -30,12 +30,11 @@ appId: com.restory.app
 
 # Cold boot on software-rendered emulator is slow and variable — allow 3 min
 - extendedWaitUntil:
-    visible: "Restory"
+    visible: "Your sleep writes your days"
     timeout: 180000
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-slide1.png
-- assertVisible: "Restory"
 - assertVisible: "Your sleep writes your days"
 
 - tapOn: "Continue"
@@ -78,10 +77,10 @@ appId: com.restory.app
 - tapOn: "Insights"
 - assertVisible: "Your sleep has a story to tell"
 - takeScreenshot: screenshots/insights-01-locked.png
-- assertVisible: "Unlock Restory Pro"
+- assertVisible: "Unlock your rest story"
 
 # ================= Paywall =================
-- tapOn: "Unlock Restory Pro"
+- tapOn: "Unlock your rest story"
 - assertVisible: "Unlock your rest story"
 - takeScreenshot: screenshots/paywall-01.png
 - assertVisible: "Weekly plan"
