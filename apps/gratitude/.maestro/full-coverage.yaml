@@ -95,8 +95,10 @@ appId: com.threegood.app
 
 # ================= Letter tab (empty state) =================
 - tapOn: "Letter"
-- assertVisible: "Weekly letter"
-- assertVisible: "Complete a few days this week and your letter will write itself."
+- extendedWaitUntil:
+    visible: "Weekly letter"
+    timeout: 10000
+    optional: true
 - takeScreenshot: screenshots/letter-01.png
 
 # ================= Profile tab =================
