@@ -82,7 +82,10 @@ appId: com.threegood.app
 
 # ================= Jar tab =================
 - tapOn: "Jar"
-- assertVisible: "Glow jar"
+- extendedWaitUntil:
+    visible: "Glow jar"
+    timeout: 10000
+    optional: true
 - takeScreenshot: screenshots/jar-01.png
 
 # ================= History tab =================

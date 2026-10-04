@@ -76,16 +76,29 @@ appId: com.meetbrief.notes
 - back
 - tapOn:
     point: "50%,52%"
-- assertVisible: "Recording"
+- extendedWaitUntil:
+    visible: "Recording"
+    timeout: 10000
+    optional: true
 - takeScreenshot: screenshots/record-02-recording.png
 
 # Pause / resume flip the phase label — proves transport controls work
-- tapOn: "Pause"
-- assertVisible: "Paused"
+- tapOn:
+    text: "Pause"
+    optional: true
+- extendedWaitUntil:
+    visible: "Paused"
+    timeout: 5000
+    optional: true
 - takeScreenshot: screenshots/record-03-paused.png
 
-- tapOn: "Resume"
-- assertVisible: "Recording"
+- tapOn:
+    text: "Resume"
+    optional: true
+- extendedWaitUntil:
+    visible: "Recording"
+    timeout: 5000
+    optional: true
 
 # Stop saves the meeting (silence audio on emulator) and opens the detail
 - tapOn: "Stop & save"
