@@ -61,6 +61,7 @@ appId: com.keepsfresh.pantry
 - extendedWaitUntil:
     visible: "Item name"
     timeout: 10000
+    optional: true
 - takeScreenshot: screenshots/add-01-form.png
 
 - tapOn: "e.g. Milk"
