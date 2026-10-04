@@ -72,7 +72,7 @@ appId: com.keepsfresh.pantry
 - assertVisible: "Milk"
 - takeScreenshot: screenshots/add-02-suggestions.png
 
-- tapOn: "Save"
+- tapOn: "Add to pantry"
 
 # ================= Pantry tab (with item) =================
 - assertVisible: "Milk"
