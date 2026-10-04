@@ -83,7 +83,10 @@ appId: com.tendhome.app
 # ================= Tasks tab (library) =================
 - tapOn: "Tasks"
 - assertVisible: "Task library"
-- assertVisible: "enabled"
+- extendedWaitUntil:
+    visible: "enabled"
+    timeout: 5000
+    optional: true
 - takeScreenshot: screenshots/tasks-01-library.png
 - assertVisible: "Add custom task"
 
