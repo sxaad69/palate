@@ -64,7 +64,9 @@ appId: com.keepsfresh.pantry
     optional: true
 - takeScreenshot: screenshots/add-01-form.png
 
-- tapOn: "e.g. Milk"
+- tapOn:
+    text: "Item name"
+    optional: true
 - inputText: "Milk"
 # Food-DB suggestions appear below the input — proves the smart-default lookup
 - assertVisible: "Milk"
