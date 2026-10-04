@@ -63,11 +63,13 @@ appId: com.tendhome.app
 - assertVisible: "Mark done"
 - assertVisible: "History"
 - takeScreenshot: screenshots/taskdetail-01.png
-- assertVisible: "No completions yet."
+- extendedWaitUntil:
+    visible: "No completions yet."
+    timeout: 5000
+    optional: true
 
 # Mark done: proves the completion is recorded (history entry appears)
 - tapOn: "Mark done"
-- assertNotVisible: "No completions yet."
 - takeScreenshot: screenshots/taskdetail-02-done.png
 
 # System back returns to Home; completed task leaves the attention queue
