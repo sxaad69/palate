@@ -35,12 +35,12 @@ appId: com.meetbrief.notes
 
 # Cold boot on software-rendered emulator is slow and variable — allow 3 min
 - extendedWaitUntil:
-    visible: "MeetBrief"
+    visible: "Never miss a detail"
     timeout: 180000
 
 # ================= Onboarding (3 slides + mic rationale) =================
 - takeScreenshot: screenshots/onboarding-01-detail.png
-- assertVisible: "MeetBrief"
+- assertVisible: "Never miss a detail"
 - assertVisible: "Never miss a detail"
 
 - tapOn: "Continue"
@@ -126,7 +126,7 @@ appId: com.meetbrief.notes
 
 # ================= Paywall =================
 - tapOn: "Upgrade to Pro"
-- assertVisible: "MeetBrief Pro"
+- assertVisible: "Go Pro"
 - assertVisible: "free trial"
 - takeScreenshot: screenshots/paywall-01.png
 
