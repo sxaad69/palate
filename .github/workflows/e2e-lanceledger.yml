@@ -17,6 +17,10 @@ on:
       - '.github/workflows/e2e-lanceledger.yml'
   workflow_dispatch:
 
+concurrency:
+  group: android-emulator
+  cancel-in-progress: false
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
