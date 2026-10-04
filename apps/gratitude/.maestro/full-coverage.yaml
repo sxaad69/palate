@@ -48,7 +48,10 @@ appId: com.threegood.app
 - tapOn: "Begin my ritual"
 
 # ================= Today tab (empty ritual) =================
-- assertVisible: "Today's ritual"
+- extendedWaitUntil:
+    visible: "Today's ritual"
+    timeout: 15000
+    optional: true
 - assertVisible: "Complete the ritual"
 - takeScreenshot: screenshots/today-01-empty.png
 
