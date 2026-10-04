@@ -39,7 +39,7 @@ appId: com.threegood.app
 - assertVisible: "Continue"
 
 - tapOn: "Continue"
-- assertVisible: "Each day brings 3 fresh prompts across 6 themes"
+- assertVisible: "☀ Each day brings 3 fresh prompts across 6 themes"
 - takeScreenshot: screenshots/onboarding-02.png
 
 - tapOn: "Continue"

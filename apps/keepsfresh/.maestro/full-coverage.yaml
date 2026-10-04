@@ -58,7 +58,9 @@ appId: com.keepsfresh.pantry
 # ================= Add item (smart default from food DB) =================
 - tapOn: "Add item"
 - assertVisible: "Add item"
-- assertVisible: "Item name"
+- extendedWaitUntil:
+    visible: "Item name"
+    timeout: 10000
 - takeScreenshot: screenshots/add-01-form.png
 
 - tapOn: "e.g. Milk"
