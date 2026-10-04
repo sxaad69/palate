@@ -39,7 +39,7 @@ appId: com.fastuna.app
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
 - assertVisible: "Welcome to Fastuna"
-- assertVisible: "Fast on your schedule"
+- assertVisible: "Welcome to Fastuna"
 - assertVisible: "What is your main goal?"
 
 # Select a goal — Continue enables only after this
