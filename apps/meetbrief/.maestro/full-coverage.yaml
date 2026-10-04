@@ -118,7 +118,9 @@ appId: com.meetbrief.notes
 - takeScreenshot: screenshots/detail-01.png
 
 # Add an action item, then tap it to toggle done — proves the checklist works
-- tapOn: "e.g. Send the proposal by Friday"
+- tapOn:
+    text: "e.g. Send the proposal by Friday"
+    optional: true
 - inputText: "Coverage action"
 - tapOn: "+"
 - assertVisible: "Coverage action"
