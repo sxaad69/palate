@@ -61,6 +61,7 @@ appId: com.dryspell.app
     text: "Roughly how much did it cost you per day?"
     index: 1
 - inputText: "10"
+- hideKeyboard
 
 - tapOn: "Continue"
 
@@ -114,6 +115,7 @@ appId: com.dryspell.app
 
 - tapOn: "How are you feeling today?"
 - inputText: "Day one. Feeling strong."
+- hideKeyboard
 - tapOn: "Save entry"
 - assertVisible: "Day one. Feeling strong."
 - takeScreenshot: screenshots/journal-02-entry.png
