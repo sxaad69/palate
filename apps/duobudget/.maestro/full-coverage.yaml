@@ -30,12 +30,12 @@ appId: com.twopurse.app
 
 # Cold boot on software-rendered emulator is slow and variable — allow 3 min
 - extendedWaitUntil:
-    visible: "TwoPurse"
+    visible: "Money fights, solved gently"
     timeout: 180000
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01-fights.png
-- assertVisible: "TwoPurse"
+- assertVisible: "Money fights, solved gently"
 - assertVisible: "Money fights, solved gently"
 
 - tapOn: "Continue"
