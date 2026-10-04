@@ -113,12 +113,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           emulator-options: -partition-size 2048 -no-snapshot -no-audio -no-boot-anim -no-window -gpu swiftshader_indirect -memory 2048 -camera-back none -camera-front none
-          script: |
-            cd "$GITHUB_WORKSPACE/apps/headdown"
-            mkdir -p screenshots
-            adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk
-            maestro test .maestro/full-coverage.yaml
-
+          script: cd "$GITHUB_WORKSPACE/apps/headdown" && mkdir -p screenshots && adb install -r app/android/app/build/outputs/apk/debug/app-debug.apk && (for i in 01 02 03 04 05 06 07 08 09 10 11 12; do sleep 30; adb exec-out screencap -p > screenshots/step-$i.png 2>/dev/null; done &) && maestro test .maestro/full-coverage.yaml; TEST_EXIT=$?; adb exec-out screencap -p > screenshots/fail-screencap.png 2>/dev/null; adb logcat -d > screenshots/fail-logcat.txt 2>/dev/null; find . "$HOME" /tmp -name "shot-*.png" -newer app/android/app/build/outputs/apk/debug/app-debug.apk -not -path "*/screenshots/*" -exec cp {} screenshots/ \; 2>/dev/null; ls -la screenshots/ >> "${GITHUB_STEP_SUMMARY:-/dev/null}" 2>/dev/null; if [ $TEST_EXIT -ne 0 ]; then { echo "## Diagnosis - on-screen text at failure"; echo '```'; adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; adb pull /sdcard/ui.xml /tmp/uidump.xml >/dev/null 2>&1; grep -o 'text="[^"]*"' /tmp/uidump.xml 2>/dev/null | grep -v 'text=""' | sort -u | head -60; echo '```'; echo "## Diagnosis - foreground activity"; echo '```'; adb shell dumpsys activity activities 2>/dev/null | grep -E "mFocusedApp|mResumedActivity" | head -4; echo '```'; echo "## Diagnosis - headdown process log (last 60 lines)"; echo '```'; PID=$(adb shell pidof com.headdown.app 2>/dev/null | tr -d '\r'); if [ -n "$PID" ]; then adb logcat -d --pid="$PID" 2>/dev/null | tail -60; else echo "com.headdown.app process not running"; fi; echo '```'; } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"; fi; exit $TEST_EXIT
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
