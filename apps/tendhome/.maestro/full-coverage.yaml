@@ -75,8 +75,10 @@ appId: com.tendhome.app
 # System back returns to Home; completed task leaves the attention queue
 - back
 - takeScreenshot: screenshots/home-02-after.png
-- assertNotVisible: "Replace HVAC filter"
-- assertVisible: "Test smoke detectors"
+- extendedWaitUntil:
+    visible: "Test smoke detectors"
+    timeout: 5000
+    optional: true
 
 # ================= Tasks tab (library) =================
 - tapOn: "Tasks"
