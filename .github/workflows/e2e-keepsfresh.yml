@@ -60,6 +60,21 @@ jobs:
         env:
           CI: 'true'
 
+      - name: Bundle JS in debug APK (standalone, no Metro)
+        # assembleDebug skips JS bundling by default (debug is a "debuggable variant"),
+        # producing an APK that redboxes with "Unable to load script". Force bundling.
+        working-directory: apps/keepsfresh/app
+        run: |
+          python3 - << 'EOF'
+          p = 'android/app/build.gradle'
+          s = open(p).read()
+          old = "react {\n"
+          new = "react {\n    // CI: bundle JS for debug so the APK runs standalone (no Metro)\n    debuggableVariants.set([])\n"
+          assert old in s, "react block not found"
+          open(p, 'w').write(s.replace(old, new, 1))
+          print("patched debug JS bundling")
+          EOF
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
