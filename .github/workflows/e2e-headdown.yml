@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: android-emulator
+  group: android-emulator-b
   cancel-in-progress: false
 
 jobs:
