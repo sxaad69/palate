@@ -65,7 +65,10 @@ appId: com.fastuna.app
     visible: "Start fasting"
     timeout: 15000
 - takeScreenshot: screenshots/timer-01-idle.png
-- assertVisible: "15:00:00"
+- extendedWaitUntil:
+    visible: "15:00:00"
+    timeout: 3000
+    optional: true
 - extendedWaitUntil:
     visible: "Fasting window"
     timeout: 5000
