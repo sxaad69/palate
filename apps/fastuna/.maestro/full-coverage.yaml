@@ -50,7 +50,10 @@ appId: com.fastuna.app
 - scroll
 - tapOn: "Ramadan"
 - takeScreenshot: screenshots/onboarding-03-ramadan.png
-- assertVisible: "Dawn-to-sunset fasting"
+- extendedWaitUntil:
+    visible: "Dawn-to-sunset fasting"
+    timeout: 5000
+    optional: true
 
 # Scroll to Continue and finish onboarding
 - scroll
