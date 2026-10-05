@@ -76,7 +76,7 @@ appId: com.dryspell.app
 
 # ================= Today tab (fresh) =================
 - extendedWaitUntil:
-    visible: "days clear"
+    visible: "DAY CLEAR"
     timeout: 15000
 - takeScreenshot: screenshots/today-01-fresh.png
 - assertVisible: "saved so far"
