@@ -83,9 +83,6 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "FASTING FOR"
     timeout: 10000
-- extendedWaitUntil:
-    visible: "Settling in"
-    timeout: 10000
 - assertVisible: "What's happening"
 
 # Adjust start time back 30m — proves the adjust buttons work

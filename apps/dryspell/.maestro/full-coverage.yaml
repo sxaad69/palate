@@ -85,7 +85,7 @@ appId: com.dryspell.app
 
 # Daily pledge
 - tapOn: "Daily pledge"
-- assertVisible: "Pledged for today"
+- assertVisible: "Pledged for today ✓"
 - takeScreenshot: screenshots/today-02-pledged.png
 
 # ================= SOS =================
