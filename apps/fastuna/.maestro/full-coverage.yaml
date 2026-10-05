@@ -80,8 +80,12 @@ appId: com.fastuna.app
     visible: "End fast"
     timeout: 15000
 - takeScreenshot: screenshots/timer-02-active.png
-- assertVisible: "Fasting for"
-- assertVisible: "Current stage"
+- extendedWaitUntil:
+    visible: "FASTING FOR"
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "Current stage:"
+    timeout: 10000
 - assertVisible: "What's happening"
 - assertVisible: "Settling in"
 
