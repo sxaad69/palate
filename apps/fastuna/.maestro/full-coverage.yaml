@@ -100,7 +100,7 @@ appId: com.fastuna.app
 # ================= History tab (empty) =================
 - tapOn: "History"
 - assertVisible: "Total fasts"
-- assertVisible: "No fasts yet"
+- assertVisible: "No fasts yet — your history will appear here."
 - takeScreenshot: screenshots/history-01-empty.png
 
 # ================= End fast → History (with data) =================
@@ -113,7 +113,7 @@ appId: com.fastuna.app
     visible: "Ended early"
     timeout: 15000
 - takeScreenshot: screenshots/history-02-with-fast.png
-- assertVisible: "Ramadan"
+- assertVisible: ".*Ramadan.*"
 
 # ================= Profile tab =================
 - tapOn: "Profile"

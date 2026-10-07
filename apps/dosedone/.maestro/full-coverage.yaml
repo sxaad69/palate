@@ -46,7 +46,7 @@ appId: com.dosedone.app
     visible: "Today's doses"
     timeout: 30000
 - takeScreenshot: screenshots/today-01-empty.png
-- assertVisible: "No medicines yet"
+- assertVisible: ".*No medicines yet.*"
 
 # ================= Medicines tab =================
 - tapOn: "Medicines"
@@ -58,9 +58,13 @@ appId: com.dosedone.app
 - assertVisible: "Medicine name"
 - takeScreenshot: screenshots/medform-01.png
 
-- tapOn: "Medicine name"
+- tapOn:
+    text: "Medicine name"
+    index: 1
 - inputText: "Vitamin D"
-- tapOn: "Dose (e.g. 1 pill, 10mg)"
+- tapOn:
+    text: "Dose (e.g. 1 pill, 10mg)"
+    index: 1
 - inputText: "1 pill"
 - hideKeyboard
 - takeScreenshot: screenshots/medform-02-filled.png
@@ -79,7 +83,7 @@ appId: com.dosedone.app
 
 # ================= Take the dose =================
 - tapOn: "TAKE"
-- assertVisible: "Taken"
+- assertVisible: "Taken ✓"
 - takeScreenshot: screenshots/today-03-taken.png
 - assertVisible: "Undo"
 
@@ -87,7 +91,7 @@ appId: com.dosedone.app
 - tapOn: "Progress"
 - assertVisible: "of doses taken"
 - takeScreenshot: screenshots/progress-01.png
-- assertVisible: "day streak"
+- assertVisible: "days in a row with no missed doses"
 
 # ================= Family tab =================
 - tapOn: "Family"

@@ -39,11 +39,18 @@ appId: com.pip.app
 - assertVisible: "Pick 1–3 starter recipes"
 
 # Template 0 ("floss one tooth") is pre-selected
+# The Continue button sits at the bottom of the onboarding ScrollView —
+# bring it into view before tapping (emulator screen heights vary)
+- scrollUntilVisible:
+    element:
+      text: "Continue"
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Continue"
 
 # ================= Today tab (with starter recipe) =================
 - extendedWaitUntil:
-    visible: "floss one tooth"
+    visible: ".*floss one tooth.*"
     timeout: 30000
 - takeScreenshot: screenshots/today-01-recipe.png
 - assertVisible: "Done"
@@ -60,13 +67,13 @@ appId: com.pip.app
 
 # ================= Recipes tab =================
 - tapOn: "Recipes"
-- assertVisible: "floss one tooth"
+- assertVisible: ".*floss one tooth.*"
 - takeScreenshot: screenshots/recipes-01.png
 - assertVisible: "New recipe"
 
 # ================= Recipe editor =================
 - tapOn: "New recipe"
-- assertVisible: "After I"
+- assertVisible: "After I… (e.g. brush my teeth)"
 - takeScreenshot: screenshots/editor-01.png
 
 - tapOn: "After I… (e.g. brush my teeth)"

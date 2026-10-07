@@ -84,7 +84,9 @@ appId: com.dryspell.app
 - assertVisible: "Next milestone"
 
 # Daily pledge
-- tapOn: "Daily pledge"
+- tapOn:
+    text: "Daily pledge"
+    index: 1
 - assertVisible: "Pledged for today ✓"
 - takeScreenshot: screenshots/today-02-pledged.png
 
@@ -142,7 +144,7 @@ appId: com.dryspell.app
 # Restore is safe: no Play Store on emulator, always reports nothing found
 - tapOn: "Restore purchase"
 - extendedWaitUntil:
-    visible: "none found"
+    visible: "Restore purchase — none found"
     timeout: 15000
 - takeScreenshot: screenshots/paywall-02-restore.png
 
