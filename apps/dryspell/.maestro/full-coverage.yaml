@@ -91,7 +91,9 @@ appId: com.dryspell.app
 - takeScreenshot: screenshots/today-02-pledged.png
 
 # ================= SOS =================
-- tapOn: "Craving? Tap for SOS"
+# SOS button title is "🆘 Craving? Tap for SOS" (emoji prefix in Dashboard).
+# Whole-value regex match; escape the ? or it eats the 'g' before it.
+- tapOn: ".*Craving\\? Tap for SOS.*"
 - assertVisible: "Ride it out"
 - takeScreenshot: screenshots/sos-01-breathing.png
 - assertVisible: "Your reasons"
@@ -111,11 +113,13 @@ appId: com.dryspell.app
 
 # ================= Journal tab =================
 - tapOn: "Journal"
-- assertVisible: "How are you feeling today?"
+# TextInput accessibilityLabel is the exact placeholder string; escape the ?
+# or the regex quantifier eats the trailing 'y' and the full-value match fails.
+- assertVisible: "How are you feeling today\\?"
 - takeScreenshot: screenshots/journal-01-empty.png
-- assertVisible: "No entries yet. Writing helps"
-
-- tapOn: "How are you feeling today?"
+- assertVisible: "No entries yet. Writing helps — even one line."
+# Same ? escaping for the tap on the input's accessibility label.
+- tapOn: "How are you feeling today\\?"
 - inputText: "Day one. Feeling strong."
 - hideKeyboard
 - tapOn: "Save entry"

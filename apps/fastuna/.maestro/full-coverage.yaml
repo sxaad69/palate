@@ -94,6 +94,13 @@ appId: com.fastuna.app
 - tapOn: "Presets"
 - assertVisible: "Ramadan"
 - assertVisible: "Night shift"
+# The gentle preset is the last card (7 presets) — below the fold on emulator
+# heights. Scroll it into view before asserting (same pattern as pip).
+- scrollUntilVisible:
+    element:
+      text: "Gentle"
+    direction: DOWN
+    timeout: 10000
 - assertVisible: "Gentle"
 - takeScreenshot: screenshots/presets-01.png
 
