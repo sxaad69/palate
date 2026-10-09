@@ -1,19 +1,34 @@
-import * as Notifications from 'expo-notifications';
+import type * as NotificationsType from 'expo-notifications';
 import type { Med } from '../store/meds';
 
 // Local dose reminders. Best-effort: scheduling is exact on most devices,
 // but delivery should be verified on a real device at launch (see
 // BUILD_NOTES.md). The app's logs and schedules work fully without it.
 
-// Install the notification handler lazily (and guarded): calling
-// setNotificationHandler at module-import time crashes the app on boot
-// when the expo-notifications native module is missing or broken in the
-// build (redbox before the first render). Keeping everything behind
-// try/catch means reminders stay best-effort and the app always boots.
+// expo-notifications is loaded LAZILY (dynamic import), never at module top
+// level. Its native modules are resolved via requireNativeModule during
+// module evaluation, which throws when the native module is missing or
+// broken in the build — redboxing the app before the first render (this is
+// what killed the CI emulator boot even after setNotificationHandler was
+// moved behind try/catch: the import itself threw first). Loading it lazily
+// inside a guarded promise keeps reminders best-effort and the app booting.
+type N = typeof NotificationsType;
+
+let notificationsPromise: Promise<N | null> | null = null;
+
+function loadNotifications(): Promise<N | null> {
+  if (!notificationsPromise) {
+    notificationsPromise = import('expo-notifications').catch(() => null);
+  }
+  return notificationsPromise;
+}
+
 let handlerInstalled = false;
 
-function ensureNotificationHandler(): void {
+async function ensureNotificationHandler(): Promise<void> {
   if (handlerInstalled) return;
+  const Notifications = await loadNotifications();
+  if (!Notifications) return;
   try {
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
@@ -31,7 +46,9 @@ function ensureNotificationHandler(): void {
 }
 
 export async function requestNotificationPermissions(): Promise<boolean> {
-  ensureNotificationHandler();
+  await ensureNotificationHandler();
+  const Notifications = await loadNotifications();
+  if (!Notifications) return false;
   try {
     const { status } = await Notifications.requestPermissionsAsync();
     return status === 'granted';
@@ -45,7 +62,9 @@ export async function rescheduleDoseReminders(
   meds: Med[],
   t: { title: string; body: (medName: string, dosage: string) => string },
 ): Promise<void> {
-  ensureNotificationHandler();
+  await ensureNotificationHandler();
+  const Notifications = await loadNotifications();
+  if (!Notifications) return;
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
     for (const med of meds) {
@@ -72,7 +91,9 @@ export async function rescheduleDoseReminders(
 }
 
 export async function cancelAllReminders(): Promise<void> {
-  ensureNotificationHandler();
+  await ensureNotificationHandler();
+  const Notifications = await loadNotifications();
+  if (!Notifications) return;
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
   } catch {
