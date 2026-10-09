@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Parse Maestro output for failed optional assertions and write JSON report."""
 import json
+import os
 import re
 import sys
 
@@ -23,6 +24,10 @@ def main():
             failures.append({"type": "soft_assert", "detail": line.strip()[:300]})
 
     report = {"app": app, "soft_failures": failures, "count": len(failures)}
+    # Create output directory if needed
+    out_dir = os.path.dirname(out_path)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(report, f, indent=2)
     print(f"Soft assert failures for {app}: {len(failures)}")
