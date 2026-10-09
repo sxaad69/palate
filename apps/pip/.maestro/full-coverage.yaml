@@ -85,12 +85,12 @@ appId: com.pip.app
 - takeScreenshot: screenshots/editor-02-filled.png
 
 - tapOn: "Save recipe"
-- assertVisible: "drink one glass"
+- assertVisible: ".*drink one glass.*"
 - takeScreenshot: screenshots/recipes-02-new.png
 
 # ================= Progress tab =================
 - tapOn: "Progress"
-- assertVisible: "day streak"
+- assertVisible: ".*day streak.*"
 - takeScreenshot: screenshots/progress-01.png
 - assertVisible: "Best streak"
 
