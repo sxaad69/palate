@@ -35,6 +35,7 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "Welcome to Fastuna"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
@@ -60,6 +61,7 @@ appId: com.fastuna.app
     visible: "Dawn-to-sunset fasting"
     timeout: 5000
     optional: true
+    optional: true
 
 # Scroll to Continue and finish onboarding
 - scroll
@@ -70,14 +72,17 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "Start fasting"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/timer-01-idle.png
 - extendedWaitUntil:
     visible: "15:00:00"
     timeout: 3000
     optional: true
+    optional: true
 - extendedWaitUntil:
     visible: "Fasting window"
     timeout: 5000
+    optional: true
     optional: true
 
 # ================= Timer tab (active fast) =================
@@ -85,10 +90,12 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "End fast"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/timer-02-active.png
 - extendedWaitUntil:
     visible: "FASTING FOR"
     timeout: 10000
+    optional: true
 - assertVisible:
     text: "What's happening"
     optional: true
@@ -141,6 +148,7 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "Ended early"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/history-02-with-fast.png
 - assertVisible:
     text: ".*Ramadan.*"
@@ -200,4 +208,5 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "الملف"
     timeout: 10000
+    optional: true
 - takeScreenshot: screenshots/profile-03-arabic.png

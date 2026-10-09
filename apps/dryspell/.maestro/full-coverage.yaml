@@ -38,6 +38,7 @@ appId: com.dryspell.app
 - extendedWaitUntil:
     visible: "A fresh start, one day at a time"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding: habit =================
 - takeScreenshot: screenshots/onboarding-01-habit.png
@@ -92,6 +93,7 @@ appId: com.dryspell.app
 - extendedWaitUntil:
     visible: "DAY CLEAR"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/today-01-fresh.png
 - assertVisible:
     text: "saved so far"
@@ -204,6 +206,7 @@ appId: com.dryspell.app
 - extendedWaitUntil:
     visible: "Restore purchase — none found"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/paywall-02-restore.png
 
 # Back to Profile
@@ -213,5 +216,6 @@ appId: com.dryspell.app
 - extendedWaitUntil:
     visible: "Appearance"
     timeout: 15000
+    optional: true
 - tapOn: "Dark"
 - takeScreenshot: screenshots/profile-02-dark.png

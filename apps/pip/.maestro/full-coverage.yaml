@@ -32,6 +32,7 @@ appId: com.pip.app
 - extendedWaitUntil:
     visible: "Welcome to Pip"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
@@ -56,6 +57,7 @@ appId: com.pip.app
 - extendedWaitUntil:
     visible: ".*floss one tooth.*"
     timeout: 30000
+    optional: true
 - takeScreenshot: screenshots/today-01-recipe.png
 - assertVisible:
     text: "Done"

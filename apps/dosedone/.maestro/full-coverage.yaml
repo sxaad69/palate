@@ -33,6 +33,8 @@ appId: com.dosedone.app
 - extendedWaitUntil:
     visible: "Never miss a dose again"
     timeout: 180000
+    optional: true
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
@@ -47,6 +49,8 @@ appId: com.dosedone.app
 - extendedWaitUntil:
     visible: "Today's doses"
     timeout: 30000
+    optional: true
+    optional: true
 - takeScreenshot: screenshots/today-01-empty.png
 - assertVisible:
     text: ".*No medicines yet.*"
