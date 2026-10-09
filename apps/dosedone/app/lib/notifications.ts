@@ -5,17 +5,33 @@ import type { Med } from '../store/meds';
 // but delivery should be verified on a real device at launch (see
 // BUILD_NOTES.md). The app's logs and schedules work fully without it.
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+// Install the notification handler lazily (and guarded): calling
+// setNotificationHandler at module-import time crashes the app on boot
+// when the expo-notifications native module is missing or broken in the
+// build (redbox before the first render). Keeping everything behind
+// try/catch means reminders stay best-effort and the app always boots.
+let handlerInstalled = false;
+
+function ensureNotificationHandler(): void {
+  if (handlerInstalled) return;
+  try {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+        shouldShowBanner: true,
+        shouldShowList: true,
+      }),
+    });
+    handlerInstalled = true;
+  } catch {
+    // Native module unavailable — reminders degrade to no-ops.
+  }
+}
 
 export async function requestNotificationPermissions(): Promise<boolean> {
+  ensureNotificationHandler();
   try {
     const { status } = await Notifications.requestPermissionsAsync();
     return status === 'granted';
@@ -29,6 +45,7 @@ export async function rescheduleDoseReminders(
   meds: Med[],
   t: { title: string; body: (medName: string, dosage: string) => string },
 ): Promise<void> {
+  ensureNotificationHandler();
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
     for (const med of meds) {
@@ -55,6 +72,7 @@ export async function rescheduleDoseReminders(
 }
 
 export async function cancelAllReminders(): Promise<void> {
+  ensureNotificationHandler();
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
   } catch {
