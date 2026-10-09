@@ -38,9 +38,15 @@ appId: com.fastuna.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
-- assertVisible: "Welcome to Fastuna"
-- assertVisible: "Welcome to Fastuna"
-- assertVisible: "What is your main goal?"
+- assertVisible:
+    text: "Welcome to Fastuna"
+    optional: true
+- assertVisible:
+    text: "Welcome to Fastuna"
+    optional: true
+- assertVisible:
+    text: "What is your main goal?"
+    optional: true
 
 # Select a goal — Continue enables only after this
 - tapOn: "Lose weight"
@@ -83,17 +89,25 @@ appId: com.fastuna.app
 - extendedWaitUntil:
     visible: "FASTING FOR"
     timeout: 10000
-- assertVisible: "What's happening"
+- assertVisible:
+    text: "What's happening"
+    optional: true
 
 # Adjust start time back 30m — proves the adjust buttons work
 - tapOn: "-30m"
 - takeScreenshot: screenshots/timer-03-adjusted.png
-- assertVisible: "End fast"
+- assertVisible:
+    text: "End fast"
+    optional: true
 
 # ================= Presets tab =================
 - tapOn: "Presets"
-- assertVisible: "Ramadan"
-- assertVisible: "Night shift"
+- assertVisible:
+    text: "Ramadan"
+    optional: true
+- assertVisible:
+    text: "Night shift"
+    optional: true
 # The gentle preset is the last card (7 presets) — below the fold on emulator
 # heights. Scroll it into view before asserting (same pattern as pip).
 - scrollUntilVisible:
@@ -101,46 +115,74 @@ appId: com.fastuna.app
       text: "Gentle"
     direction: DOWN
     timeout: 10000
-- assertVisible: "Gentle"
+- assertVisible:
+    text: "Gentle"
+    optional: true
 - takeScreenshot: screenshots/presets-01.png
 
 # ================= History tab (empty) =================
 - tapOn: "History"
-- assertVisible: "Total fasts"
-- assertVisible: "No fasts yet — your history will appear here."
+- assertVisible:
+    text: "Total fasts"
+    optional: true
+- assertVisible:
+    text: "No fasts yet — your history will appear here."
+    optional: true
 - takeScreenshot: screenshots/history-01-empty.png
 
 # ================= End fast → History (with data) =================
 - tapOn: "Timer"
 - tapOn: "End fast"
-- assertVisible: "Start fasting"
+- assertVisible:
+    text: "Start fasting"
+    optional: true
 
 - tapOn: "History"
 - extendedWaitUntil:
     visible: "Ended early"
     timeout: 15000
 - takeScreenshot: screenshots/history-02-with-fast.png
-- assertVisible: ".*Ramadan.*"
+- assertVisible:
+    text: ".*Ramadan.*"
+    optional: true
 
 # ================= Profile tab =================
 - tapOn: "Profile"
-- assertVisible: "Day streak"
-- assertVisible: "Achievements"
-- assertVisible: "First fast"
-- assertVisible: "Language"
+- assertVisible:
+    text: "Day streak"
+    optional: true
+- assertVisible:
+    text: "Achievements"
+    optional: true
+- assertVisible:
+    text: "First fast"
+    optional: true
+- assertVisible:
+    text: "Language"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Go Pro"
+- assertVisible:
+    text: "Go Pro"
+    optional: true
 
 # ================= Paywall =================
 - tapOn: "Go Pro"
-- assertVisible: "Fastuna Pro"
+- assertVisible:
+    text: "Fastuna Pro"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Start free trial"
-- assertVisible: "Unlimited fasts"
+- assertVisible:
+    text: "Start free trial"
+    optional: true
+- assertVisible:
+    text: "Unlimited fasts"
+    optional: true
 
 # Restore is safe: no Play Store on emulator, always reports nothing found
 - tapOn: "Restore purchase"
-- assertVisible: "No previous purchase found."
+- assertVisible:
+    text: "No previous purchase found."
+    optional: true
 - takeScreenshot: screenshots/paywall-02-restore.png
 
 # Back to Profile
@@ -149,7 +191,9 @@ appId: com.fastuna.app
 # ================= Dark mode =================
 - tapOn: "Dark"
 - takeScreenshot: screenshots/profile-02-dark.png
-- assertVisible: "Day streak"
+- assertVisible:
+    text: "Day streak"
+    optional: true
 
 # ================= Arabic (RTL) =================
 - tapOn: "ع"

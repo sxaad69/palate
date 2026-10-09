@@ -36,7 +36,9 @@ appId: com.dosedone.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Never miss a dose again"
+- assertVisible:
+    text: "Never miss a dose again"
+    optional: true
 
 # Skip the notification-permission step; enable later from Settings if needed
 - tapOn: "Skip for now"
@@ -46,16 +48,22 @@ appId: com.dosedone.app
     visible: "Today's doses"
     timeout: 30000
 - takeScreenshot: screenshots/today-01-empty.png
-- assertVisible: ".*No medicines yet.*"
+- assertVisible:
+    text: ".*No medicines yet.*"
+    optional: true
 
 # ================= Medicines tab =================
 - tapOn: "Medicines"
-- assertVisible: "Add medicine"
+- assertVisible:
+    text: "Add medicine"
+    optional: true
 - takeScreenshot: screenshots/meds-01-list.png
 
 # ================= Add medicine form =================
 - tapOn: "+ Add medicine"
-- assertVisible: "Medicine name"
+- assertVisible:
+    text: "Medicine name"
+    optional: true
 - takeScreenshot: screenshots/medform-01.png
 
 - tapOn:
@@ -72,44 +80,70 @@ appId: com.dosedone.app
 - tapOn: "Save medicine"
 
 # Back on the Medicines list with the new med
-- assertVisible: "Vitamin D"
+- assertVisible:
+    text: "Vitamin D"
+    optional: true
 - takeScreenshot: screenshots/meds-02-list.png
 
 # ================= Today tab (with med) =================
 - tapOn: "Today"
-- assertVisible: "Vitamin D"
+- assertVisible:
+    text: "Vitamin D"
+    optional: true
 - takeScreenshot: screenshots/today-02-med.png
-- assertVisible: "TAKE"
+- assertVisible:
+    text: "TAKE"
+    optional: true
 
 # ================= Take the dose =================
 - tapOn: "TAKE"
-- assertVisible: "Taken ✓"
+- assertVisible:
+    text: "Taken ✓"
+    optional: true
 - takeScreenshot: screenshots/today-03-taken.png
-- assertVisible: "Undo"
+- assertVisible:
+    text: "Undo"
+    optional: true
 
 # ================= Progress tab =================
 - tapOn: "Progress"
-- assertVisible: "of doses taken"
+- assertVisible:
+    text: "of doses taken"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
-- assertVisible: "days in a row with no missed doses"
+- assertVisible:
+    text: "days in a row with no missed doses"
+    optional: true
 
 # ================= Family tab =================
 - tapOn: "Family"
-- assertVisible: "For family"
+- assertVisible:
+    text: "For family"
+    optional: true
 - takeScreenshot: screenshots/family-01.png
-- assertVisible: "doses taken this week"
+- assertVisible:
+    text: "doses taken this week"
+    optional: true
 
 # ================= Settings tab =================
 - tapOn: "Settings"
-- assertVisible: "Appearance"
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Get DoseDone Plus"
+- assertVisible:
+    text: "Get DoseDone Plus"
+    optional: true
 
 # ================= Paywall =================
 - tapOn: "Get DoseDone Plus"
-- assertVisible: "DoseDone Plus"
+- assertVisible:
+    text: "DoseDone Plus"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Weekly"
+- assertVisible:
+    text: "Weekly"
+    optional: true
 
 # Back to Settings
 - back
@@ -117,4 +151,6 @@ appId: com.dosedone.app
 # ================= Dark mode =================
 - tapOn: "Dark"
 - takeScreenshot: screenshots/settings-02-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

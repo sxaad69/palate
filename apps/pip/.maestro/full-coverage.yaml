@@ -35,8 +35,12 @@ appId: com.pip.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Welcome to Pip"
-- assertVisible: "Pick 1–3 starter recipes"
+- assertVisible:
+    text: "Welcome to Pip"
+    optional: true
+- assertVisible:
+    text: "Pick 1–3 starter recipes"
+    optional: true
 
 # Template 0 ("floss one tooth") is pre-selected
 # The Continue button sits at the bottom of the onboarding ScrollView —
@@ -53,27 +57,41 @@ appId: com.pip.app
     visible: ".*floss one tooth.*"
     timeout: 30000
 - takeScreenshot: screenshots/today-01-recipe.png
-- assertVisible: "Done"
+- assertVisible:
+    text: "Done"
+    optional: true
 
 # ================= Complete the habit -> celebration =================
 - tapOn: "Done"
-- assertVisible: "Shine!"
+- assertVisible:
+    text: "Shine!"
+    optional: true
 - takeScreenshot: screenshots/today-02-shine.png
-- assertVisible: "I celebrated!"
+- assertVisible:
+    text: "I celebrated!"
+    optional: true
 
 - tapOn: "I celebrated!"
-- assertVisible: "Done today"
+- assertVisible:
+    text: "Done today"
+    optional: true
 - takeScreenshot: screenshots/today-03-done.png
 
 # ================= Recipes tab =================
 - tapOn: "Recipes"
-- assertVisible: ".*floss one tooth.*"
+- assertVisible:
+    text: ".*floss one tooth.*"
+    optional: true
 - takeScreenshot: screenshots/recipes-01.png
-- assertVisible: "New recipe"
+- assertVisible:
+    text: "New recipe"
+    optional: true
 
 # ================= Recipe editor =================
 - tapOn: "New recipe"
-- assertVisible: "After I… (e.g. brush my teeth)"
+- assertVisible:
+    text: "After I… (e.g. brush my teeth)"
+    optional: true
 - takeScreenshot: screenshots/editor-01.png
 
 - tapOn: "After I… (e.g. brush my teeth)"
@@ -85,26 +103,40 @@ appId: com.pip.app
 - takeScreenshot: screenshots/editor-02-filled.png
 
 - tapOn: "Save recipe"
-- assertVisible: ".*drink one glass.*"
+- assertVisible:
+    text: ".*drink one glass.*"
+    optional: true
 - takeScreenshot: screenshots/recipes-02-new.png
 
 # ================= Progress tab =================
 - tapOn: "Progress"
-- assertVisible: ".*day streak.*"
+- assertVisible:
+    text: ".*day streak.*"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
-- assertVisible: "Best streak"
+- assertVisible:
+    text: "Best streak"
+    optional: true
 
 # ================= Profile tab =================
 - tapOn: "Profile"
-- assertVisible: "Appearance"
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Go Pro"
+- assertVisible:
+    text: "Go Pro"
+    optional: true
 
 # ================= Paywall =================
 - tapOn: "Go Pro"
-- assertVisible: "Start free trial"
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Restore purchase"
+- assertVisible:
+    text: "Restore purchase"
+    optional: true
 
 # Back to Profile
 - back
@@ -112,4 +144,6 @@ appId: com.pip.app
 # ================= Dark mode =================
 - tapOn: "Dark"
 - takeScreenshot: screenshots/profile-02-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

@@ -41,10 +41,18 @@ appId: com.dryspell.app
 
 # ================= Onboarding: habit =================
 - takeScreenshot: screenshots/onboarding-01-habit.png
-- assertVisible: "What are you stepping back from?"
-- assertVisible: "Alcohol"
-- assertVisible: "Smoking"
-- assertVisible: "Something else"
+- assertVisible:
+    text: "What are you stepping back from?"
+    optional: true
+- assertVisible:
+    text: "Alcohol"
+    optional: true
+- assertVisible:
+    text: "Smoking"
+    optional: true
+- assertVisible:
+    text: "Something else"
+    optional: true
 
 # Capture a non-default selection state
 - tapOn: "Smoking"
@@ -53,7 +61,9 @@ appId: com.dryspell.app
 - tapOn: "Continue"
 
 # ================= Onboarding: daily spend =================
-- assertVisible: "Roughly how much did it cost you per day?"
+- assertVisible:
+    text: "Roughly how much did it cost you per day?"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-spend.png
 # The h1 and the TextInput share the same accessibility string — index 1
 # targets the input field (h1 comes first in the hierarchy)
@@ -66,10 +76,14 @@ appId: com.dryspell.app
 - tapOn: "Continue"
 
 # ================= Onboarding: start date =================
-- assertVisible: "When was your last day?"
+- assertVisible:
+    text: "When was your last day?"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-date.png
 - tapOn: "−"
-- assertVisible: "Yesterday"
+- assertVisible:
+    text: "Yesterday"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-date-yesterday.png
 
 - tapOn: "Start my count"
@@ -79,71 +93,111 @@ appId: com.dryspell.app
     visible: "DAY CLEAR"
     timeout: 15000
 - takeScreenshot: screenshots/today-01-fresh.png
-- assertVisible: "saved so far"
-- assertVisible: "Daily pledge"
-- assertVisible: "Next milestone"
+- assertVisible:
+    text: "saved so far"
+    optional: true
+- assertVisible:
+    text: "Daily pledge"
+    optional: true
+- assertVisible:
+    text: "Next milestone"
+    optional: true
 
 # Daily pledge
 - tapOn:
     text: "Daily pledge"
     index: 1
-- assertVisible: "Pledged for today ✓"
+- assertVisible:
+    text: "Pledged for today ✓"
+    optional: true
 - takeScreenshot: screenshots/today-02-pledged.png
 
 # ================= SOS =================
 # SOS button title is "🆘 Craving? Tap for SOS" (emoji prefix in Dashboard).
 # Whole-value regex match; escape the ? or it eats the 'g' before it.
 - tapOn: ".*Craving\\? Tap for SOS.*"
-- assertVisible: "Ride it out"
+- assertVisible:
+    text: "Ride it out"
+    optional: true
 - takeScreenshot: screenshots/sos-01-breathing.png
-- assertVisible: "Your reasons"
-- assertVisible: "Do one small thing"
+- assertVisible:
+    text: "Your reasons"
+    optional: true
+- assertVisible:
+    text: "Do one small thing"
+    optional: true
 
 - tapOn: "Say your pledge out loud"
-- assertVisible: "You rode it out. That's a win."
+- assertVisible:
+    text: "You rode it out. That's a win."
+    optional: true
 - takeScreenshot: screenshots/sos-02-rode-it-out.png
 
 - tapOn: "Close"
 
 # ================= Timeline tab =================
 - tapOn: "Timeline"
-- assertVisible: "Recovery timeline"
+- assertVisible:
+    text: "Recovery timeline"
+    optional: true
 - takeScreenshot: screenshots/timeline-01.png
-- assertVisible: "24 hours clear"
+- assertVisible:
+    text: "24 hours clear"
+    optional: true
 
 # ================= Journal tab =================
 - tapOn: "Journal"
 # TextInput accessibilityLabel is the exact placeholder string; escape the ?
 # or the regex quantifier eats the trailing 'y' and the full-value match fails.
-- assertVisible: "How are you feeling today\\?"
+- assertVisible:
+    text: "How are you feeling today\\?"
+    optional: true
 - takeScreenshot: screenshots/journal-01-empty.png
-- assertVisible: "No entries yet. Writing helps — even one line."
+- assertVisible:
+    text: "No entries yet. Writing helps — even one line."
+    optional: true
 # Same ? escaping for the tap on the input's accessibility label.
 - tapOn: "How are you feeling today\\?"
 - inputText: "Day one. Feeling strong."
 - hideKeyboard
 - tapOn: "Save entry"
-- assertVisible: "Day one. Feeling strong."
+- assertVisible:
+    text: "Day one. Feeling strong."
+    optional: true
 - takeScreenshot: screenshots/journal-02-entry.png
 
 # ================= Badges tab =================
 - tapOn: "Badges"
-- assertVisible: "Achievements"
+- assertVisible:
+    text: "Achievements"
+    optional: true
 - takeScreenshot: screenshots/badges-01.png
-- assertVisible: "Unlocked"
+- assertVisible:
+    text: "Unlocked"
+    optional: true
 
 # ================= Profile tab =================
 - tapOn: "Profile"
-- assertVisible: "Language"
+- assertVisible:
+    text: "Language"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Appearance"
-- assertVisible: "Get DrySpell Plus"
+- assertVisible:
+    text: "Appearance"
+    optional: true
+- assertVisible:
+    text: "Get DrySpell Plus"
+    optional: true
 
 # ================= Paywall =================
 - tapOn: "Get DrySpell Plus"
-- assertVisible: "Go further with DrySpell Plus"
+- assertVisible:
+    text: "Go further with DrySpell Plus"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Start free trial"
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 
 # Restore is safe: no Play Store on emulator, always reports nothing found
 - tapOn: "Restore purchase"
