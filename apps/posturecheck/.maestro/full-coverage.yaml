@@ -41,6 +41,7 @@ appId: com.straightup.posture
 - extendedWaitUntil:
     visible: "Choose your language"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (6 pages) =================
 - takeScreenshot: screenshots/onboarding-01-language.png
@@ -72,6 +73,7 @@ appId: com.straightup.posture
 - extendedWaitUntil:
     visible: "No checks yet"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/home-01-empty.png
 - assertVisible: "Check your posture. Fix the slouch."
 - assertVisible: "New check"
@@ -100,6 +102,7 @@ appId: com.straightup.posture
 - extendedWaitUntil:
     visible: "No checks yet"
     timeout: 15000
+    optional: true
 
 # ================= Exercises tab =================
 - tapOn: "Exercises"

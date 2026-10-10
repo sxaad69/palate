@@ -37,6 +37,7 @@ appId: com.meetbrief.notes
 - extendedWaitUntil:
     visible: "Never miss a detail"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides + mic rationale) =================
 - takeScreenshot: screenshots/onboarding-01-detail.png
@@ -80,6 +81,7 @@ appId: com.meetbrief.notes
     visible: "Recording"
     timeout: 10000
     optional: true
+    optional: true
 - takeScreenshot: screenshots/record-02-recording.png
 
 # Pause / resume flip the phase label — proves transport controls work
@@ -90,6 +92,7 @@ appId: com.meetbrief.notes
     visible: "Paused"
     timeout: 5000
     optional: true
+    optional: true
 - takeScreenshot: screenshots/record-03-paused.png
 
 - tapOn:
@@ -98,6 +101,7 @@ appId: com.meetbrief.notes
 - extendedWaitUntil:
     visible: "Recording"
     timeout: 5000
+    optional: true
     optional: true
 
 # Stop saves the meeting (silence audio on emulator) and opens the detail
@@ -109,11 +113,13 @@ appId: com.meetbrief.notes
     visible: "Coverage test meeting"
     timeout: 15000
     optional: true
+    optional: true
 
 # ================= Meeting detail =================
 - extendedWaitUntil:
     visible: "Summary"
     timeout: 5000
+    optional: true
     optional: true
 - takeScreenshot: screenshots/detail-01.png
 

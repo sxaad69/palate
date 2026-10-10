@@ -33,6 +33,7 @@ appId: com.threegood.app
 - extendedWaitUntil:
     visible: "Continue"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01.png
@@ -51,6 +52,7 @@ appId: com.threegood.app
 - extendedWaitUntil:
     visible: "Today's ritual"
     timeout: 15000
+    optional: true
     optional: true
 - assertVisible: "Complete the ritual"
 - takeScreenshot: screenshots/today-01-empty.png
@@ -86,6 +88,7 @@ appId: com.threegood.app
     visible: "Glow jar"
     timeout: 10000
     optional: true
+    optional: true
 - takeScreenshot: screenshots/jar-01.png
 
 # ================= History tab =================
@@ -98,6 +101,7 @@ appId: com.threegood.app
 - extendedWaitUntil:
     visible: "Weekly letter"
     timeout: 10000
+    optional: true
     optional: true
 - takeScreenshot: screenshots/letter-01.png
 

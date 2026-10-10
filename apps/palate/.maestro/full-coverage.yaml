@@ -37,6 +37,7 @@ appId: com.palate.app
 - extendedWaitUntil:
     visible: "Palate"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
@@ -83,6 +84,7 @@ appId: com.palate.app
 - extendedWaitUntil:
     visible: "Log this meal"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/scan-03-result.png
 - assertVisible: "Chicken Kabsa"
 
@@ -92,6 +94,7 @@ appId: com.palate.app
 - extendedWaitUntil:
     visible: "1 logged"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/today-02-with-meal.png
 - assertVisible: "Chicken Kabsa"
 

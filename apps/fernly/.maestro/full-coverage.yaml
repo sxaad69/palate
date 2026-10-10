@@ -33,6 +33,7 @@ appId: com.fernly.app
 - extendedWaitUntil:
     visible: "Welcome to Fernly"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png

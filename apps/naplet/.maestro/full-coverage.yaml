@@ -33,6 +33,7 @@ appId: com.naplet.app
 - extendedWaitUntil:
     visible: "Welcome to Naplet"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png

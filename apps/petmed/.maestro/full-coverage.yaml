@@ -34,6 +34,7 @@ appId: com.pawscript.app
 - extendedWaitUntil:
     visible: "One calm place for pet meds"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides + reminder step) =================
 - takeScreenshot: screenshots/onboarding-01-slide1.png

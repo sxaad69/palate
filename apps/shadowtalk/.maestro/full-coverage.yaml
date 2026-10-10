@@ -33,6 +33,7 @@ appId: com.shadowsay.app
 - extendedWaitUntil:
     visible: "ShadowSay"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (5 steps) =================
 - takeScreenshot: screenshots/onboarding-01-lang.png

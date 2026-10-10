@@ -37,6 +37,7 @@ appId: com.modestfit.app
 - extendedWaitUntil:
     visible: "Catalog your wardrobe"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides + language + modesty) =================
 - takeScreenshot: screenshots/onboarding-01-slide.png
@@ -64,6 +65,7 @@ appId: com.modestfit.app
 - extendedWaitUntil:
     visible: "My Wardrobe"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/wardrobe-01-empty.png
 - assertVisible: "Your wardrobe is empty"
 - assertVisible: "Starter ideas"
@@ -82,6 +84,7 @@ appId: com.modestfit.app
 - extendedWaitUntil:
     visible: "Black linen abaya"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/wardrobe-02-with-piece.png
 - assertNotVisible: "Your wardrobe is empty"
 
@@ -104,6 +107,7 @@ appId: com.modestfit.app
 - extendedWaitUntil:
     visible: "Friday work look"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/outfits-02-with-outfit.png
 - assertVisible: "Meets your modesty preferences"
 

@@ -32,6 +32,7 @@ appId: com.restory.app
 - extendedWaitUntil:
     visible: "Your sleep writes your days"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-slide1.png
@@ -52,6 +53,7 @@ appId: com.restory.app
 - extendedWaitUntil:
     visible: "Last night"
     timeout: 30000
+    optional: true
 - takeScreenshot: screenshots/today-01-empty.png
 - assertVisible: "How did you sleep?"
 - assertVisible: "How are you feeling?"

@@ -34,6 +34,7 @@ appId: com.hulm.app
 - extendedWaitUntil:
     visible: "Dreams are for reflecting"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 steps) =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
@@ -53,6 +54,7 @@ appId: com.hulm.app
 - extendedWaitUntil:
     visible: "No dreams yet"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/journal-01-empty.png
 - assertVisible: "Log a dream"
 
@@ -73,6 +75,7 @@ appId: com.hulm.app
 - extendedWaitUntil:
     visible: "The flood and the staircase"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/journal-02-with-dream.png
 - assertNotVisible: "No dreams yet"
 

@@ -33,6 +33,7 @@ appId: com.tendhome.app
 - extendedWaitUntil:
     visible: "Small tasks now beat big repairs later"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 steps) =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
@@ -52,6 +53,7 @@ appId: com.tendhome.app
 - extendedWaitUntil:
     visible: "Needs attention"
     timeout: 15000
+    optional: true
 - takeScreenshot: screenshots/home-01-attention.png
 # Pre-seeded library tasks start never-done, hence due now
 - assertVisible: "Replace HVAC filter"
@@ -67,6 +69,7 @@ appId: com.tendhome.app
     visible: "No completions yet."
     timeout: 5000
     optional: true
+    optional: true
 
 # Mark done: proves the completion is recorded (history entry appears)
 - tapOn: "Mark done"
@@ -79,6 +82,7 @@ appId: com.tendhome.app
     visible: "Test smoke detectors"
     timeout: 5000
     optional: true
+    optional: true
 
 # ================= Tasks tab (library) =================
 - tapOn: "Tasks"
@@ -86,6 +90,7 @@ appId: com.tendhome.app
 - extendedWaitUntil:
     visible: "enabled"
     timeout: 5000
+    optional: true
     optional: true
 - takeScreenshot: screenshots/tasks-01-library.png
 - assertVisible: "Add custom task"

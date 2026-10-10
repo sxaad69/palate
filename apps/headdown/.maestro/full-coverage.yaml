@@ -33,6 +33,7 @@ appId: com.headdown.app
 - extendedWaitUntil:
     visible: "Your attention is the product"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01.png

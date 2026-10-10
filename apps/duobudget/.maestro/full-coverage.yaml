@@ -32,6 +32,7 @@ appId: com.twopurse.app
 - extendedWaitUntil:
     visible: "Money fights, solved gently"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01-fights.png

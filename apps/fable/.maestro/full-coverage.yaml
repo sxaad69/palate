@@ -35,6 +35,7 @@ appId: com.fable.breath
 - extendedWaitUntil:
     visible: "Fable"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01-slide.png

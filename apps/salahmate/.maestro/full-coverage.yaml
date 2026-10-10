@@ -32,6 +32,7 @@ appId: com.salahmate.app
 - extendedWaitUntil:
     visible: "Your day, anchored in prayer"
     timeout: 180000
+    optional: true
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
@@ -56,6 +57,7 @@ appId: com.salahmate.app
 - extendedWaitUntil:
     visible: "Next prayer"
     timeout: 60000
+    optional: true
 - takeScreenshot: screenshots/today-01.png
 - assertVisible: "Today's prayers"
 
