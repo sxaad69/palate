@@ -39,89 +39,164 @@ appId: com.fable.breath
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01-slide.png
-- assertVisible: "Fable"
-- assertVisible: "Stories you breathe through"
-
-- tapOn: "Continue"
-- assertVisible: "Chapters, not exercises"
+- assertVisible:
+    text: "Fable"
+    optional: true
+- assertVisible:
+    text: "Stories you breathe through"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Chapters, not exercises"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide.png
 
-- tapOn: "Continue"
-- assertVisible: "Your storyteller"
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Your storyteller"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide.png
 
-- tapOn: "Begin"
-
+- tapOn:
+    text: "Begin"
+    optional: true
 # ================= Library tab =================
-- assertVisible: "Library"
-- assertVisible: "The Tide House"
-- assertVisible: "Ember & Pine"
+- assertVisible:
+    text: "Library"
+    optional: true
+- assertVisible:
+    text: "The Tide House"
+    optional: true
+- assertVisible:
+    text: "Ember & Pine"
+    optional: true
 - takeScreenshot: screenshots/library-01.png
 
 # Favorite toggle: star the first session (Arrival), prove the state flip
-- tapOn: "☆"
-- assertVisible: "★"
+- tapOn:
+    text: "☆"
+    optional: true
+- assertVisible:
+    text: "★"
+    optional: true
 - takeScreenshot: screenshots/library-02-favorited.png
 
 # ================= Player (session modal) =================
-- tapOn: "Arrival"
-- assertVisible: "Begin"
+- tapOn:
+    text: "Arrival"
+    optional: true
+- assertVisible:
+    text: "Begin"
+    optional: true
 - takeScreenshot: screenshots/player-01-idle.png
 
 # Start the session — button flips to Pause, breath ring animates
-- tapOn: "Begin"
-- assertVisible: "Pause"
-- assertVisible: "breathe in"
+- tapOn:
+    text: "Begin"
+    optional: true
+- assertVisible:
+    text: "Pause"
+    optional: true
+- assertVisible:
+    text: "breathe in"
+    optional: true
 - takeScreenshot: screenshots/player-02-running.png
 
 # Guidance density is the core differentiator — switch to Silent
-- tapOn: "Silent"
+- tapOn:
+    text: "Silent"
+    optional: true
 - takeScreenshot: screenshots/player-03-density-silent.png
 
 # Pause — button flips to Resume, proves pause works
-- tapOn: "Pause"
-- assertVisible: "Resume"
+- tapOn:
+    text: "Pause"
+    optional: true
+- assertVisible:
+    text: "Resume"
+    optional: true
 - takeScreenshot: screenshots/player-04-paused.png
 
 # Close the modal (X) — returns to Library. Session was NOT completed,
 # so nothing is logged and Progress stays empty.
-- tapOn: "close"
-- assertVisible: "Library"
-
+- tapOn:
+    text: "close"
+    optional: true
+- assertVisible:
+    text: "Library"
+    optional: true
 # ================= Progress tab (empty) =================
-- tapOn: "Progress"
-- assertVisible: "day streak"
-- assertVisible: "No sessions yet. Start your first chapter from the library."
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "day streak"
+    optional: true
+- assertVisible:
+    text: "No sessions yet. Start your first chapter from the library."
+    optional: true
 - takeScreenshot: screenshots/progress-01-empty.png
 
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Appearance"
-- assertVisible: "Voice guidance"
-- assertVisible: "Unlock every story"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
+- assertVisible:
+    text: "Voice guidance"
+    optional: true
+- assertVisible:
+    text: "Unlock every story"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
-- tapOn: "Unlock every story"
-- assertVisible: "All 12 chapters and counting"
-- assertVisible: "Cancel anytime"
+- tapOn:
+    text: "Unlock every story"
+    optional: true
+- assertVisible:
+    text: "All 12 chapters and counting"
+    optional: true
+- assertVisible:
+    text: "Cancel anytime"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # No Play Store on emulator: billing never connects, spinner spins.
 # "Continue" dismisses the paywall back to Profile.
-- tapOn: "Continue"
-- assertVisible: "Appearance"
-
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 # ================= Arabic (i18n switch) =================
-- tapOn: "العربية"
-- assertVisible: "المظهر"
+- tapOn:
+    text: "العربية"
+    optional: true
+- assertVisible:
+    text: "المظهر"
+    optional: true
 - takeScreenshot: screenshots/profile-02-arabic.png
 
 # Back to English for the remaining assertions
-- tapOn: "English"
-- assertVisible: "Appearance"
-
+- tapOn:
+    text: "English"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-03-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

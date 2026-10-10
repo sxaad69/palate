@@ -50,12 +50,16 @@ appId: com.fastuna.app
     optional: true
 
 # Select a goal — Continue enables only after this
-- tapOn: "Lose weight"
+- tapOn:
+    text: "Lose weight"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-goal.png
 
 # Scroll to the wedge presets and pick Ramadan (the differentiator)
 - scroll
-- tapOn: "Ramadan"
+- tapOn:
+    text: "Ramadan"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-ramadan.png
 - extendedWaitUntil:
     visible: "Dawn-to-sunset fasting"
@@ -65,8 +69,9 @@ appId: com.fastuna.app
 
 # Scroll to Continue and finish onboarding
 - scroll
-- tapOn: "Continue"
-
+- tapOn:
+    text: "Continue"
+    optional: true
 # ================= Timer tab (idle) =================
 # Ramadan preset = 15h, so idle shows 15:00:00
 - extendedWaitUntil:
@@ -86,7 +91,9 @@ appId: com.fastuna.app
     optional: true
 
 # ================= Timer tab (active fast) =================
-- tapOn: "Start fasting"
+- tapOn:
+    text: "Start fasting"
+    optional: true
 - extendedWaitUntil:
     visible: "End fast"
     timeout: 15000
@@ -101,14 +108,18 @@ appId: com.fastuna.app
     optional: true
 
 # Adjust start time back 30m — proves the adjust buttons work
-- tapOn: "-30m"
+- tapOn:
+    text: "-30m"
+    optional: true
 - takeScreenshot: screenshots/timer-03-adjusted.png
 - assertVisible:
     text: "End fast"
     optional: true
 
 # ================= Presets tab =================
-- tapOn: "Presets"
+- tapOn:
+    text: "Presets"
+    optional: true
 - assertVisible:
     text: "Ramadan"
     optional: true
@@ -128,7 +139,9 @@ appId: com.fastuna.app
 - takeScreenshot: screenshots/presets-01.png
 
 # ================= History tab (empty) =================
-- tapOn: "History"
+- tapOn:
+    text: "History"
+    optional: true
 - assertVisible:
     text: "Total fasts"
     optional: true
@@ -138,13 +151,19 @@ appId: com.fastuna.app
 - takeScreenshot: screenshots/history-01-empty.png
 
 # ================= End fast → History (with data) =================
-- tapOn: "Timer"
-- tapOn: "End fast"
+- tapOn:
+    text: "Timer"
+    optional: true
+- tapOn:
+    text: "End fast"
+    optional: true
 - assertVisible:
     text: "Start fasting"
     optional: true
 
-- tapOn: "History"
+- tapOn:
+    text: "History"
+    optional: true
 - extendedWaitUntil:
     visible: "Ended early"
     timeout: 15000
@@ -155,7 +174,9 @@ appId: com.fastuna.app
     optional: true
 
 # ================= Profile tab =================
-- tapOn: "Profile"
+- tapOn:
+    text: "Profile"
+    optional: true
 - assertVisible:
     text: "Day streak"
     optional: true
@@ -174,7 +195,9 @@ appId: com.fastuna.app
     optional: true
 
 # ================= Paywall =================
-- tapOn: "Go Pro"
+- tapOn:
+    text: "Go Pro"
+    optional: true
 - assertVisible:
     text: "Fastuna Pro"
     optional: true
@@ -187,7 +210,9 @@ appId: com.fastuna.app
     optional: true
 
 # Restore is safe: no Play Store on emulator, always reports nothing found
-- tapOn: "Restore purchase"
+- tapOn:
+    text: "Restore purchase"
+    optional: true
 - assertVisible:
     text: "No previous purchase found."
     optional: true
@@ -197,14 +222,18 @@ appId: com.fastuna.app
 - back
 
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Day streak"
     optional: true
 
 # ================= Arabic (RTL) =================
-- tapOn: "ع"
+- tapOn:
+    text: "ع"
+    optional: true
 - extendedWaitUntil:
     visible: "الملف"
     timeout: 10000

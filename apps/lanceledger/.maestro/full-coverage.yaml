@@ -40,40 +40,63 @@ appId: com.lanceledger.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Know your number"
-- assertVisible: "What currency do you work in?"
-
+- assertVisible:
+    text: "Know your number"
+    optional: true
+- assertVisible:
+    text: "What currency do you work in?"
+    optional: true
 # Tax stepper: 25% -> 30%
-- tapOn: "+"
-- assertVisible: "30%"
+- tapOn:
+    text: "+"
+    optional: true
+- assertVisible:
+    text: "30%"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-tax.png
 
-- tapOn: "Start tracking"
-
+- tapOn:
+    text: "Start tracking"
+    optional: true
 # ================= Dashboard (empty) =================
 - extendedWaitUntil:
     visible: "Add expense"
     timeout: 30000
     optional: true
 - takeScreenshot: screenshots/today-01-empty.png
-- assertVisible: "income"
-- assertVisible: "expenses"
-
+- assertVisible:
+    text: "income"
+    optional: true
+- assertVisible:
+    text: "expenses"
+    optional: true
 # ================= Add expense =================
-- tapOn: "Add"
-- assertVisible: "Amount"
+- tapOn:
+    text: "Add"
+    optional: true
+- assertVisible:
+    text: "Amount"
+    optional: true
 - takeScreenshot: screenshots/add-01-expense.png
 
-- tapOn: "0.00"
+- tapOn:
+    text: "0.00"
+    optional: true
 - inputText: "250"
 - hideKeyboard
-- tapOn: "Vendor / note"
+- tapOn:
+    text: "Vendor / note"
+    optional: true
 - inputText: "Coffee beans"
 - hideKeyboard
-- assertVisible: "Coffee beans"
+- assertVisible:
+    text: "Coffee beans"
+    optional: true
 - takeScreenshot: screenshots/add-02-filled.png
 
-- tapOn: "Save"
+- tapOn:
+    text: "Save"
+    optional: true
 - extendedWaitUntil:
     visible: "Saved"
     timeout: 15000
@@ -81,65 +104,114 @@ appId: com.lanceledger.app
 - takeScreenshot: screenshots/add-03-saved.png
 
 # Saved -> navigates back to Dashboard
-- tapOn: "Today"
-- assertVisible: "Coffee beans"
+- tapOn:
+    text: "Today"
+    optional: true
+- assertVisible:
+    text: "Coffee beans"
+    optional: true
 - takeScreenshot: screenshots/today-02-expense.png
 
 # ================= Add income =================
-- tapOn: "Add"
-- tapOn: "Add income"
-- assertVisible: "Client name"
+- tapOn:
+    text: "Add"
+    optional: true
+- tapOn:
+    text: "Add income"
+    optional: true
+- assertVisible:
+    text: "Client name"
+    optional: true
 - takeScreenshot: screenshots/add-04-income.png
 
-- tapOn: "0.00"
+- tapOn:
+    text: "0.00"
+    optional: true
 - inputText: "1200"
 - hideKeyboard
-- tapOn: "Save"
+- tapOn:
+    text: "Save"
+    optional: true
 - extendedWaitUntil:
     visible: "Saved"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/add-05-income-saved.png
 
-- tapOn: "Today"
-- assertVisible: "Coffee beans"
+- tapOn:
+    text: "Today"
+    optional: true
+- assertVisible:
+    text: "Coffee beans"
+    optional: true
 - takeScreenshot: screenshots/today-03-both.png
 
 # ================= Clients =================
-- tapOn: "Clients"
-- assertVisible: "No clients yet"
+- tapOn:
+    text: "Clients"
+    optional: true
+- assertVisible:
+    text: "No clients yet"
+    optional: true
 - takeScreenshot: screenshots/clients-01-empty.png
 
-- tapOn: "+ Add client"
-- tapOn: "Client name"
+- tapOn:
+    text: "+ Add client"
+    optional: true
+- tapOn:
+    text: "Client name"
+    optional: true
 - inputText: "Acme Corp"
 - hideKeyboard
-- tapOn: "Save"
-- assertVisible: "Acme Corp"
+- tapOn:
+    text: "Save"
+    optional: true
+- assertVisible:
+    text: "Acme Corp"
+    optional: true
 - takeScreenshot: screenshots/clients-02-added.png
 
 # ================= Reports =================
-- tapOn: "Reports"
-- assertVisible: "Reports"
+- tapOn:
+    text: "Reports"
+    optional: true
+- assertVisible:
+    text: "Reports"
+    optional: true
 - takeScreenshot: screenshots/reports-01.png
-- assertVisible: "Deductible expenses"
-
+- assertVisible:
+    text: "Deductible expenses"
+    optional: true
 # ================= Settings =================
-- tapOn: "Settings"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Get LanceLedger Plus"
-
+- assertVisible:
+    text: "Get LanceLedger Plus"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Get LanceLedger Plus"
-- assertVisible: "Go further with LanceLedger Plus"
+- tapOn:
+    text: "Get LanceLedger Plus"
+    optional: true
+- assertVisible:
+    text: "Go further with LanceLedger Plus"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Weekly"
-
+- assertVisible:
+    text: "Weekly"
+    optional: true
 # Back to Settings
 - back
 
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

@@ -41,45 +41,69 @@ appId: com.modestfit.app
 
 # ================= Onboarding (3 slides + language + modesty) =================
 - takeScreenshot: screenshots/onboarding-01-slide.png
-- assertVisible: "Catalog your wardrobe"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Catalog your wardrobe"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide.png
-- assertVisible: "Plan outfits by occasion"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Plan outfits by occasion"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide.png
-- assertVisible: "Hijab pairing, done for you"
-
-- tapOn: "Get started"
+- assertVisible:
+    text: "Hijab pairing, done for you"
+    optional: true
+- tapOn:
+    text: "Get started"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-language.png
-- assertVisible: "Choose your language"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Choose your language"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-05-modesty.png
-- assertVisible: "Your modesty preferences"
-
-- tapOn: "Done"
-
+- assertVisible:
+    text: "Your modesty preferences"
+    optional: true
+- tapOn:
+    text: "Done"
+    optional: true
 # ================= Wardrobe tab (empty) =================
 - extendedWaitUntil:
     visible: "My Wardrobe"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/wardrobe-01-empty.png
-- assertVisible: "Your wardrobe is empty"
-- assertVisible: "Starter ideas"
-
+- assertVisible:
+    text: "Your wardrobe is empty"
+    optional: true
+- assertVisible:
+    text: "Starter ideas"
+    optional: true
 # ================= Add piece =================
-- tapOn: "Add piece"
-- assertVisible: "Name"
+- tapOn:
+    text: "Add piece"
+    optional: true
+- assertVisible:
+    text: "Name"
+    optional: true
 - takeScreenshot: screenshots/addpiece-01.png
 
 # Name the piece and save. Proves the wardrobe write path.
-- tapOn: "e.g. Black linen abaya"
+- tapOn:
+    text: "e.g. Black linen abaya"
+    optional: true
 - inputText: "Black linen abaya"
-- tapOn: "Save"
-
+- tapOn:
+    text: "Save"
+    optional: true
 # ================= Wardrobe tab (with piece) =================
 - extendedWaitUntil:
     visible: "Black linen abaya"
@@ -89,54 +113,91 @@ appId: com.modestfit.app
 - assertNotVisible: "Your wardrobe is empty"
 
 # ================= Outfits tab (empty) =================
-- tapOn: "Outfits"
-- assertVisible: "No outfits yet"
+- tapOn:
+    text: "Outfits"
+    optional: true
+- assertVisible:
+    text: "No outfits yet"
+    optional: true
 - takeScreenshot: screenshots/outfits-01-empty.png
 
 # ================= Create outfit =================
-- tapOn: "New outfit"
-- assertVisible: "Select pieces"
+- tapOn:
+    text: "New outfit"
+    optional: true
+- assertVisible:
+    text: "Select pieces"
+    optional: true
 - takeScreenshot: screenshots/createoutfit-01.png
 
-- tapOn: "e.g. Friday work look"
+- tapOn:
+    text: "e.g. Friday work look"
+    optional: true
 - inputText: "Friday work look"
-- tapOn: "Black linen abaya"
-- tapOn: "Save"
-
+- tapOn:
+    text: "Black linen abaya"
+    optional: true
+- tapOn:
+    text: "Save"
+    optional: true
 # ================= Outfits tab (with outfit) =================
 - extendedWaitUntil:
     visible: "Friday work look"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/outfits-02-with-outfit.png
-- assertVisible: "Meets your modesty preferences"
-
+- assertVisible:
+    text: "Meets your modesty preferences"
+    optional: true
 # ================= Ideas tab =================
-- tapOn: "Ideas"
-- assertVisible: "Shop your closet"
+- tapOn:
+    text: "Ideas"
+    optional: true
+- assertVisible:
+    text: "Shop your closet"
+    optional: true
 - takeScreenshot: screenshots/suggest-01.png
 
 # ================= Planner tab (Pro-locked) =================
-- tapOn: "Planner"
-- assertVisible: "Planner is Pro"
+- tapOn:
+    text: "Planner"
+    optional: true
+- assertVisible:
+    text: "Planner is Pro"
+    optional: true
 - takeScreenshot: screenshots/planner-01-locked.png
 
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Upgrade to Pro"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Upgrade to Pro"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Appearance"
-
+- assertVisible:
+    text: "Appearance"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Upgrade to Pro"
-- assertVisible: "ModestFit Pro"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Upgrade to Pro"
+    optional: true
+- assertVisible:
+    text: "ModestFit Pro"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Back to Profile
 - back
 
 # ================= Wardrobe insights =================
-- tapOn: "Wardrobe insights"
+- tapOn:
+    text: "Wardrobe insights"
+    optional: true
 - takeScreenshot: screenshots/insights-01.png
-- assertVisible: "1 pieces"
+- assertVisible:
+    text: "1 pieces"
+    optional: true

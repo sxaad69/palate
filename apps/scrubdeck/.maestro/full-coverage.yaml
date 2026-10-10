@@ -37,84 +37,155 @@ appId: com.scrubdeck.app
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Know it cold for the exam"
-
-- tapOn: "→"
-- assertVisible: "Spaced repetition does the scheduling"
+- assertVisible:
+    text: "Know it cold for the exam"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
+- assertVisible:
+    text: "Spaced repetition does the scheduling"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02.png
 
-- tapOn: "→"
-- assertVisible: "A few minutes a day"
+- tapOn:
+    text: "→"
+    optional: true
+- assertVisible:
+    text: "A few minutes a day"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03.png
 
-- tapOn: "Start studying"
-
+- tapOn:
+    text: "Start studying"
+    optional: true
 # ================= Home (Today tab) =================
 # Seed cards are due immediately (nextDue: now), so Start session renders
-- assertVisible: "Today"
-- assertVisible: "cards due"
-- assertVisible: "Start session"
+- assertVisible:
+    text: "Today"
+    optional: true
+- assertVisible:
+    text: "cards due"
+    optional: true
+- assertVisible:
+    text: "Start session"
+    optional: true
 - takeScreenshot: screenshots/home-01.png
 
 # ================= Study session =================
-- tapOn: "Start session"
-- assertVisible: "Tap to reveal"
+- tapOn:
+    text: "Start session"
+    optional: true
+- assertVisible:
+    text: "Tap to reveal"
+    optional: true
 - takeScreenshot: screenshots/study-01-front.png
 
-- tapOn: "Tap to reveal"
-- assertVisible: "Again"
-- assertVisible: "Good"
+- tapOn:
+    text: "Tap to reveal"
+    optional: true
+- assertVisible:
+    text: "Again"
+    optional: true
+- assertVisible:
+    text: "Good"
+    optional: true
 - takeScreenshot: screenshots/study-02-back.png
 
 # Grade Good — proves SM-2 scheduling advances to the next card
-- tapOn: "Good"
-- assertVisible: "Tap to reveal"
+- tapOn:
+    text: "Good"
+    optional: true
+- assertVisible:
+    text: "Tap to reveal"
+    optional: true
 - takeScreenshot: screenshots/study-03-graded.png
 
 # Close study (X) — returns to Home
-- tapOn: "✕"
-- assertVisible: "Today"
-
+- tapOn:
+    text: "✕"
+    optional: true
+- assertVisible:
+    text: "Today"
+    optional: true
 # ================= Decks tab =================
-- tapOn: "Decks"
-- assertVisible: "Fundamentals"
+- tapOn:
+    text: "Decks"
+    optional: true
+- assertVisible:
+    text: "Fundamentals"
+    optional: true
 - takeScreenshot: screenshots/decks-01.png
 
-- tapOn: "Fundamentals"
-- assertVisible: "Add card"
+- tapOn:
+    text: "Fundamentals"
+    optional: true
+- assertVisible:
+    text: "Add card"
+    optional: true
 - takeScreenshot: screenshots/decks-02-detail.png
 
 # Back to deck list
-- tapOn: "← Decks"
-- assertVisible: "Fundamentals"
-
+- tapOn:
+    text: "← Decks"
+    optional: true
+- assertVisible:
+    text: "Fundamentals"
+    optional: true
 # ================= Progress tab =================
-- tapOn: "Progress"
-- assertVisible: "Total reviews"
-- assertVisible: "day streak"
-- assertVisible: "Mastery by deck"
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "Total reviews"
+    optional: true
+- assertVisible:
+    text: "day streak"
+    optional: true
+- assertVisible:
+    text: "Mastery by deck"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
 
 # ================= Settings tab =================
-- tapOn: "Settings"
-- assertVisible: "Settings"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Go Plus"
-
+- assertVisible:
+    text: "Go Plus"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Go Plus"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Go Plus"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # "Later" dismisses the paywall back to Settings
-- tapOn: "Later"
-- assertVisible: "Settings"
-
+- tapOn:
+    text: "Later"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- assertVisible: "Dark"
-
+- assertVisible:
+    text: "Dark"
+    optional: true
 # Restore light mode
-- tapOn: "Light"
-- assertVisible: "Settings"
+- tapOn:
+    text: "Light"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true

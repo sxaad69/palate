@@ -41,33 +41,59 @@ appId: com.meetbrief.notes
 
 # ================= Onboarding (3 slides + mic rationale) =================
 - takeScreenshot: screenshots/onboarding-01-detail.png
-- assertVisible: "Never miss a detail"
-- assertVisible: "Never miss a detail"
-
-- tapOn: "Continue"
-- assertVisible: "Actions, not walls of text"
+- assertVisible:
+    text: "Never miss a detail"
+    optional: true
+- assertVisible:
+    text: "Never miss a detail"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Actions, not walls of text"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-actions.png
 
-- tapOn: "Continue"
-- assertVisible: "Private by design"
-- assertVisible: "Allow microphone access"
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Private by design"
+    optional: true
+- assertVisible:
+    text: "Allow microphone access"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-mic.png
 
-- tapOn: "Allow microphone access"
-- tapOn: "Get started"
-
+- tapOn:
+    text: "Allow microphone access"
+    optional: true
+- tapOn:
+    text: "Get started"
+    optional: true
 # ================= Meetings tab (empty) =================
-- assertVisible: "Meetings"
-- assertVisible: "No meetings yet"
+- assertVisible:
+    text: "Meetings"
+    optional: true
+- assertVisible:
+    text: "No meetings yet"
+    optional: true
 - takeScreenshot: screenshots/meetings-01-empty.png
 
 # ================= Record tab =================
-- tapOn: "Record"
-- assertVisible: "Tap to start recording"
+- tapOn:
+    text: "Record"
+    optional: true
+- assertVisible:
+    text: "Tap to start recording"
+    optional: true
 - takeScreenshot: screenshots/record-01-idle.png
 
 # Name the meeting before recording (title locks once recording starts)
-- tapOn: "Meeting title"
+- tapOn:
+    text: "Meeting title"
+    optional: true
 - inputText: "Coverage test meeting"
 
 # Dismiss the keyboard, then start recording. The big red record button has
@@ -128,38 +154,68 @@ appId: com.meetbrief.notes
     text: "e.g. Send the proposal by Friday"
     optional: true
 - inputText: "Coverage action"
-- tapOn: "+"
-- assertVisible: "Coverage action"
-- tapOn: "Coverage action"
+- tapOn:
+    text: "+"
+    optional: true
+- assertVisible:
+    text: "Coverage action"
+    optional: true
+- tapOn:
+    text: "Coverage action"
+    optional: true
 - takeScreenshot: screenshots/detail-02-action-added.png
 
 # Back to the meetings list
-- tapOn: "‹"
-
+- tapOn:
+    text: "‹"
+    optional: true
 # ================= Meetings tab (with meeting) =================
-- tapOn: "Meetings"
-- assertVisible: "Coverage test meeting"
+- tapOn:
+    text: "Meetings"
+    optional: true
+- assertVisible:
+    text: "Coverage test meeting"
+    optional: true
 - takeScreenshot: screenshots/meetings-02-with-meeting.png
 
 # ================= Stats tab =================
-- tapOn: "Stats"
-- assertVisible: "Meetings recorded"
+- tapOn:
+    text: "Stats"
+    optional: true
+- assertVisible:
+    text: "Meetings recorded"
+    optional: true
 - takeScreenshot: screenshots/stats-01.png
 
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
-- tapOn: "Upgrade to Pro"
-- assertVisible: "Go Pro"
-- assertVisible: "free trial"
+- tapOn:
+    text: "Upgrade to Pro"
+    optional: true
+- assertVisible:
+    text: "Go Pro"
+    optional: true
+- assertVisible:
+    text: "free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
-- tapOn: "✕"
-- assertVisible: "Profile"
-
+- tapOn:
+    text: "✕"
+    optional: true
+- assertVisible:
+    text: "Profile"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

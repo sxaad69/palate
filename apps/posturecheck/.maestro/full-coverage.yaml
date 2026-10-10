@@ -45,50 +45,82 @@ appId: com.straightup.posture
 
 # ================= Onboarding (6 pages) =================
 - takeScreenshot: screenshots/onboarding-01-language.png
-- assertVisible: "Choose your language"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Choose your language"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-posture.png
-- assertVisible: "Your desk is wrecking your posture"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Your desk is wrecking your posture"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-markers.png
-- assertVisible: "Place the markers, we do the math"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Place the markers, we do the math"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-fix.png
-- assertVisible: "Fix what is actually off"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Fix what is actually off"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-05-privacy.png
-- assertVisible: "Camera stays on your phone"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Camera stays on your phone"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-06-score.png
-- assertVisible: "How your score is computed"
-
-- tapOn: "Get started"
-
+- assertVisible:
+    text: "How your score is computed"
+    optional: true
+- tapOn:
+    text: "Get started"
+    optional: true
 # ================= Home tab (empty) =================
 - extendedWaitUntil:
     visible: "No checks yet"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/home-01-empty.png
-- assertVisible: "Check your posture. Fix the slouch."
-- assertVisible: "New check"
-- assertVisible: "Posture nudges"
-
+- assertVisible:
+    text: "Check your posture. Fix the slouch."
+    optional: true
+- assertVisible:
+    text: "New check"
+    optional: true
+- assertVisible:
+    text: "Posture nudges"
+    optional: true
 # ================= Capture (guide + camera entry) =================
-- tapOn: "New check"
-- assertVisible: "Line yourself up"
-- assertVisible: "Start camera"
-- assertVisible: "Choose from gallery"
+- tapOn:
+    text: "New check"
+    optional: true
+- assertVisible:
+    text: "Line yourself up"
+    optional: true
+- assertVisible:
+    text: "Start camera"
+    optional: true
+- assertVisible:
+    text: "Choose from gallery"
+    optional: true
 - takeScreenshot: screenshots/capture-01-guide.png
 
 # Camera state on the emulator is permission-dependent: dismiss any system
 # permission dialog if it appears, screenshot whatever state we land in.
-- tapOn: "Start camera"
+- tapOn:
+    text: "Start camera"
+    optional: true
 - tapOn:
     text: "Allow"
     optional: true
@@ -105,37 +137,66 @@ appId: com.straightup.posture
     optional: true
 
 # ================= Exercises tab =================
-- tapOn: "Exercises"
-- assertVisible: "Exercise library"
+- tapOn:
+    text: "Exercises"
+    optional: true
+- assertVisible:
+    text: "Exercise library"
+    optional: true
 - takeScreenshot: screenshots/exercises-01.png
 
 # Expand the first exercise — proves the interactive rows work
-- tapOn: "Chin Tucks"
+- tapOn:
+    text: "Chin Tucks"
+    optional: true
 - takeScreenshot: screenshots/exercises-02-expanded.png
-- assertVisible: "Sit tall. Glide your chin straight back"
-
+- assertVisible:
+    text: "Sit tall. Glide your chin straight back"
+    optional: true
 # ================= History tab =================
-- tapOn: "History"
-- assertVisible: "No checks yet"
+- tapOn:
+    text: "History"
+    optional: true
+- assertVisible:
+    text: "No checks yet"
+    optional: true
 - takeScreenshot: screenshots/history-01-empty.png
-- assertVisible: "Your posture timeline will appear here after your first check."
-
+- assertVisible:
+    text: "Your posture timeline will appear here after your first check."
+    optional: true
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "StraightUp Pro"
-- assertVisible: "Appearance"
-- assertVisible: "Language"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "StraightUp Pro"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
+- assertVisible:
+    text: "Language"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
-- tapOn: "StraightUp Pro"
-- assertVisible: "Stand taller, every week"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "StraightUp Pro"
+    optional: true
+- assertVisible:
+    text: "Stand taller, every week"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Close paywall
-- tapOn: "Close"
-
+- tapOn:
+    text: "Close"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

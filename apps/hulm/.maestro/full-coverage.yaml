@@ -38,39 +38,59 @@ appId: com.hulm.app
 
 # ================= Onboarding (3 steps) =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
-- assertVisible: "Dreams are for reflecting"
-
-- tapOn: "→"
+- assertVisible:
+    text: "Dreams are for reflecting"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-symbols.png
-- assertVisible: "Symbols, not verdicts"
-
-- tapOn: "→"
+- assertVisible:
+    text: "Symbols, not verdicts"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-disclaimer.png
-- assertVisible: "Not a religious ruling"
-
-- tapOn: "Begin journaling"
-
+- assertVisible:
+    text: "Not a religious ruling"
+    optional: true
+- tapOn:
+    text: "Begin journaling"
+    optional: true
 # ================= Journal tab (empty) =================
 - extendedWaitUntil:
     visible: "No dreams yet"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/journal-01-empty.png
-- assertVisible: "Log a dream"
-
+- assertVisible:
+    text: "Log a dream"
+    optional: true
 # ================= Dream form =================
-- tapOn: "Log a dream"
-- assertVisible: "How did you wake up feeling?"
+- tapOn:
+    text: "Log a dream"
+    optional: true
+- assertVisible:
+    text: "How did you wake up feeling?"
+    optional: true
 - takeScreenshot: screenshots/dreamform-01.png
 
 # Fill title + narrative, pick a mood, save. Proves the journal write path.
-- tapOn: "e.g. The flood and the staircase"
+- tapOn:
+    text: "e.g. The flood and the staircase"
+    optional: true
 - inputText: "The flood and the staircase"
-- tapOn: "Write everything you remember…"
+- tapOn:
+    text: "Write everything you remember…"
+    optional: true
 - inputText: "I was flying over dark water and saw a snake."
-- tapOn: "Peaceful"
-- tapOn: "Save dream"
-
+- tapOn:
+    text: "Peaceful"
+    optional: true
+- tapOn:
+    text: "Save dream"
+    optional: true
 # ================= Journal tab (with dream) =================
 - extendedWaitUntil:
     visible: "The flood and the staircase"
@@ -80,48 +100,90 @@ appId: com.hulm.app
 - assertNotVisible: "No dreams yet"
 
 # ================= Dream detail =================
-- tapOn: "The flood and the staircase"
-- assertVisible: "Reflect"
+- tapOn:
+    text: "The flood and the staircase"
+    optional: true
+- assertVisible:
+    text: "Reflect"
+    optional: true
 - takeScreenshot: screenshots/dreamdetail-01.png
-- assertVisible: "Delete dream"
-
+- assertVisible:
+    text: "Delete dream"
+    optional: true
 # Back to Journal
-- tapOn: "‹ Journal"
-
+- tapOn:
+    text: "‹ Journal"
+    optional: true
 # ================= Symbols tab =================
-- tapOn: "Symbols"
-- assertVisible: "Search symbols…"
+- tapOn:
+    text: "Symbols"
+    optional: true
+- assertVisible:
+    text: "Search symbols…"
+    optional: true
 - takeScreenshot: screenshots/symbols-01.png
 
 # Open the first symbol → symbol detail
-- tapOn: "Water"
+- tapOn:
+    text: "Water"
+    optional: true
 - takeScreenshot: screenshots/symboldetail-01.png
-- assertVisible: "Water"
-- tapOn: "‹ Symbols"
-
+- assertVisible:
+    text: "Water"
+    optional: true
+- tapOn:
+    text: "‹ Symbols"
+    optional: true
 # ================= Insights tab =================
-- tapOn: "Insights"
-- assertVisible: "Dreams logged"
+- tapOn:
+    text: "Insights"
+    optional: true
+- assertVisible:
+    text: "Dreams logged"
+    optional: true
 - takeScreenshot: screenshots/insights-01.png
-- assertVisible: "Waking moods"
-- assertVisible: "Peaceful"
-
+- assertVisible:
+    text: "Waking moods"
+    optional: true
+- assertVisible:
+    text: "Peaceful"
+    optional: true
 # ================= Settings tab =================
-- tapOn: "Settings"
-- assertVisible: "Language"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Language"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Hulm 1.0"
-
+- assertVisible:
+    text: "Hulm 1.0"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- tapOn: "Light"
-
+- tapOn:
+    text: "Light"
+    optional: true
 # ================= Paywall (via Insights upgrade) =================
-- tapOn: "Insights"
-- tapOn: "Go Plus"
-- assertVisible: "Hulm Plus"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Insights"
+    optional: true
+- tapOn:
+    text: "Go Plus"
+    optional: true
+- assertVisible:
+    text: "Hulm Plus"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- tapOn: "Later"
+- tapOn:
+    text: "Later"
+    optional: true

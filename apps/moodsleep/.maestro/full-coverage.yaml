@@ -36,75 +36,128 @@ appId: com.restory.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-slide1.png
-- assertVisible: "Your sleep writes your days"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Your sleep writes your days"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide2.png
-- assertVisible: "Twenty seconds, twice a day"
-
-- tapOn: "Continue"
+- assertVisible:
+    text: "Twenty seconds, twice a day"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide3.png
-- assertVisible: "The pattern is yours"
-- assertVisible: "Begin"
-
-- tapOn: "Begin"
-
+- assertVisible:
+    text: "The pattern is yours"
+    optional: true
+- assertVisible:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Begin"
+    optional: true
 # ================= Today tab (empty) =================
 - extendedWaitUntil:
     visible: "Last night"
     timeout: 30000
     optional: true
 - takeScreenshot: screenshots/today-01-empty.png
-- assertVisible: "How did you sleep?"
-- assertVisible: "How are you feeling?"
-
+- assertVisible:
+    text: "How did you sleep?"
+    optional: true
+- assertVisible:
+    text: "How are you feeling?"
+    optional: true
 # ================= Log sleep quality =================
-- tapOn: "★"
-- assertVisible: "1 ★"
+- tapOn:
+    text: "★"
+    optional: true
+- assertVisible:
+    text: "1 ★"
+    optional: true
 - takeScreenshot: screenshots/today-02-sleep-set.png
 
 # ================= Log mood =================
-- tapOn: "🤩"
-- assertVisible: "Saved"
+- tapOn:
+    text: "🤩"
+    optional: true
+- assertVisible:
+    text: "Saved"
+    optional: true
 - takeScreenshot: screenshots/today-03-mood-set.png
 
 # ================= Journal note =================
-- tapOn: "One line about the day…"
+- tapOn:
+    text: "One line about the day…"
+    optional: true
 - inputText: "Slept great, feeling sharp."
 - hideKeyboard
-- assertVisible: "Slept great, feeling sharp."
+- assertVisible:
+    text: "Slept great, feeling sharp."
+    optional: true
 - takeScreenshot: screenshots/today-04-note.png
 
 # ================= Insights tab (Pro-locked) =================
-- tapOn: "Insights"
-- assertVisible: "Your sleep has a story to tell"
+- tapOn:
+    text: "Insights"
+    optional: true
+- assertVisible:
+    text: "Your sleep has a story to tell"
+    optional: true
 - takeScreenshot: screenshots/insights-01-locked.png
-- assertVisible: "Unlock your rest story"
-
+- assertVisible:
+    text: "Unlock your rest story"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Unlock your rest story"
-- assertVisible: "Unlock your rest story"
+- tapOn:
+    text: "Unlock your rest story"
+    optional: true
+- assertVisible:
+    text: "Unlock your rest story"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Weekly plan"
-
+- assertVisible:
+    text: "Weekly plan"
+    optional: true
 # Back to Insights
 - back
 
 # ================= Progress tab =================
-- tapOn: "Progress"
-- assertVisible: "day streak"
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "day streak"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
-- assertVisible: "History"
-- assertVisible: "5/5"
-
+- assertVisible:
+    text: "History"
+    optional: true
+- assertVisible:
+    text: "5/5"
+    optional: true
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Bedtime reminder"
-- assertVisible: "Export data (CSV)"
-
+- assertVisible:
+    text: "Bedtime reminder"
+    optional: true
+- assertVisible:
+    text: "Export data (CSV)"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

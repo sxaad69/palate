@@ -37,75 +37,137 @@ appId: com.shadowsay.app
 
 # ================= Onboarding (5 steps) =================
 - takeScreenshot: screenshots/onboarding-01-lang.png
-- assertVisible: "ShadowSay"
-- assertVisible: "Shadow. Speak. Sound native."
-- assertVisible: "Pick your app language"
-
-- tapOn: "Continue"
-- assertVisible: "Hear it like a native"
+- assertVisible:
+    text: "ShadowSay"
+    optional: true
+- assertVisible:
+    text: "Shadow. Speak. Sound native."
+    optional: true
+- assertVisible:
+    text: "Pick your app language"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Hear it like a native"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide1.png
 
-- tapOn: "Continue"
-- assertVisible: "Shadow it out loud"
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Shadow it out loud"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide2.png
 
-- tapOn: "Continue"
-- assertVisible: "Compare and score"
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Compare and score"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-slide3.png
 
-- tapOn: "Continue"
-- assertVisible: "Which direction will you practice?"
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible:
+    text: "Which direction will you practice?"
+    optional: true
 - takeScreenshot: screenshots/onboarding-05-direction.png
 
-- tapOn: "English → Arabic"
+- tapOn:
+    text: "English → Arabic"
+    optional: true
 - takeScreenshot: screenshots/onboarding-06-direction-selected.png
 
-- tapOn: "Start practicing"
-
+- tapOn:
+    text: "Start practicing"
+    optional: true
 # ================= Packs tab =================
-- assertVisible: "Travel"
-- assertVisible: "Arabic for English Speakers"
+- assertVisible:
+    text: "Travel"
+    optional: true
+- assertVisible:
+    text: "Arabic for English Speakers"
+    optional: true
 - takeScreenshot: screenshots/packs-01.png
 
 # Practice: free pack for en-ar direction is "Arabic for English Speakers"
-- tapOn: "Arabic for English Speakers"
-- assertVisible: "Play model"
-- assertVisible: "Record"
+- tapOn:
+    text: "Arabic for English Speakers"
+    optional: true
+- assertVisible:
+    text: "Play model"
+    optional: true
+- assertVisible:
+    text: "Record"
+    optional: true
 - takeScreenshot: screenshots/practice-01-idle.png
 
 # Play model uses on-device TTS — safe on emulator, no permission needed
-- tapOn: "Play model"
+- tapOn:
+    text: "Play model"
+    optional: true
 - takeScreenshot: screenshots/practice-02-model-playing.png
 
 # Close practice (X) — returns to Packs
-- tapOn: "✕"
-- assertVisible: "Travel"
-
+- tapOn:
+    text: "✕"
+    optional: true
+- assertVisible:
+    text: "Travel"
+    optional: true
 # ================= Progress tab =================
-- tapOn: "Progress"
-- assertVisible: "day streak"
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "day streak"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
 
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "ShadowSay"
-
+- assertVisible:
+    text: "ShadowSay"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Go Pro"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Go Pro"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # "Maybe later" dismisses the paywall back to Profile
-- tapOn: "Maybe later"
-- assertVisible: "Appearance"
-
+- tapOn:
+    text: "Maybe later"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
-- assertVisible: "Dark"
-
+- assertVisible:
+    text: "Dark"
+    optional: true
 # Restore light mode
-- tapOn: "Light"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Light"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true

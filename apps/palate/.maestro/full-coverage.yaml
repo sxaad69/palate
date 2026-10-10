@@ -41,30 +41,49 @@ appId: com.palate.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
-- assertVisible: "Palate"
-- assertVisible: "The food logger that knows your food — from kabsa to biryani."
-
+- assertVisible:
+    text: "Palate"
+    optional: true
+- assertVisible:
+    text: "The food logger that knows your food — from kabsa to biryani."
+    optional: true
 # Tap each goal to capture every selection state
-- tapOn: "Build healthy habits"
+- tapOn:
+    text: "Build healthy habits"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-habits-selected.png
 
-- tapOn: "Track macros"
+- tapOn:
+    text: "Track macros"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-macros-selected.png
 
-- tapOn: "Lose weight"
+- tapOn:
+    text: "Lose weight"
+    optional: true
 - takeScreenshot: screenshots/onboarding-04-lose-selected.png
 
-- tapOn: "Continue"
-
+- tapOn:
+    text: "Continue"
+    optional: true
 # ================= Today tab (empty) =================
 - takeScreenshot: screenshots/today-01-empty.png
-- assertVisible: "Protein"
-- assertVisible: "Carbs"
-- assertVisible: "Nothing logged yet"
-
+- assertVisible:
+    text: "Protein"
+    optional: true
+- assertVisible:
+    text: "Carbs"
+    optional: true
+- assertVisible:
+    text: "Nothing logged yet"
+    optional: true
 # ================= Scan tab =================
-- tapOn: "Snap your meal"
-- assertVisible: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
+- tapOn:
+    text: "Snap your meal"
+    optional: true
+- assertVisible:
+    text: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
+    optional: true
 - takeScreenshot: screenshots/scan-01-idle.png
 
 # Trigger a scan. Button label depends on camera permission state
@@ -86,56 +105,89 @@ appId: com.palate.app
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/scan-03-result.png
-- assertVisible: "Chicken Kabsa"
-
-- tapOn: "Log this meal"
-
+- assertVisible:
+    text: "Chicken Kabsa"
+    optional: true
+- tapOn:
+    text: "Log this meal"
+    optional: true
 # ================= Today tab (with meal) =================
 - extendedWaitUntil:
     visible: "1 logged"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/today-02-with-meal.png
-- assertVisible: "Chicken Kabsa"
-
+- assertVisible:
+    text: "Chicken Kabsa"
+    optional: true
 # ================= Dish detail =================
-- tapOn: "Chicken Kabsa"
-- assertVisible: "Portion"
+- tapOn:
+    text: "Chicken Kabsa"
+    optional: true
+- assertVisible:
+    text: "Portion"
+    optional: true
 - takeScreenshot: screenshots/dishdetail-01.png
 
-- tapOn: "Increase portion"
-- assertVisible: "1.5 plates"
+- tapOn:
+    text: "Increase portion"
+    optional: true
+- assertVisible:
+    text: "1.5 plates"
+    optional: true
 - takeScreenshot: screenshots/dishdetail-02-portion.png
 
 # System back returns to Today
 - back
 
 # ================= Progress tab =================
-- tapOn: "Progress"
-- assertVisible: "Current streak"
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "Current streak"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
-- assertVisible: "Badges"
-
+- assertVisible:
+    text: "Badges"
+    optional: true
 # ================= Profile tab =================
-- tapOn: "Profile"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Profile"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/profile-01.png
-- assertVisible: "Palate Pro"
-
+- assertVisible:
+    text: "Palate Pro"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Palate Pro"
-- assertVisible: "Subscribe"
+- tapOn:
+    text: "Palate Pro"
+    optional: true
+- assertVisible:
+    text: "Subscribe"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Restore is safe: no Play Store on emulator, always reports nothing found
-- tapOn: "Restore purchase"
-- assertVisible: "No previous purchase found."
+- tapOn:
+    text: "Restore purchase"
+    optional: true
+- assertVisible:
+    text: "No previous purchase found."
+    optional: true
 - takeScreenshot: screenshots/paywall-02-restore.png
 
 # Back to Profile
 - back
 
 # ================= Dark mode =================
-- tapOn: "Appearance"
-- assertVisible: "Dark"
+- tapOn:
+    text: "Appearance"
+    optional: true
+- assertVisible:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

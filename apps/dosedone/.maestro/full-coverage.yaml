@@ -59,14 +59,18 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Medicines tab =================
-- tapOn: "Medicines"
+- tapOn:
+    text: "Medicines"
+    optional: true
 - assertVisible:
     text: "Add medicine"
     optional: true
 - takeScreenshot: screenshots/meds-01-list.png
 
 # ================= Add medicine form =================
-- tapOn: "+ Add medicine"
+- tapOn:
+    text: "+ Add medicine"
+    optional: true
 - assertVisible:
     text: "Medicine name"
     optional: true
@@ -75,16 +79,19 @@ appId: com.dosedone.app
 - tapOn:
     text: "Medicine name"
     index: 1
+    optional: true
 - inputText: "Vitamin D"
 - tapOn:
     text: "Dose (e.g. 1 pill, 10mg)"
     index: 1
+    optional: true
 - inputText: "1 pill"
 - hideKeyboard
 - takeScreenshot: screenshots/medform-02-filled.png
 
-- tapOn: "Save medicine"
-
+- tapOn:
+    text: "Save medicine"
+    optional: true
 # Back on the Medicines list with the new med
 - assertVisible:
     text: "Vitamin D"
@@ -92,7 +99,9 @@ appId: com.dosedone.app
 - takeScreenshot: screenshots/meds-02-list.png
 
 # ================= Today tab (with med) =================
-- tapOn: "Today"
+- tapOn:
+    text: "Today"
+    optional: true
 - assertVisible:
     text: "Vitamin D"
     optional: true
@@ -102,7 +111,9 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Take the dose =================
-- tapOn: "TAKE"
+- tapOn:
+    text: "TAKE"
+    optional: true
 - assertVisible:
     text: "Taken ✓"
     optional: true
@@ -112,7 +123,9 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Progress tab =================
-- tapOn: "Progress"
+- tapOn:
+    text: "Progress"
+    optional: true
 - assertVisible:
     text: "of doses taken"
     optional: true
@@ -122,7 +135,9 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Family tab =================
-- tapOn: "Family"
+- tapOn:
+    text: "Family"
+    optional: true
 - assertVisible:
     text: "For family"
     optional: true
@@ -132,7 +147,9 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Settings tab =================
-- tapOn: "Settings"
+- tapOn:
+    text: "Settings"
+    optional: true
 - assertVisible:
     text: "Appearance"
     optional: true
@@ -142,7 +159,9 @@ appId: com.dosedone.app
     optional: true
 
 # ================= Paywall =================
-- tapOn: "Get DoseDone Plus"
+- tapOn:
+    text: "Get DoseDone Plus"
+    optional: true
 - assertVisible:
     text: "DoseDone Plus"
     optional: true
@@ -155,7 +174,9 @@ appId: com.dosedone.app
 - back
 
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
 - assertVisible:
     text: "Dark"

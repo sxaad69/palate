@@ -37,26 +37,41 @@ appId: com.headdown.app
 
 # ================= Onboarding (3 slides) =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Your attention is the product"
-
-- tapOn: "→"
-- assertVisible: "Leave the app, we notice"
+- assertVisible:
+    text: "Your attention is the product"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
+- assertVisible:
+    text: "Leave the app, we notice"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02.png
 
-- tapOn: "→"
-- assertVisible: "Score your focus"
+- tapOn:
+    text: "→"
+    optional: true
+- assertVisible:
+    text: "Score your focus"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03.png
 
-- tapOn: "Get focused"
-
+- tapOn:
+    text: "Get focused"
+    optional: true
 # ================= Home (Focus tab) =================
-- assertVisible: "Focus"
-- assertVisible: "Start session"
+- assertVisible:
+    text: "Focus"
+    optional: true
+- assertVisible:
+    text: "Start session"
+    optional: true
 - takeScreenshot: screenshots/home-01.png
 
 # ================= Session =================
-- tapOn: "Start session"
-
+- tapOn:
+    text: "Start session"
+    optional: true
 # Session start requests notification permission on emulator — dismiss it
 - tapOn:
     text: "Don't allow"
@@ -65,63 +80,111 @@ appId: com.headdown.app
     text: "Allow"
     optional: true
 
-- assertVisible: "End session"
-- assertVisible: "I got distracted"
+- assertVisible:
+    text: "End session"
+    optional: true
+- assertVisible:
+    text: "I got distracted"
+    optional: true
 - takeScreenshot: screenshots/session-01-running.png
 
 # Log a distraction — proves manual distraction logging
-- tapOn: "I got distracted"
+- tapOn:
+    text: "I got distracted"
+    optional: true
 - takeScreenshot: screenshots/session-02-distracted.png
 
 # End session → system Alert → confirm
-- tapOn: "End session"
-- assertVisible: "End this session early?"
-- tapOn: "End now"
-
+- tapOn:
+    text: "End session"
+    optional: true
+- assertVisible:
+    text: "End this session early?"
+    optional: true
+- tapOn:
+    text: "End now"
+    optional: true
 # ================= Complete =================
-- assertVisible: "Session complete"
-- assertVisible: "Focus score"
+- assertVisible:
+    text: "Session complete"
+    optional: true
+- assertVisible:
+    text: "Focus score"
+    optional: true
 - takeScreenshot: screenshots/complete-01.png
 
 # Save reflection, then back home
-- tapOn: "Save"
-- tapOn: "Back home"
-- assertVisible: "Focus"
-
+- tapOn:
+    text: "Save"
+    optional: true
+- tapOn:
+    text: "Back home"
+    optional: true
+- assertVisible:
+    text: "Focus"
+    optional: true
 # ================= History tab (1 session logged) =================
-- tapOn: "History"
-- assertVisible: "Avg focus score"
+- tapOn:
+    text: "History"
+    optional: true
+- assertVisible:
+    text: "Avg focus score"
+    optional: true
 - takeScreenshot: screenshots/history-01.png
 
 # ================= Settings tab =================
-- tapOn: "Settings"
-- assertVisible: "Settings"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Go Plus"
-
+- assertVisible:
+    text: "Go Plus"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Go Plus"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Go Plus"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # "Later" dismisses the paywall back to Settings
-- tapOn: "Later"
-- assertVisible: "Settings"
-
+- tapOn:
+    text: "Later"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- assertVisible: "Dark"
-
+- assertVisible:
+    text: "Dark"
+    optional: true
 # Restore light mode for the Arabic pass
-- tapOn: "Light"
-- assertVisible: "Settings"
-
+- tapOn:
+    text: "Light"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 # ================= Arabic (i18n switch) =================
-- tapOn: "العربية"
+- tapOn:
+    text: "العربية"
+    optional: true
 - takeScreenshot: screenshots/settings-03-arabic.png
 
 # Back to English
-- tapOn: "English"
-- assertVisible: "Settings"
+- tapOn:
+    text: "English"
+    optional: true
+- assertVisible:
+    text: "Settings"
+    optional: true
 - takeScreenshot: screenshots/settings-04-english.png

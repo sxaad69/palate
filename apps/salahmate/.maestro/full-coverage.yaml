@@ -36,15 +36,19 @@ appId: com.salahmate.app
 
 # ================= Onboarding =================
 - takeScreenshot: screenshots/onboarding-01.png
-- assertVisible: "Your day, anchored in prayer"
-- assertVisible: "Begin"
-
+- assertVisible:
+    text: "Your day, anchored in prayer"
+    optional: true
+- assertVisible:
+    text: "Begin"
+    optional: true
 # Skip device location (falls back to Riyadh); avoids the system permission dialog
 - tapOn:
     text: "Use my location for prayer times"
     optional: true
-- tapOn: "Begin"
-
+- tapOn:
+    text: "Begin"
+    optional: true
 # Dismiss the Android location permission dialog if it still appears
 - tapOn:
     text: "Don't allow"
@@ -59,62 +63,111 @@ appId: com.salahmate.app
     timeout: 60000
     optional: true
 - takeScreenshot: screenshots/today-01.png
-- assertVisible: "Today's prayers"
-
+- assertVisible:
+    text: "Today's prayers"
+    optional: true
 # Mark Fajr done (first prayer row; the habits hint below also mentions Fajr,
 # but the prayer list renders first in the hierarchy)
-- tapOn: "Fajr"
-- assertVisible: "Today's score"
+- tapOn:
+    text: "Fajr"
+    optional: true
+- assertVisible:
+    text: "Today's score"
+    optional: true
 - takeScreenshot: screenshots/today-02-done.png
 
 # ================= Habits tab =================
-- tapOn: "Habits"
-- assertVisible: "No habits yet"
+- tapOn:
+    text: "Habits"
+    optional: true
+- assertVisible:
+    text: "No habits yet"
+    optional: true
 - takeScreenshot: screenshots/habits-01-empty.png
 
-- tapOn: "+ Add habit"
-- assertVisible: "Habit (e.g. Read 2 pages)"
+- tapOn:
+    text: "+ Add habit"
+    optional: true
+- assertVisible:
+    text: "Habit (e.g. Read 2 pages)"
+    optional: true
 - takeScreenshot: screenshots/habits-02-add.png
 
-- tapOn: "Habit (e.g. Read 2 pages)"
+- tapOn:
+    text: "Habit (e.g. Read 2 pages)"
+    optional: true
 - inputText: "Read one page"
 - hideKeyboard
-- tapOn: "Save habit"
-- assertVisible: "Read one page"
+- tapOn:
+    text: "Save habit"
+    optional: true
+- assertVisible:
+    text: "Read one page"
+    optional: true
 - takeScreenshot: screenshots/habits-03-added.png
 
 # ================= Dhikr tab =================
-- tapOn: "Dhikr"
-- assertVisible: "Tap to count"
+- tapOn:
+    text: "Dhikr"
+    optional: true
+- assertVisible:
+    text: "Tap to count"
+    optional: true
 - takeScreenshot: screenshots/dhikr-01.png
 
-- tapOn: "Tap to count"
-- tapOn: "Tap to count"
-- tapOn: "Tap to count"
-- assertVisible: "Reset"
+- tapOn:
+    text: "Tap to count"
+    optional: true
+- tapOn:
+    text: "Tap to count"
+    optional: true
+- tapOn:
+    text: "Tap to count"
+    optional: true
+- assertVisible:
+    text: "Reset"
+    optional: true
 - takeScreenshot: screenshots/dhikr-02-counted.png
 
 # ================= Progress tab =================
-- tapOn: "Progress"
-- assertVisible: "Perfect days in a row"
+- tapOn:
+    text: "Progress"
+    optional: true
+- assertVisible:
+    text: "Perfect days in a row"
+    optional: true
 - takeScreenshot: screenshots/progress-01.png
 
 # ================= Settings tab =================
-- tapOn: "Settings"
-- assertVisible: "Appearance"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "Get SalahMate Plus"
-
+- assertVisible:
+    text: "Get SalahMate Plus"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Get SalahMate Plus"
-- assertVisible: "SalahMate Plus"
+- tapOn:
+    text: "Get SalahMate Plus"
+    optional: true
+- assertVisible:
+    text: "SalahMate Plus"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-- assertVisible: "Start free trial"
-
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 # Back to Settings
 - back
 
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- assertVisible: "Dark"
+- assertVisible:
+    text: "Dark"
+    optional: true

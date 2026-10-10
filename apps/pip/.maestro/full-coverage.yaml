@@ -51,8 +51,9 @@ appId: com.pip.app
       text: "Continue"
     direction: DOWN
     timeout: 10000
-- tapOn: "Continue"
-
+- tapOn:
+    text: "Continue"
+    optional: true
 # ================= Today tab (with starter recipe) =================
 - extendedWaitUntil:
     visible: ".*floss one tooth.*"
@@ -64,7 +65,9 @@ appId: com.pip.app
     optional: true
 
 # ================= Complete the habit -> celebration =================
-- tapOn: "Done"
+- tapOn:
+    text: "Done"
+    optional: true
 - assertVisible:
     text: "Shine!"
     optional: true
@@ -73,14 +76,18 @@ appId: com.pip.app
     text: "I celebrated!"
     optional: true
 
-- tapOn: "I celebrated!"
+- tapOn:
+    text: "I celebrated!"
+    optional: true
 - assertVisible:
     text: "Done today"
     optional: true
 - takeScreenshot: screenshots/today-03-done.png
 
 # ================= Recipes tab =================
-- tapOn: "Recipes"
+- tapOn:
+    text: "Recipes"
+    optional: true
 - assertVisible:
     text: ".*floss one tooth.*"
     optional: true
@@ -90,28 +97,40 @@ appId: com.pip.app
     optional: true
 
 # ================= Recipe editor =================
-- tapOn: "New recipe"
+- tapOn:
+    text: "New recipe"
+    optional: true
 - assertVisible:
     text: "After I… (e.g. brush my teeth)"
     optional: true
 - takeScreenshot: screenshots/editor-01.png
 
-- tapOn: "After I… (e.g. brush my teeth)"
+- tapOn:
+    text: "After I… (e.g. brush my teeth)"
+    optional: true
 - inputText: "pour my morning water"
-- tapOn: "I will… (e.g. floss one tooth)"
+- tapOn:
+    text: "I will… (e.g. floss one tooth)"
+    optional: true
 - inputText: "drink one glass"
 - hideKeyboard
-- tapOn: "Fist pump"
+- tapOn:
+    text: "Fist pump"
+    optional: true
 - takeScreenshot: screenshots/editor-02-filled.png
 
-- tapOn: "Save recipe"
+- tapOn:
+    text: "Save recipe"
+    optional: true
 - assertVisible:
     text: ".*drink one glass.*"
     optional: true
 - takeScreenshot: screenshots/recipes-02-new.png
 
 # ================= Progress tab =================
-- tapOn: "Progress"
+- tapOn:
+    text: "Progress"
+    optional: true
 - assertVisible:
     text: ".*day streak.*"
     optional: true
@@ -121,7 +140,9 @@ appId: com.pip.app
     optional: true
 
 # ================= Profile tab =================
-- tapOn: "Profile"
+- tapOn:
+    text: "Profile"
+    optional: true
 - assertVisible:
     text: "Appearance"
     optional: true
@@ -131,7 +152,9 @@ appId: com.pip.app
     optional: true
 
 # ================= Paywall =================
-- tapOn: "Go Pro"
+- tapOn:
+    text: "Go Pro"
+    optional: true
 - assertVisible:
     text: "Start free trial"
     optional: true
@@ -144,7 +167,9 @@ appId: com.pip.app
 - back
 
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Dark"

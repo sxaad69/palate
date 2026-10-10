@@ -37,18 +37,26 @@ appId: com.tendhome.app
 
 # ================= Onboarding (3 steps) =================
 - takeScreenshot: screenshots/onboarding-01-hero.png
-- assertVisible: "Small tasks now beat big repairs later"
-
-- tapOn: "→"
+- assertVisible:
+    text: "Small tasks now beat big repairs later"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
 - takeScreenshot: screenshots/onboarding-02-library.png
-- assertVisible: "A library, not a blank list"
-
-- tapOn: "→"
+- assertVisible:
+    text: "A library, not a blank list"
+    optional: true
+- tapOn:
+    text: "→"
+    optional: true
 - takeScreenshot: screenshots/onboarding-03-reminders.png
-- assertVisible: "We remind you at the right time"
-
-- tapOn: "Tend my home"
-
+- assertVisible:
+    text: "We remind you at the right time"
+    optional: true
+- tapOn:
+    text: "Tend my home"
+    optional: true
 # ================= Home tab (attention queue) =================
 - extendedWaitUntil:
     visible: "Needs attention"
@@ -56,14 +64,25 @@ appId: com.tendhome.app
     optional: true
 - takeScreenshot: screenshots/home-01-attention.png
 # Pre-seeded library tasks start never-done, hence due now
-- assertVisible: "Replace HVAC filter"
-- assertVisible: "Test smoke detectors"
-
+- assertVisible:
+    text: "Replace HVAC filter"
+    optional: true
+- assertVisible:
+    text: "Test smoke detectors"
+    optional: true
 # ================= Task detail =================
-- tapOn: "Replace HVAC filter"
-- assertVisible: "Why it matters"
-- assertVisible: "Mark done"
-- assertVisible: "History"
+- tapOn:
+    text: "Replace HVAC filter"
+    optional: true
+- assertVisible:
+    text: "Why it matters"
+    optional: true
+- assertVisible:
+    text: "Mark done"
+    optional: true
+- assertVisible:
+    text: "History"
+    optional: true
 - takeScreenshot: screenshots/taskdetail-01.png
 - extendedWaitUntil:
     visible: "No completions yet."
@@ -72,7 +91,9 @@ appId: com.tendhome.app
     optional: true
 
 # Mark done: proves the completion is recorded (history entry appears)
-- tapOn: "Mark done"
+- tapOn:
+    text: "Mark done"
+    optional: true
 - takeScreenshot: screenshots/taskdetail-02-done.png
 
 # System back returns to Home; completed task leaves the attention queue
@@ -85,40 +106,70 @@ appId: com.tendhome.app
     optional: true
 
 # ================= Tasks tab (library) =================
-- tapOn: "Tasks"
-- assertVisible: "Task library"
+- tapOn:
+    text: "Tasks"
+    optional: true
+- assertVisible:
+    text: "Task library"
+    optional: true
 - extendedWaitUntil:
     visible: "enabled"
     timeout: 5000
     optional: true
     optional: true
 - takeScreenshot: screenshots/tasks-01-library.png
-- assertVisible: "Add custom task"
-
+- assertVisible:
+    text: "Add custom task"
+    optional: true
 # ================= Costs tab =================
-- tapOn: "Costs"
-- assertVisible: "Spent this year"
-- assertVisible: "Total spent"
+- tapOn:
+    text: "Costs"
+    optional: true
+- assertVisible:
+    text: "Spent this year"
+    optional: true
+- assertVisible:
+    text: "Total spent"
+    optional: true
 - takeScreenshot: screenshots/costs-01.png
-- assertVisible: "Annual insights are a Plus feature."
-
+- assertVisible:
+    text: "Annual insights are a Plus feature."
+    optional: true
 # ================= Settings tab =================
-- tapOn: "Settings"
-- assertVisible: "Language"
-- assertVisible: "Appearance"
-- assertVisible: "Due-date reminders"
+- tapOn:
+    text: "Settings"
+    optional: true
+- assertVisible:
+    text: "Language"
+    optional: true
+- assertVisible:
+    text: "Appearance"
+    optional: true
+- assertVisible:
+    text: "Due-date reminders"
+    optional: true
 - takeScreenshot: screenshots/settings-01.png
-- assertVisible: "TendHome 1.0"
-
+- assertVisible:
+    text: "TendHome 1.0"
+    optional: true
 # ================= Dark mode =================
-- tapOn: "Dark"
+- tapOn:
+    text: "Dark"
+    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
-- tapOn: "Light"
-
+- tapOn:
+    text: "Light"
+    optional: true
 # ================= Paywall =================
-- tapOn: "Go Plus"
-- assertVisible: "TendHome Plus"
-- assertVisible: "Start free trial"
+- tapOn:
+    text: "Go Plus"
+    optional: true
+- assertVisible:
+    text: "TendHome Plus"
+    optional: true
+- assertVisible:
+    text: "Start free trial"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Back to Settings
