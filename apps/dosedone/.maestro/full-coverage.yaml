@@ -43,7 +43,9 @@ appId: com.dosedone.app
     optional: true
 
 # Skip the notification-permission step; enable later from Settings if needed
-- tapOn: "Skip for now"
+- tapOn:
+    text: "Skip for now"
+    optional: true
 
 # ================= Today tab (empty) =================
 - extendedWaitUntil:
