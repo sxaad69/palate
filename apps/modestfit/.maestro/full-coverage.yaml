@@ -101,6 +101,7 @@ appId: com.modestfit.app
     text: "e.g. Black linen abaya"
     optional: true
 - inputText: "Black linen abaya"
+- hideKeyboard
 - tapOn:
     text: "Save"
     optional: true
