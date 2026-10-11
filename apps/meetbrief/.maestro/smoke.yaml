@@ -28,6 +28,7 @@ appId: com.meetbrief.notes
 - takeScreenshot: screenshots/shot-02.png
 - tapOn: "Meeting title"
 - inputText: "Smoke test meeting"
+- hideKeyboard
 - tapOn: "Record"
 - assertVisible: "Recording"
 - tapOn: "Pause"
@@ -43,6 +44,7 @@ appId: com.meetbrief.notes
 - tapOn: "e.g. Send the proposal by Friday"
 - takeScreenshot: screenshots/shot-03.png
 - inputText: "Smoke action"
+- hideKeyboard
 - tapOn: "+"
 - assertVisible: "Smoke action"
 - tapOn: "Smoke action"

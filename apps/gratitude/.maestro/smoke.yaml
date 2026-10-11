@@ -19,16 +19,19 @@ appId: com.threegood.app
 - tapOn: "I am grateful for…"
 - takeScreenshot: screenshots/shot-02.png
 - inputText: "Morning coffee with my sister"
+- hideKeyboard
 - tapOn: "Complete the ritual"
 # second and third inputs: tap the next visible placeholder
 - tapOn:
     text: "I am grateful for…"
     index: 1
 - inputText: "The rain stopping before my walk"
+- hideKeyboard
 - tapOn:
     text: "I am grateful for…"
     index: 2
 - inputText: "Finishing the report early"
+- hideKeyboard
 - tapOn: "Complete the ritual"
 - assertVisible: "Ritual complete"
 - assertVisible: "Morning coffee with my sister"

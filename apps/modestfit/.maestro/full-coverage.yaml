@@ -135,6 +135,7 @@ appId: com.modestfit.app
     text: "e.g. Friday work look"
     optional: true
 - inputText: "Friday work look"
+- hideKeyboard
 - tapOn:
     text: "Black linen abaya"
     optional: true

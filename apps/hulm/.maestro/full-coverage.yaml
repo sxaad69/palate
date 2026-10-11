@@ -81,10 +81,12 @@ appId: com.hulm.app
     text: "e.g. The flood and the staircase"
     optional: true
 - inputText: "The flood and the staircase"
+- hideKeyboard
 - tapOn:
     text: "Write everything you remember…"
     optional: true
 - inputText: "I was flying over dark water and saw a snake."
+- hideKeyboard
 - tapOn:
     text: "Peaceful"
     optional: true

@@ -22,6 +22,7 @@ appId: com.pawscript.app
 - tapOn:
     id: "pet-name-input"
 - inputText: "Rex"
+- hideKeyboard
 - tapOn: "Save"
 - assertVisible: "Rex"
 - assertVisible: "Medications"

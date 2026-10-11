@@ -109,6 +109,7 @@ appId: com.pip.app
     text: "After I… (e.g. brush my teeth)"
     optional: true
 - inputText: "pour my morning water"
+- hideKeyboard
 - tapOn:
     text: "I will… (e.g. floss one tooth)"
     optional: true

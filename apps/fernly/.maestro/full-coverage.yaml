@@ -112,6 +112,7 @@ appId: com.fernly.app
     text: "Nickname"
     optional: true
 - inputText: "Pothy"
+- hideKeyboard
 - tapOn:
     text: "Save plant"
     optional: true

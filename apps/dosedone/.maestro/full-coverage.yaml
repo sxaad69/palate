@@ -81,6 +81,7 @@ appId: com.dosedone.app
     index: 1
     optional: true
 - inputText: "Vitamin D"
+- hideKeyboard
 - tapOn:
     text: "Dose (e.g. 1 pill, 10mg)"
     index: 1

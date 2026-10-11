@@ -80,6 +80,7 @@ appId: com.keepsfresh.pantry
     optional: true
 - takeScreenshot: screenshots/add-01-form.png
 - inputText: "Milk"
+- hideKeyboard
 # Food-DB suggestions appear below the input — proves the smart-default lookup
 - assertVisible:
     text: "Milk"

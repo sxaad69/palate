@@ -19,6 +19,7 @@ appId: com.keepsfresh.pantry
 - takeScreenshot: screenshots/shot-02.png
 - tapOn: "e.g. Milk"
 - inputText: "Milk"
+- hideKeyboard
 - tapOn: "Save"
 
 # --- Back in pantry: item listed under "This week" (7-day default) ---

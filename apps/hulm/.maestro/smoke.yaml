@@ -23,6 +23,7 @@ appId: com.hulm.app
 - tapOn: "Write everything you remember…"
 - takeScreenshot: screenshots/shot-02.png
 - inputText: "I was flying over the ocean at night, and the moon was enormous"
+- hideKeyboard
 - tapOn: "Save dream"
 - assertVisible: "Reflect"
 

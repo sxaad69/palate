@@ -27,6 +27,7 @@ appId: com.twopurse.app
 - tapOn:
     id: "amountInput"
 - inputText: "25"
+- hideKeyboard
 - tapOn:
     id: "saveExpenseBtn"
 

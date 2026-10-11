@@ -95,6 +95,7 @@ appId: com.meetbrief.notes
     text: "Meeting title"
     optional: true
 - inputText: "Coverage test meeting"
+- hideKeyboard
 
 # Dismiss the keyboard, then start recording. The big red record button has
 # no visible text — its accessibility label ("Record") collides with the tab
@@ -154,6 +155,7 @@ appId: com.meetbrief.notes
     text: "e.g. Send the proposal by Friday"
     optional: true
 - inputText: "Coverage action"
+- hideKeyboard
 - tapOn:
     text: "+"
     optional: true

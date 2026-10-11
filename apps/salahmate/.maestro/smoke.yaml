@@ -24,6 +24,7 @@ appId: com.salahmate.app
 - tapOn: "Add habit"
 - assertVisible: "After which prayer?"
 - inputText: "Read 2 pages"
+- hideKeyboard
 - tapOn: "Save habit"
 
 # --- Dhikr tab: tap the counter ---

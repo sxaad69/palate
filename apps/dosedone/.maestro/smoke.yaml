@@ -19,6 +19,7 @@ appId: com.dosedone.app
 - assertVisible: "Medicine name"
 - takeScreenshot: screenshots/shot-02.png
 - inputText: "Vitamin D"
+- hideKeyboard
 - tapOn: "Save medicine"
 
 # --- Back on Today: the dose card appears with a TAKE button ---
