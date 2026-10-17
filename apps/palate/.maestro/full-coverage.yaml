@@ -75,24 +75,22 @@ appId: com.palate.app
     text: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
 - takeScreenshot: screenshots/scan-01-idle.png
 
-# Trigger a scan. Button label depends on camera permission state
-# ("Simulate scan" when not granted, "Analyze meal" when granted) —
-# tap whichever is present. Either path ends at the demo result.
+# Trigger a scan. On fresh install (clearState), camera permission is not
+# granted, so the button is "Simulate scan" which yields the Chicken Kabsa
+# demo result. "Analyze meal" (permission granted) does a real analysis
+# which returns "Unknown" on the emulator — that path is NOT tested here.
 - tapOn:
     text: "Simulate scan"
-    optional: true
-- tapOn:
-    text: "Analyze meal"
-    optional: true
 # Analyzing phase lasts ~2s; screenshot captures whatever state appears
 # (analyzing indicator or early result). The result assertion below proves the flow.
 - takeScreenshot: screenshots/scan-02-analyzing.png
 
-# Demo scan resolves after ~2s
+# Demo scan resolves after ~2s. This wait is HARD: if neither scan button
+# tap worked, the scan never started and the test must fail here (not
+# later on a confusing 'Chicken Kabsa' assertion).
 - extendedWaitUntil:
     visible: "Log this meal"
     timeout: 15000
-    optional: true
 - takeScreenshot: screenshots/scan-03-result.png
 - assertVisible:
     text: "Chicken Kabsa"
