@@ -78,7 +78,9 @@ appId: com.dosedone.app
     text: "Medicine name"
     index: 1
 - inputText: "Vitamin D"
-- hideKeyboard
+# NOTE: no hideKeyboard here — dismissing the keyboard breaks the next
+# field tap (Maestro can't re-find the Dose input afterwards). Tapping the
+# Dose field directly works and shifts focus correctly.
 - tapOn:
     text: "Dose (e.g. 1 pill, 10mg)"
     index: 1
