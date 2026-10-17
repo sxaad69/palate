@@ -117,6 +117,10 @@ appId: com.hulm.app
 # ================= Insights tab =================
 - tapOn:
     text: "Insights"
+# Tab content needs a moment to render
+- extendedWaitUntil:
+    visible: "Dreams logged"
+    timeout: 10000
 - assertVisible:
     text: "Dreams logged"
 - takeScreenshot: screenshots/insights-01.png
