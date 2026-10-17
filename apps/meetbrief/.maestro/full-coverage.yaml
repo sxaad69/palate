@@ -142,8 +142,10 @@ appId: com.meetbrief.notes
     optional: true
 - inputText: "Coverage action"
 - hideKeyboard
+# NOTE: the "+" Button has accessibilityLabel="Add action item" which
+# overrides its text in the hierarchy — tap the label, not "+"
 - tapOn:
-    text: "+"
+    text: "Add action item"
 - assertVisible:
     text: "Coverage action"
 - tapOn:

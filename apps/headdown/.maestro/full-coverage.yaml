@@ -90,8 +90,10 @@ appId: com.headdown.app
 - tapOn:
     text: "End now"
 # ================= Complete =================
+# NOTE: ending early shows "Session ended", not "Session complete"
+# (Complete.tsx: completed=false → t.sessionEnded)
 - assertVisible:
-    text: "Session complete"
+    text: "Session ended"
 - assertVisible:
     text: "Focus score"
 - takeScreenshot: screenshots/complete-01.png
