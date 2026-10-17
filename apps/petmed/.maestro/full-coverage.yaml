@@ -82,6 +82,13 @@ appId: com.pawscript.app
     text: "Buddy"
 - takeScreenshot: screenshots/pets-03-with-pet.png
 
+# Save opens the Pet Detail screen — close it (X) to return to the
+# main screen with the tab bar before tapping Doses
+- tapOn:
+    text: "✕"
+- assertVisible:
+    text: "Doses"
+
 # ================= Doses tab (empty — no meds yet) =================
 - tapOn:
     text: "Doses"
