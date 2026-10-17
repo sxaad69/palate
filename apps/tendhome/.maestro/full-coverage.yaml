@@ -103,6 +103,11 @@ appId: com.tendhome.app
     optional: true
     optional: true
 - takeScreenshot: screenshots/tasks-01-library.png
+# "Add custom task" is below the fold — scroll down to reveal it
+- scrollUntilVisible:
+    element:
+      text: "Add custom task"
+    timeout: 10000
 - assertVisible:
     text: "Add custom task"
 # ================= Costs tab =================
