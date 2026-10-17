@@ -59,12 +59,12 @@ appId: com.naplet.app
 - tapOn:
     text: "Log"
 - assertVisible:
-    text: "Start sleep"
+    text: ".*Start sleep"
 - takeScreenshot: screenshots/log-01.png
 
 # Start a sleep session — button flips to "End sleep", timer shows
 - tapOn:
-    text: "Start sleep"
+    text: ".*Start sleep"
 - assertVisible:
     text: "Sleeping…"
 - assertVisible:
@@ -75,7 +75,7 @@ appId: com.naplet.app
 - tapOn:
     text: "End sleep"
 - assertVisible:
-    text: "Start sleep"
+    text: ".*Start sleep"
 # ================= Feed editor =================
 - tapOn:
     text: "Feed"

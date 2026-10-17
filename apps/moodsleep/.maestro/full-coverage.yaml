@@ -65,8 +65,9 @@ appId: com.restory.app
 # ================= Log sleep quality =================
 - tapOn:
     text: "★"
+# NOTE: display is "1 ★ · <label>" — match with .*
 - assertVisible:
-    text: "1 ★"
+    text: "1 ★.*"
 - takeScreenshot: screenshots/today-02-sleep-set.png
 
 # ================= Log mood =================
