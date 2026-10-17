@@ -58,6 +58,10 @@ appId: com.fable.breath
 - tapOn:
     text: "Begin"
 # ================= Library tab =================
+# Main app needs a moment to render after onboarding completes
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 15000
 - assertVisible:
     text: "Library"
 - assertVisible:
