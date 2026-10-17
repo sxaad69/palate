@@ -119,6 +119,10 @@ appId: com.straightup.posture
 # ================= Exercises tab =================
 - tapOn:
     text: "Exercises"
+# Hierarchy can lag behind visual render — wait for the title
+- extendedWaitUntil:
+    visible: "Exercise library"
+    timeout: 10000
 - assertVisible:
     text: "Exercise library"
 - takeScreenshot: screenshots/exercises-01.png
