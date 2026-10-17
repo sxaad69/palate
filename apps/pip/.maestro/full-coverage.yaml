@@ -53,7 +53,6 @@ appId: com.pip.app
     timeout: 10000
 - tapOn:
     text: "Continue"
-    optional: true
 # ================= Today tab (with starter recipe) =================
 - extendedWaitUntil:
     visible: ".*floss one tooth.*"
@@ -67,7 +66,6 @@ appId: com.pip.app
 # ================= Complete the habit -> celebration =================
 - tapOn:
     text: "Done"
-    optional: true
 - assertVisible:
     text: "Shine!"
     optional: true
@@ -78,7 +76,6 @@ appId: com.pip.app
 
 - tapOn:
     text: "I celebrated!"
-    optional: true
 - assertVisible:
     text: "Done today"
     optional: true
@@ -87,7 +84,6 @@ appId: com.pip.app
 # ================= Recipes tab =================
 - tapOn:
     text: "Recipes"
-    optional: true
 - assertVisible:
     text: ".*floss one tooth.*"
     optional: true
@@ -99,7 +95,6 @@ appId: com.pip.app
 # ================= Recipe editor =================
 - tapOn:
     text: "New recipe"
-    optional: true
 - assertVisible:
     text: "After I… (e.g. brush my teeth)"
     optional: true
@@ -107,22 +102,18 @@ appId: com.pip.app
 
 - tapOn:
     text: "After I… (e.g. brush my teeth)"
-    optional: true
 - inputText: "pour my morning water"
 - hideKeyboard
 - tapOn:
     text: "I will… (e.g. floss one tooth)"
-    optional: true
 - inputText: "drink one glass"
 - hideKeyboard
 - tapOn:
     text: "Fist pump"
-    optional: true
 - takeScreenshot: screenshots/editor-02-filled.png
 
 - tapOn:
     text: "Save recipe"
-    optional: true
 - assertVisible:
     text: ".*drink one glass.*"
     optional: true
@@ -131,7 +122,6 @@ appId: com.pip.app
 # ================= Progress tab =================
 - tapOn:
     text: "Progress"
-    optional: true
 - assertVisible:
     text: ".*day streak.*"
     optional: true
@@ -143,7 +133,6 @@ appId: com.pip.app
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
     optional: true
@@ -155,7 +144,6 @@ appId: com.pip.app
 # ================= Paywall =================
 - tapOn:
     text: "Go Pro"
-    optional: true
 - assertVisible:
     text: "Start free trial"
     optional: true
@@ -170,7 +158,6 @@ appId: com.pip.app
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Dark"

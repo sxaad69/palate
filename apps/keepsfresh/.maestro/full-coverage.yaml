@@ -41,39 +41,30 @@ appId: com.keepsfresh.pantry
 - takeScreenshot: screenshots/onboarding-01-waste.png
 - assertVisible:
     text: "KeepsFresh"
-    optional: true
 - assertVisible:
     text: "Nothing goes to waste"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Use soon, not too late"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-soon.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Watch your savings grow"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-savings.png
 
 - tapOn:
     text: "Get started"
-    optional: true
 # ================= Pantry tab (empty) =================
 - assertVisible:
     text: "Your pantry is empty"
-    optional: true
 - takeScreenshot: screenshots/pantry-01-empty.png
 
 # ================= Add item (smart default from food DB) =================
 - tapOn:
     text: "Add item"
-    optional: true
 - extendedWaitUntil:
     visible: "Item name"
     timeout: 15000
@@ -84,98 +75,74 @@ appId: com.keepsfresh.pantry
 # Food-DB suggestions appear below the input — proves the smart-default lookup
 - assertVisible:
     text: "Milk"
-    optional: true
 - takeScreenshot: screenshots/add-02-suggestions.png
 
 - tapOn:
     text: "Add to pantry"
-    optional: true
 # ================= Pantry tab (with item) =================
 - assertVisible:
     text: "Milk"
-    optional: true
 - assertVisible:
     text: "This week"
-    optional: true
 - takeScreenshot: screenshots/pantry-02-with-item.png
 
 # Mark the item used up — it leaves the pantry and feeds the stats counter
 - tapOn:
     text: "Used up"
-    optional: true
 - assertVisible:
     text: "Your pantry is empty"
-    optional: true
 - takeScreenshot: screenshots/pantry-03-used-up.png
 
 # ================= Alerts tab =================
 - tapOn:
     text: "Alerts"
-    optional: true
 - assertVisible:
     text: "Use soon"
-    optional: true
 - assertVisible:
     text: "Nothing expiring soon. Nicely stocked."
-    optional: true
 - takeScreenshot: screenshots/alerts-01-empty.png
 
 # ================= Stats tab =================
 - tapOn:
     text: "Stats"
-    optional: true
 - assertVisible:
     text: "Waste saved"
-    optional: true
 - assertVisible:
     text: "Money saved"
-    optional: true
 - assertVisible:
     text: "items saved"
-    optional: true
 - takeScreenshot: screenshots/stats-01.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - assertVisible:
     text: "Language"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
 - tapOn:
     text: "Go Pro — unlimited items"
-    optional: true
 - assertVisible:
     text: "Never throw food away again"
-    optional: true
 - assertVisible:
     text: "Weekly plan · free trial · cancel anytime"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Restore is a safe no-op on the emulator (no Play Store) — paywall stays put
 - tapOn:
     text: "Restore purchase"
-    optional: true
 - assertVisible:
     text: "Never throw food away again"
-    optional: true
 - takeScreenshot: screenshots/paywall-02-restore.png
 
 - tapOn:
     text: "Cancel"
-    optional: true
 - assertVisible:
     text: "Profile"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

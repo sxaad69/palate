@@ -38,27 +38,20 @@ appId: com.restory.app
 - takeScreenshot: screenshots/onboarding-01-slide1.png
 - assertVisible:
     text: "Your sleep writes your days"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide2.png
 - assertVisible:
     text: "Twenty seconds, twice a day"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide3.png
 - assertVisible:
     text: "The pattern is yours"
-    optional: true
 - assertVisible:
     text: "Begin"
-    optional: true
 - tapOn:
     text: "Begin"
-    optional: true
 # ================= Today tab (empty) =================
 - extendedWaitUntil:
     visible: "Last night"
@@ -67,97 +60,73 @@ appId: com.restory.app
 - takeScreenshot: screenshots/today-01-empty.png
 - assertVisible:
     text: "How did you sleep?"
-    optional: true
 - assertVisible:
     text: "How are you feeling?"
-    optional: true
 # ================= Log sleep quality =================
 - tapOn:
     text: "★"
-    optional: true
 - assertVisible:
     text: "1 ★"
-    optional: true
 - takeScreenshot: screenshots/today-02-sleep-set.png
 
 # ================= Log mood =================
 - tapOn:
     text: "🤩"
-    optional: true
 - assertVisible:
     text: "Saved"
-    optional: true
 - takeScreenshot: screenshots/today-03-mood-set.png
 
 # ================= Journal note =================
 - tapOn:
     text: "One line about the day…"
-    optional: true
 - inputText: "Slept great, feeling sharp."
 - hideKeyboard
 - assertVisible:
     text: "Slept great, feeling sharp."
-    optional: true
 - takeScreenshot: screenshots/today-04-note.png
 
 # ================= Insights tab (Pro-locked) =================
 - tapOn:
     text: "Insights"
-    optional: true
 - assertVisible:
     text: "Your sleep has a story to tell"
-    optional: true
 - takeScreenshot: screenshots/insights-01-locked.png
 - assertVisible:
     text: "Unlock your rest story"
-    optional: true
 # ================= Paywall =================
 - tapOn:
     text: "Unlock your rest story"
-    optional: true
 - assertVisible:
     text: "Unlock your rest story"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 - assertVisible:
     text: "Weekly plan"
-    optional: true
 # Back to Insights
 - back
 
 # ================= Progress tab =================
 - tapOn:
     text: "Progress"
-    optional: true
 - assertVisible:
     text: "day streak"
-    optional: true
 - takeScreenshot: screenshots/progress-01.png
 - assertVisible:
     text: "History"
-    optional: true
 - assertVisible:
     text: "5/5"
-    optional: true
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 - assertVisible:
     text: "Bedtime reminder"
-    optional: true
 - assertVisible:
     text: "Export data (CSV)"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Dark"
-    optional: true

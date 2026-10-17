@@ -38,52 +38,38 @@ appId: com.twopurse.app
 - takeScreenshot: screenshots/onboarding-01-fights.png
 - assertVisible:
     text: "Money fights, solved gently"
-    optional: true
 - assertVisible:
     text: "Money fights, solved gently"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Currency"
-    optional: true
 - tapOn:
     text: "USD"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-currency.png
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "A monthly money date"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-moneydate.png
 - tapOn:
     text: "Get started"
-    optional: true
 # ================= Envelopes home =================
 - assertVisible:
     text: "Envelopes"
-    optional: true
 - assertVisible:
     text: "Groceries"
-    optional: true
 - assertVisible:
     text: "left to spend"
-    optional: true
 - takeScreenshot: screenshots/envelopes-01.png
 
 # ================= Add expense =================
 - tapOn:
     text: "Add expense"
-    optional: true
 - assertVisible:
     text: "Add expense"
-    optional: true
 - assertVisible:
     text: "Who spent it?"
-    optional: true
 - takeScreenshot: screenshots/expense-01-sheet.png
 
 - tapOn:
@@ -96,68 +82,51 @@ appId: com.twopurse.app
 # Home reflects the new expense
 - assertVisible:
     text: "Envelopes"
-    optional: true
 - takeScreenshot: screenshots/envelopes-02-expense.png
 
 # ================= Edit envelope =================
 - tapOn:
     text: "Groceries"
-    optional: true
 - assertVisible:
     text: "Edit envelope"
-    optional: true
 - assertVisible:
     text: "This month\u2019s spending"
-    optional: true
 - assertVisible:
     text: "Roll leftover into savings"
-    optional: true
 - takeScreenshot: screenshots/envelope-01-edit.png
 
 - tapOn:
     text: "Save"
-    optional: true
 - assertVisible:
     text: "Envelopes"
-    optional: true
 # ================= Money date tab =================
 - tapOn:
     text: "Money date"
-    optional: true
 - assertVisible:
     text: "Reviewing"
-    optional: true
 - assertVisible:
     text: "Roll over & close month"
-    optional: true
 - takeScreenshot: screenshots/moneydate-01.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
 - tapOn:
     text: "Get TwoPurse Pro"
-    optional: true
 - assertVisible:
     text: "TwoPurse Pro"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 - tapOn:
     text: "Continue with free"
-    optional: true
 - assertVisible:
     text: "Profile"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

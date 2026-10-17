@@ -39,24 +39,18 @@ appId: com.tendhome.app
 - takeScreenshot: screenshots/onboarding-01-hero.png
 - assertVisible:
     text: "Small tasks now beat big repairs later"
-    optional: true
 - tapOn:
     text: "→"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-library.png
 - assertVisible:
     text: "A library, not a blank list"
-    optional: true
 - tapOn:
     text: "→"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-reminders.png
 - assertVisible:
     text: "We remind you at the right time"
-    optional: true
 - tapOn:
     text: "Tend my home"
-    optional: true
 # ================= Home tab (attention queue) =================
 - extendedWaitUntil:
     visible: "Needs attention"
@@ -66,23 +60,17 @@ appId: com.tendhome.app
 # Pre-seeded library tasks start never-done, hence due now
 - assertVisible:
     text: "Replace HVAC filter"
-    optional: true
 - assertVisible:
     text: "Test smoke detectors"
-    optional: true
 # ================= Task detail =================
 - tapOn:
     text: "Replace HVAC filter"
-    optional: true
 - assertVisible:
     text: "Why it matters"
-    optional: true
 - assertVisible:
     text: "Mark done"
-    optional: true
 - assertVisible:
     text: "History"
-    optional: true
 - takeScreenshot: screenshots/taskdetail-01.png
 - extendedWaitUntil:
     visible: "No completions yet."
@@ -93,7 +81,6 @@ appId: com.tendhome.app
 # Mark done: proves the completion is recorded (history entry appears)
 - tapOn:
     text: "Mark done"
-    optional: true
 - takeScreenshot: screenshots/taskdetail-02-done.png
 
 # System back returns to Home; completed task leaves the attention queue
@@ -108,10 +95,8 @@ appId: com.tendhome.app
 # ================= Tasks tab (library) =================
 - tapOn:
     text: "Tasks"
-    optional: true
 - assertVisible:
     text: "Task library"
-    optional: true
 - extendedWaitUntil:
     visible: "enabled"
     timeout: 5000
@@ -120,56 +105,41 @@ appId: com.tendhome.app
 - takeScreenshot: screenshots/tasks-01-library.png
 - assertVisible:
     text: "Add custom task"
-    optional: true
 # ================= Costs tab =================
 - tapOn:
     text: "Costs"
-    optional: true
 - assertVisible:
     text: "Spent this year"
-    optional: true
 - assertVisible:
     text: "Total spent"
-    optional: true
 - takeScreenshot: screenshots/costs-01.png
 - assertVisible:
     text: "Annual insights are a Plus feature."
-    optional: true
 # ================= Settings tab =================
 - tapOn:
     text: "Settings"
-    optional: true
 - assertVisible:
     text: "Language"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - assertVisible:
     text: "Due-date reminders"
-    optional: true
 - takeScreenshot: screenshots/settings-01.png
 - assertVisible:
     text: "TendHome 1.0"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
 - tapOn:
     text: "Light"
-    optional: true
 # ================= Paywall =================
 - tapOn:
     text: "Go Plus"
-    optional: true
 - assertVisible:
     text: "TendHome Plus"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Back to Settings

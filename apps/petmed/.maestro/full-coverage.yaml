@@ -40,46 +40,35 @@ appId: com.pawscript.app
 - takeScreenshot: screenshots/onboarding-01-slide1.png
 - assertVisible:
     text: "One calm place for pet meds"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Doses, right on time"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide2.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Walk into the vet prepared"
-    optional: true
 - assertVisible:
     text: "Enable reminders"
-    optional: true
 - assertVisible:
     text: "Get started"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-reminders.png
 
 # "Get started" skips the notification permission dialog on emulator
 - tapOn:
     text: "Get started"
-    optional: true
 # ================= Pets tab (empty) =================
 - assertVisible:
     text: "No pets yet"
-    optional: true
 - takeScreenshot: screenshots/pets-01-empty.png
 
 # ================= Add pet =================
 - tapOn:
     text: "Add pet"
-    optional: true
 - assertVisible:
     text: "Name"
-    optional: true
 - tapOn:
     id: "pet-name-input"
 - inputText: "Buddy"
@@ -89,92 +78,70 @@ appId: com.pawscript.app
 # Save enables once a name is entered — proves the form validation
 - tapOn:
     text: "Save"
-    optional: true
 - assertVisible:
     text: "Buddy"
-    optional: true
 - takeScreenshot: screenshots/pets-03-with-pet.png
 
 # ================= Doses tab (empty — no meds yet) =================
 - tapOn:
     text: "Doses"
-    optional: true
 - assertVisible:
     text: "All caught up"
-    optional: true
 - takeScreenshot: screenshots/doses-01-empty.png
 
 # ================= Records tab =================
 - tapOn:
     text: "Records"
-    optional: true
 - assertVisible:
     text: "Records"
-    optional: true
 - takeScreenshot: screenshots/records-01.png
 
 # ================= Stats tab (empty) =================
 - tapOn:
     text: "Stats"
-    optional: true
 - assertVisible:
     text: "No medications yet"
-    optional: true
 - takeScreenshot: screenshots/stats-01-empty.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 - assertVisible:
     text: "Unlock Pro"
-    optional: true
 # ================= Paywall =================
 - tapOn:
     text: "Unlock Pro"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Close dismisses the paywall back to Profile
 - tapOn:
     text: "Close"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Dark"
-    optional: true
 # Restore light mode for the Arabic pass
 - tapOn:
     text: "Light"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 # ================= Arabic (i18n switch) =================
 - tapOn:
     text: "العربية"
-    optional: true
 - takeScreenshot: screenshots/profile-03-arabic.png
 
 # Back to English
 - tapOn:
     text: "English"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-04-english.png

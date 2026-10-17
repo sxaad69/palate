@@ -39,135 +39,101 @@ appId: com.shadowsay.app
 - takeScreenshot: screenshots/onboarding-01-lang.png
 - assertVisible:
     text: "ShadowSay"
-    optional: true
 - assertVisible:
     text: "Shadow. Speak. Sound native."
-    optional: true
 - assertVisible:
     text: "Pick your app language"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Hear it like a native"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-slide1.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Shadow it out loud"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-slide2.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Compare and score"
-    optional: true
 - takeScreenshot: screenshots/onboarding-04-slide3.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Which direction will you practice?"
-    optional: true
 - takeScreenshot: screenshots/onboarding-05-direction.png
 
 - tapOn:
     text: "English → Arabic"
-    optional: true
 - takeScreenshot: screenshots/onboarding-06-direction-selected.png
 
 - tapOn:
     text: "Start practicing"
-    optional: true
 # ================= Packs tab =================
 - assertVisible:
     text: "Travel"
-    optional: true
 - assertVisible:
     text: "Arabic for English Speakers"
-    optional: true
 - takeScreenshot: screenshots/packs-01.png
 
 # Practice: free pack for en-ar direction is "Arabic for English Speakers"
 - tapOn:
     text: "Arabic for English Speakers"
-    optional: true
 - assertVisible:
     text: "Play model"
-    optional: true
 - assertVisible:
     text: "Record"
-    optional: true
 - takeScreenshot: screenshots/practice-01-idle.png
 
 # Play model uses on-device TTS — safe on emulator, no permission needed
 - tapOn:
     text: "Play model"
-    optional: true
 - takeScreenshot: screenshots/practice-02-model-playing.png
 
 # Close practice (X) — returns to Packs
 - tapOn:
     text: "✕"
-    optional: true
 - assertVisible:
     text: "Travel"
-    optional: true
 # ================= Progress tab =================
 - tapOn:
     text: "Progress"
-    optional: true
 - assertVisible:
     text: "day streak"
-    optional: true
 - takeScreenshot: screenshots/progress-01.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 - assertVisible:
     text: "ShadowSay"
-    optional: true
 # ================= Paywall =================
 - tapOn:
     text: "Go Pro"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # "Maybe later" dismisses the paywall back to Profile
 - tapOn:
     text: "Maybe later"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png
 - assertVisible:
     text: "Dark"
-    optional: true
 # Restore light mode
 - tapOn:
     text: "Light"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true

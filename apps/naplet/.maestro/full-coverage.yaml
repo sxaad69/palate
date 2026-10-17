@@ -39,147 +39,111 @@ appId: com.naplet.app
 - takeScreenshot: screenshots/onboarding-01.png
 - assertVisible:
     text: "Welcome to Naplet"
-    optional: true
 - assertVisible:
     text: "Baby's name"
-    optional: true
 # Personalize: the name flows into the Today header
 - tapOn:
     text: "Baby's name"
-    optional: true
 - inputText: "Layla"
 - hideKeyboard
 - tapOn:
     text: "Continue"
-    optional: true
 # ================= Today tab (empty) =================
 - assertVisible:
     text: "Today"
-    optional: true
 - assertVisible:
     text: "Nothing logged yet today."
-    optional: true
 - takeScreenshot: screenshots/today-01-empty.png
 
 # ================= Log tab =================
 - tapOn:
     text: "Log"
-    optional: true
 - assertVisible:
     text: "Start sleep"
-    optional: true
 - takeScreenshot: screenshots/log-01.png
 
 # Start a sleep session — button flips to "End sleep", timer shows
 - tapOn:
     text: "Start sleep"
-    optional: true
 - assertVisible:
     text: "Sleeping…"
-    optional: true
 - assertVisible:
     text: "End sleep"
-    optional: true
 - takeScreenshot: screenshots/log-02-sleeping.png
 
 # End the sleep right away — proves the sleep timer round-trips
 - tapOn:
     text: "End sleep"
-    optional: true
 - assertVisible:
     text: "Start sleep"
-    optional: true
 # ================= Feed editor =================
 - tapOn:
     text: "Feed"
-    optional: true
 - assertVisible:
     text: "Feed"
-    optional: true
 - takeScreenshot: screenshots/feed-01.png
 
 - tapOn:
     text: "Bottle"
-    optional: true
 - tapOn:
     text: "Amount (ml)"
-    optional: true
 - inputText: "120"
 - hideKeyboard
 - takeScreenshot: screenshots/feed-02-bottle.png
 - tapOn:
     text: "Save"
-    optional: true
 # ================= Diaper editor =================
 - tapOn:
     text: "Diaper"
-    optional: true
 - assertVisible:
     text: "Diaper"
-    optional: true
 - tapOn:
     text: "Dirty"
-    optional: true
 - takeScreenshot: screenshots/diaper-01.png
 - tapOn:
     text: "Save"
-    optional: true
 # ================= Today tab (with events) =================
 - tapOn:
     text: "Today"
-    optional: true
 - assertVisible:
     text: "Timeline"
-    optional: true
 - takeScreenshot: screenshots/today-02-events.png
 
 # ================= Stats tab =================
 - tapOn:
     text: "Stats"
-    optional: true
 - assertVisible:
     text: "Stats"
-    optional: true
 - assertVisible:
     text: "Feeds today"
-    optional: true
 - takeScreenshot: screenshots/stats-01.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
 - tapOn:
     text: "Go Pro"
-    optional: true
 - assertVisible:
     text: "Naplet Pro"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Restore is safe: no Play Store on emulator, always reports nothing found
 - tapOn:
     text: "Restore purchase"
-    optional: true
 - assertVisible:
     text: "No previous purchase found."
-    optional: true
 # Stack back returns to Profile
 - back
 - assertVisible:
     text: "Profile"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

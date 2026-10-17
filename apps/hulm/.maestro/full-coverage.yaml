@@ -40,24 +40,18 @@ appId: com.hulm.app
 - takeScreenshot: screenshots/onboarding-01-hero.png
 - assertVisible:
     text: "Dreams are for reflecting"
-    optional: true
 - tapOn:
     text: "→"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-symbols.png
 - assertVisible:
     text: "Symbols, not verdicts"
-    optional: true
 - tapOn:
     text: "→"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-disclaimer.png
 - assertVisible:
     text: "Not a religious ruling"
-    optional: true
 - tapOn:
     text: "Begin journaling"
-    optional: true
 # ================= Journal tab (empty) =================
 - extendedWaitUntil:
     visible: "No dreams yet"
@@ -66,33 +60,26 @@ appId: com.hulm.app
 - takeScreenshot: screenshots/journal-01-empty.png
 - assertVisible:
     text: "Log a dream"
-    optional: true
 # ================= Dream form =================
 - tapOn:
     text: "Log a dream"
-    optional: true
 - assertVisible:
     text: "How did you wake up feeling?"
-    optional: true
 - takeScreenshot: screenshots/dreamform-01.png
 
 # Fill title + narrative, pick a mood, save. Proves the journal write path.
 - tapOn:
     text: "e.g. The flood and the staircase"
-    optional: true
 - inputText: "The flood and the staircase"
 - hideKeyboard
 - tapOn:
     text: "Write everything you remember…"
-    optional: true
 - inputText: "I was flying over dark water and saw a snake."
 - hideKeyboard
 - tapOn:
     text: "Peaceful"
-    optional: true
 - tapOn:
     text: "Save dream"
-    optional: true
 # ================= Journal tab (with dream) =================
 - extendedWaitUntil:
     visible: "The flood and the staircase"
@@ -104,88 +91,64 @@ appId: com.hulm.app
 # ================= Dream detail =================
 - tapOn:
     text: "The flood and the staircase"
-    optional: true
 - assertVisible:
     text: "Reflect"
-    optional: true
 - takeScreenshot: screenshots/dreamdetail-01.png
 - assertVisible:
     text: "Delete dream"
-    optional: true
 # Back to Journal
 - tapOn:
     text: "‹ Journal"
-    optional: true
 # ================= Symbols tab =================
 - tapOn:
     text: "Symbols"
-    optional: true
 - assertVisible:
     text: "Search symbols…"
-    optional: true
 - takeScreenshot: screenshots/symbols-01.png
 
 # Open the first symbol → symbol detail
 - tapOn:
     text: "Water"
-    optional: true
 - takeScreenshot: screenshots/symboldetail-01.png
 - assertVisible:
     text: "Water"
-    optional: true
 - tapOn:
     text: "‹ Symbols"
-    optional: true
 # ================= Insights tab =================
 - tapOn:
     text: "Insights"
-    optional: true
 - assertVisible:
     text: "Dreams logged"
-    optional: true
 - takeScreenshot: screenshots/insights-01.png
 - assertVisible:
     text: "Waking moods"
-    optional: true
 - assertVisible:
     text: "Peaceful"
-    optional: true
 # ================= Settings tab =================
 - tapOn:
     text: "Settings"
-    optional: true
 - assertVisible:
     text: "Language"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/settings-01.png
 - assertVisible:
     text: "Hulm 1.0"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
 - tapOn:
     text: "Light"
-    optional: true
 # ================= Paywall (via Insights upgrade) =================
 - tapOn:
     text: "Insights"
-    optional: true
 - tapOn:
     text: "Go Plus"
-    optional: true
 - assertVisible:
     text: "Hulm Plus"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 - tapOn:
     text: "Later"
-    optional: true

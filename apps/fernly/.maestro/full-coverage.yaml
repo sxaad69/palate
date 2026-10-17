@@ -39,139 +39,105 @@ appId: com.fernly.app
 - takeScreenshot: screenshots/onboarding-01.png
 - assertVisible:
     text: "Welcome to Fernly"
-    optional: true
 - assertVisible:
     text: "Add your plants"
-    optional: true
 - tapOn:
     text: "Monstera"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 # ================= Today tab (tasks due for the new plant) =================
 - assertVisible:
     text: "Today"
-    optional: true
 - assertVisible:
     text: "day care streak"
-    optional: true
 - takeScreenshot: screenshots/today-01-tasks.png
 
 # Complete the first due task — proves the care log + streak work
 - tapOn:
     text: "Done"
-    optional: true
 - assertVisible:
     text: "day care streak"
-    optional: true
 - takeScreenshot: screenshots/today-02-task-done.png
 
 # ================= Plants tab =================
 - tapOn:
     text: "Plants"
-    optional: true
 - assertVisible:
     text: "My plants"
-    optional: true
 - assertVisible:
     text: "Monstera"
-    optional: true
 - takeScreenshot: screenshots/plants-01.png
 
 # ================= Plant detail =================
 - tapOn:
     text: "Monstera"
-    optional: true
 - assertVisible:
     text: "Water"
-    optional: true
 - assertVisible:
     text: "Fertilize"
-    optional: true
 - takeScreenshot: screenshots/plant-01-detail.png
 
 # Stack back returns to the collection
 - back
 - assertVisible:
     text: "My plants"
-    optional: true
 # ================= Add a second plant =================
 - tapOn:
     text: "Add plant"
-    optional: true
 - assertVisible:
     text: "Choose species"
-    optional: true
 - takeScreenshot: screenshots/add-01.png
 
 - tapOn:
     text: "Pothos"
-    optional: true
 - tapOn:
     text: "Nickname"
-    optional: true
 - inputText: "Pothy"
 - hideKeyboard
 - tapOn:
     text: "Save plant"
-    optional: true
 - assertVisible:
     text: "Pothy"
-    optional: true
 - takeScreenshot: screenshots/plants-02-two.png
 
 # ================= Plant Doctor =================
 - tapOn:
     text: "Doctor"
-    optional: true
 - assertVisible:
     text: "Plant Doctor"
-    optional: true
 - assertVisible:
     text: "What is wrong with your plant?"
-    optional: true
 - takeScreenshot: screenshots/doctor-01.png
 
 - tapOn:
     text: "Yellow leaves"
-    optional: true
 - tapOn:
     text: "Diagnose"
-    optional: true
 - assertVisible:
     text: "Likely causes"
-    optional: true
 - takeScreenshot: screenshots/doctor-02-diagnosis.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
 - tapOn:
     text: "Go Pro"
-    optional: true
 - assertVisible:
     text: "Fernly Pro"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # Stack back returns to Profile
 - back
 - assertVisible:
     text: "Profile"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

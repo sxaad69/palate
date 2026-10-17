@@ -43,57 +43,43 @@ appId: com.meetbrief.notes
 - takeScreenshot: screenshots/onboarding-01-detail.png
 - assertVisible:
     text: "Never miss a detail"
-    optional: true
 - assertVisible:
     text: "Never miss a detail"
-    optional: true
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Actions, not walls of text"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-actions.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 - assertVisible:
     text: "Private by design"
-    optional: true
 - assertVisible:
     text: "Allow microphone access"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03-mic.png
 
 - tapOn:
     text: "Allow microphone access"
-    optional: true
 - tapOn:
     text: "Get started"
-    optional: true
 # ================= Meetings tab (empty) =================
 - assertVisible:
     text: "Meetings"
-    optional: true
 - assertVisible:
     text: "No meetings yet"
-    optional: true
 - takeScreenshot: screenshots/meetings-01-empty.png
 
 # ================= Record tab =================
 - tapOn:
     text: "Record"
-    optional: true
 - assertVisible:
     text: "Tap to start recording"
-    optional: true
 - takeScreenshot: screenshots/record-01-idle.png
 
 # Name the meeting before recording (title locks once recording starts)
 - tapOn:
     text: "Meeting title"
-    optional: true
 - inputText: "Coverage test meeting"
 - hideKeyboard
 
@@ -158,66 +144,50 @@ appId: com.meetbrief.notes
 - hideKeyboard
 - tapOn:
     text: "+"
-    optional: true
 - assertVisible:
     text: "Coverage action"
-    optional: true
 - tapOn:
     text: "Coverage action"
-    optional: true
 - takeScreenshot: screenshots/detail-02-action-added.png
 
 # Back to the meetings list
 - tapOn:
     text: "‹"
-    optional: true
 # ================= Meetings tab (with meeting) =================
 - tapOn:
     text: "Meetings"
-    optional: true
 - assertVisible:
     text: "Coverage test meeting"
-    optional: true
 - takeScreenshot: screenshots/meetings-02-with-meeting.png
 
 # ================= Stats tab =================
 - tapOn:
     text: "Stats"
-    optional: true
 - assertVisible:
     text: "Meetings recorded"
-    optional: true
 - takeScreenshot: screenshots/stats-01.png
 
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Appearance"
-    optional: true
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
 - tapOn:
     text: "Upgrade to Pro"
-    optional: true
 - assertVisible:
     text: "Go Pro"
-    optional: true
 - assertVisible:
     text: "free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 - tapOn:
     text: "✕"
-    optional: true
 - assertVisible:
     text: "Profile"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

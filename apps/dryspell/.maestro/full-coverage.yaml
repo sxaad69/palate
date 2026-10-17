@@ -58,12 +58,10 @@ appId: com.dryspell.app
 # Capture a non-default selection state
 - tapOn:
     text: "Smoking"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02-smoking-selected.png
 
 - tapOn:
     text: "Continue"
-    optional: true
 # ================= Onboarding: daily spend =================
 - assertVisible:
     text: "Roughly how much did it cost you per day?"
@@ -74,13 +72,11 @@ appId: com.dryspell.app
 - tapOn:
     text: "Roughly how much did it cost you per day?"
     index: 1
-    optional: true
 - inputText: "10"
 - hideKeyboard
 
 - tapOn:
     text: "Continue"
-    optional: true
 # ================= Onboarding: start date =================
 - assertVisible:
     text: "When was your last day?"
@@ -88,7 +84,6 @@ appId: com.dryspell.app
 - takeScreenshot: screenshots/onboarding-04-date.png
 - tapOn:
     text: "−"
-    optional: true
 - assertVisible:
     text: "Yesterday"
     optional: true
@@ -96,7 +91,6 @@ appId: com.dryspell.app
 
 - tapOn:
     text: "Start my count"
-    optional: true
 # ================= Today tab (fresh) =================
 - extendedWaitUntil:
     visible: "DAY CLEAR"
@@ -117,7 +111,6 @@ appId: com.dryspell.app
 - tapOn:
     text: "Daily pledge"
     index: 1
-    optional: true
 - assertVisible:
     text: "Pledged for today ✓"
     optional: true
@@ -128,7 +121,6 @@ appId: com.dryspell.app
 # Whole-value regex match; escape the ? or it eats the 'g' before it.
 - tapOn:
     text: ".*Craving\\? Tap for SOS.*"
-    optional: true
 - assertVisible:
     text: "Ride it out"
     optional: true
@@ -142,7 +134,6 @@ appId: com.dryspell.app
 
 - tapOn:
     text: "Say your pledge out loud"
-    optional: true
 - assertVisible:
     text: "You rode it out. That's a win."
     optional: true
@@ -150,11 +141,9 @@ appId: com.dryspell.app
 
 - tapOn:
     text: "Close"
-    optional: true
 # ================= Timeline tab =================
 - tapOn:
     text: "Timeline"
-    optional: true
 - assertVisible:
     text: "Recovery timeline"
     optional: true
@@ -166,7 +155,6 @@ appId: com.dryspell.app
 # ================= Journal tab =================
 - tapOn:
     text: "Journal"
-    optional: true
 # TextInput accessibilityLabel is the exact placeholder string; escape the ?
 # or the regex quantifier eats the trailing 'y' and the full-value match fails.
 - assertVisible:
@@ -179,12 +167,10 @@ appId: com.dryspell.app
 # Same ? escaping for the tap on the input's accessibility label.
 - tapOn:
     text: "How are you feeling today\\?"
-    optional: true
 - inputText: "Day one. Feeling strong."
 - hideKeyboard
 - tapOn:
     text: "Save entry"
-    optional: true
 - assertVisible:
     text: "Day one. Feeling strong."
     optional: true
@@ -193,7 +179,6 @@ appId: com.dryspell.app
 # ================= Badges tab =================
 - tapOn:
     text: "Badges"
-    optional: true
 - assertVisible:
     text: "Achievements"
     optional: true
@@ -205,7 +190,6 @@ appId: com.dryspell.app
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
-    optional: true
 - assertVisible:
     text: "Language"
     optional: true
@@ -220,7 +204,6 @@ appId: com.dryspell.app
 # ================= Paywall =================
 - tapOn:
     text: "Get DrySpell Plus"
-    optional: true
 - assertVisible:
     text: "Go further with DrySpell Plus"
     optional: true
@@ -232,7 +215,6 @@ appId: com.dryspell.app
 # Restore is safe: no Play Store on emulator, always reports nothing found
 - tapOn:
     text: "Restore purchase"
-    optional: true
 - extendedWaitUntil:
     visible: "Restore purchase — none found"
     timeout: 15000
@@ -242,7 +224,6 @@ appId: com.dryspell.app
 # Back to Profile
 - tapOn:
     text: "Maybe later"
-    optional: true
 # ================= Dark mode =================
 - extendedWaitUntil:
     visible: "Appearance"
@@ -250,5 +231,4 @@ appId: com.dryspell.app
     optional: true
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/profile-02-dark.png

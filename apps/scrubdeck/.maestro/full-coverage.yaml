@@ -39,153 +39,114 @@ appId: com.scrubdeck.app
 - takeScreenshot: screenshots/onboarding-01.png
 - assertVisible:
     text: "Know it cold for the exam"
-    optional: true
 - tapOn:
     text: "→"
-    optional: true
 - assertVisible:
     text: "Spaced repetition does the scheduling"
-    optional: true
 - takeScreenshot: screenshots/onboarding-02.png
 
 - tapOn:
     text: "→"
-    optional: true
 - assertVisible:
     text: "A few minutes a day"
-    optional: true
 - takeScreenshot: screenshots/onboarding-03.png
 
 - tapOn:
     text: "Start studying"
-    optional: true
 # ================= Home (Today tab) =================
 # Seed cards are due immediately (nextDue: now), so Start session renders
 - assertVisible:
     text: "Today"
-    optional: true
 - assertVisible:
     text: "cards due"
-    optional: true
 - assertVisible:
     text: "Start session"
-    optional: true
 - takeScreenshot: screenshots/home-01.png
 
 # ================= Study session =================
 - tapOn:
     text: "Start session"
-    optional: true
 - assertVisible:
     text: "Tap to reveal"
-    optional: true
 - takeScreenshot: screenshots/study-01-front.png
 
 - tapOn:
     text: "Tap to reveal"
-    optional: true
 - assertVisible:
     text: "Again"
-    optional: true
 - assertVisible:
     text: "Good"
-    optional: true
 - takeScreenshot: screenshots/study-02-back.png
 
 # Grade Good — proves SM-2 scheduling advances to the next card
 - tapOn:
     text: "Good"
-    optional: true
 - assertVisible:
     text: "Tap to reveal"
-    optional: true
 - takeScreenshot: screenshots/study-03-graded.png
 
 # Close study (X) — returns to Home
 - tapOn:
     text: "✕"
-    optional: true
 - assertVisible:
     text: "Today"
-    optional: true
 # ================= Decks tab =================
 - tapOn:
     text: "Decks"
-    optional: true
 - assertVisible:
     text: "Fundamentals"
-    optional: true
 - takeScreenshot: screenshots/decks-01.png
 
 - tapOn:
     text: "Fundamentals"
-    optional: true
 - assertVisible:
     text: "Add card"
-    optional: true
 - takeScreenshot: screenshots/decks-02-detail.png
 
 # Back to deck list
 - tapOn:
     text: "← Decks"
-    optional: true
 - assertVisible:
     text: "Fundamentals"
-    optional: true
 # ================= Progress tab =================
 - tapOn:
     text: "Progress"
-    optional: true
 - assertVisible:
     text: "Total reviews"
-    optional: true
 - assertVisible:
     text: "day streak"
-    optional: true
 - assertVisible:
     text: "Mastery by deck"
-    optional: true
 - takeScreenshot: screenshots/progress-01.png
 
 # ================= Settings tab =================
 - tapOn:
     text: "Settings"
-    optional: true
 - assertVisible:
     text: "Settings"
-    optional: true
 - takeScreenshot: screenshots/settings-01.png
 - assertVisible:
     text: "Go Plus"
-    optional: true
 # ================= Paywall =================
 - tapOn:
     text: "Go Plus"
-    optional: true
 - assertVisible:
     text: "Start free trial"
-    optional: true
 - takeScreenshot: screenshots/paywall-01.png
 
 # "Later" dismisses the paywall back to Settings
 - tapOn:
     text: "Later"
-    optional: true
 - assertVisible:
     text: "Settings"
-    optional: true
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
-    optional: true
 - takeScreenshot: screenshots/settings-02-dark.png
 - assertVisible:
     text: "Dark"
-    optional: true
 # Restore light mode
 - tapOn:
     text: "Light"
-    optional: true
 - assertVisible:
     text: "Settings"
-    optional: true
