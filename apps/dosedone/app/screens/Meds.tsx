@@ -100,6 +100,7 @@ export function MedFormScreen({
           placeholderTextColor={colors.textTertiary}
           style={[styles.input, { color: colors.textPrimary, borderColor: colors.border }]}
           accessibilityLabel={t.medDosage}
+          testID="dose-input"
         />
 
         <Text variant="overline" color="textSecondary" style={{ marginTop: spacing.md }}>{t.medTimes}</Text>

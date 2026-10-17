@@ -56,6 +56,10 @@ appId: com.modestfit.app
 - tapOn:
     text: "Get started"
 - takeScreenshot: screenshots/onboarding-04-language.png
+# Hierarchy can lag behind visual render — wait for the title
+- extendedWaitUntil:
+    visible: "Choose your language"
+    timeout: 10000
 - assertVisible:
     text: "Choose your language"
 - tapOn:
