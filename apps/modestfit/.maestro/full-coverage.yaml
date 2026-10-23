@@ -183,12 +183,19 @@ appId: com.modestfit.app
 # Back to Profile
 - back
 
-# ================= Wardrobe insights =================
-# Profile row title renders "📊 Wardrobe insights" (emoji prefix), and
-# the insights count line renders "1 pieces → 1 outfits" as one node —
-# both need .* forms (code-verified in ProfileScreen/InsightsScreen).
+# ================= Wardrobe insights (Pro-locked) =================
+# The Profile row ("📊 Wardrobe insights") sits far down the Profile
+# scroll — the bare tap failed with Profile at its top (run
+# 40030828237). Scroll it into view first. Insights itself is
+# Pro-gated: a free user gets the locked screen ("Insights are Pro"),
+# never the counts — assert the locked state (hulm/scrubdeck pattern).
+- scrollUntilVisible:
+    element:
+      text: ".*Wardrobe insights.*"
+    direction: DOWN
+    timeout: 30000
 - tapOn:
     text: ".*Wardrobe insights.*"
 - takeScreenshot: screenshots/insights-01.png
 - assertVisible:
-    text: ".*1 pieces.*"
+    text: "Insights are Pro"
