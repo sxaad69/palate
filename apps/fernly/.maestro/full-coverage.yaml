@@ -114,8 +114,10 @@ appId: com.fernly.app
 # ================= Plant Doctor =================
 - tapOn:
     text: "Doctor"
+# Header node is "🩺 Plant Doctor" (emoji prefix) — .* form
+# (run 40006860487 failure screenshot).
 - assertVisible:
-    text: "Plant Doctor"
+    text: ".*Plant Doctor.*"
 # Subtitle node is the full sentence "What is wrong with your plant?
 # Pick the symptoms you see." — .* form (no trailing ? — regex escape).
 - assertVisible:
