@@ -120,8 +120,10 @@ appId: com.modestfit.app
 # ================= Create outfit =================
 - tapOn:
     text: "New outfit"
+# Header renders "Select pieces (0)" (label + selected count) — .* form
+# (run 40025006865 failure screenshot).
 - assertVisible:
-    text: "Select pieces"
+    text: ".*Select pieces.*"
 - takeScreenshot: screenshots/createoutfit-01.png
 
 - tapOn:
