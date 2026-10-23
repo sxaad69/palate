@@ -153,11 +153,25 @@ appId: com.headdown.app
 - assertVisible:
     text: "Settings"
 # ================= Arabic (i18n switch) =================
+# NOTE: Settings is still scrolled to the bottom after the paywall trip
+# (the ScrollView keeps its offset), so the Language row at the top is
+# off-screen — scroll UP to the العربية chip first (run 40003416221:
+# tap on العربية FAILED with Settings showing its bottom half).
+- scrollUntilVisible:
+    element:
+      text: "العربية"
+    direction: UP
+    timeout: 20000
 - tapOn:
     text: "العربية"
 - takeScreenshot: screenshots/settings-03-arabic.png
 
-# Back to English
+# Back to English (same off-screen problem in the other direction)
+- scrollUntilVisible:
+    element:
+      text: "English"
+    direction: UP
+    timeout: 20000
 - tapOn:
     text: "English"
 - assertVisible:
