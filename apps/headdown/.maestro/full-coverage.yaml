@@ -118,6 +118,15 @@ appId: com.headdown.app
 - assertVisible:
     text: "Settings"
 - takeScreenshot: screenshots/settings-01.png
+# NOTE: the "Go Plus" button renders at the very BOTTOM of Settings
+# (below the Honest limits card) — off-screen on load, so a bare
+# assertVisible fails (run 39979484727 failure screenshot shows the
+# Settings top with no Go Plus). Scroll it into view first.
+- scrollUntilVisible:
+    element:
+      text: "Go Plus"
+    direction: DOWN
+    timeout: 20000
 - assertVisible:
     text: "Go Plus"
 # ================= Paywall =================
