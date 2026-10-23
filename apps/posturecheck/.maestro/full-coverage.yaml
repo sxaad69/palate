@@ -132,7 +132,10 @@ appId: com.straightup.posture
     text: "Chin Tucks"
 - takeScreenshot: screenshots/exercises-02-expanded.png
 - assertVisible:
-    text: "Sit tall. Glide your chin straight back"
+    # NOTE: the node is the full instruction paragraph ("Sit tall. Glide
+    # your chin straight back, making a double chin — ..."); a first-
+    # sentence-only selector matches nothing (run 39979471824 screenshot).
+    text: ".*Sit tall. Glide your chin straight back.*"
 # ================= History tab =================
 - tapOn:
     text: "History"
