@@ -100,16 +100,19 @@ appId: com.salahmate.app
 # ================= Dhikr tab =================
 - tapOn:
     text: "Dhikr"
+# NOTE: the counter label renders "Tap to count · 33" (label + target) —
+# bare "Tap to count" matched nothing (run 39983552956 screenshot).
+# All four uses below (assert + taps) use the .* form.
 - assertVisible:
-    text: "Tap to count"
+    text: ".*Tap to count.*"
 - takeScreenshot: screenshots/dhikr-01.png
 
 - tapOn:
-    text: "Tap to count"
+    text: ".*Tap to count.*"
 - tapOn:
-    text: "Tap to count"
+    text: ".*Tap to count.*"
 - tapOn:
-    text: "Tap to count"
+    text: ".*Tap to count.*"
 - assertVisible:
     text: "Reset"
 - takeScreenshot: screenshots/dhikr-02-counted.png
