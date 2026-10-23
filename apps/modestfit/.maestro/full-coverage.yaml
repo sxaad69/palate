@@ -91,6 +91,15 @@ appId: com.modestfit.app
     text: "e.g. Black linen abaya"
 - inputText: "Black linen abaya"
 - hideKeyboard
+# NOTE: the Save button is the LAST element of the long Add-piece form
+# (below Category/Color/Sleeve/Hem/Opacity/Photo) — off-screen, so the
+# bare tap failed (run 40021081245 failure screenshot: form top, no
+# Save). Scroll it into view first.
+- scrollUntilVisible:
+    element:
+      text: "Save"
+    direction: DOWN
+    timeout: 20000
 - tapOn:
     text: "Save"
 # ================= Wardrobe tab (with piece) =================
@@ -121,6 +130,12 @@ appId: com.modestfit.app
 - hideKeyboard
 - tapOn:
     text: "Black linen abaya"
+# Same below-the-fold pattern as Add piece: scroll Save into view.
+- scrollUntilVisible:
+    element:
+      text: "Save"
+    direction: DOWN
+    timeout: 20000
 - tapOn:
     text: "Save"
 # ================= Outfits tab (with outfit) =================
@@ -129,8 +144,9 @@ appId: com.modestfit.app
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/outfits-02-with-outfit.png
+# Verdict renders "✓ Meets your modesty preferences" (prefix) — .* form.
 - assertVisible:
-    text: "Meets your modesty preferences"
+    text: ".*Meets your modesty preferences.*"
 # ================= Ideas tab =================
 - tapOn:
     text: "Ideas"
@@ -166,8 +182,11 @@ appId: com.modestfit.app
 - back
 
 # ================= Wardrobe insights =================
+# Profile row title renders "📊 Wardrobe insights" (emoji prefix), and
+# the insights count line renders "1 pieces → 1 outfits" as one node —
+# both need .* forms (code-verified in ProfileScreen/InsightsScreen).
 - tapOn:
-    text: "Wardrobe insights"
+    text: ".*Wardrobe insights.*"
 - takeScreenshot: screenshots/insights-01.png
 - assertVisible:
-    text: "1 pieces"
+    text: ".*1 pieces.*"
