@@ -76,7 +76,9 @@ appId: com.salahmate.app
 - tapOn:
     text: "Habits"
 - assertVisible:
-    text: "No habits yet"
+    # NOTE: full node text is "No habits yet. Anchor one to a prayer." —
+    # bare "No habits yet" matches nothing (run 39979471475 screenshot).
+    text: ".*No habits yet.*"
 - takeScreenshot: screenshots/habits-01-empty.png
 
 - tapOn:
