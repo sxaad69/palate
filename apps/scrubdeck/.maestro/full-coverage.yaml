@@ -100,8 +100,12 @@ appId: com.scrubdeck.app
     text: "Fundamentals"
 - takeScreenshot: screenshots/decks-01.png
 
+# NOTE: "Fundamentals" matches both the Home deck card (plain View, no
+# onPress, stays mounted under the tab) and the Decks row (Pressable).
+# The Pressable row is the second match (index 1).
 - tapOn:
     text: "Fundamentals"
+    index: 1
 - assertVisible:
     text: "Add card"
 - takeScreenshot: screenshots/decks-02-detail.png

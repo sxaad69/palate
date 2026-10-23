@@ -73,8 +73,9 @@ appId: com.restory.app
 # ================= Log mood =================
 - tapOn:
     text: "🤩"
+# Header indicator's full text is "✓ Saved" — whole-text matching needs .*
 - assertVisible:
-    text: "Saved"
+    text: ".*Saved"
 - takeScreenshot: screenshots/today-03-mood-set.png
 
 # ================= Journal note =================

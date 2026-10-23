@@ -83,11 +83,12 @@ appId: com.shadowsay.app
 # Practice: free pack for en-ar direction is "Arabic for English Speakers"
 - tapOn:
     text: "Arabic for English Speakers"
-# NOTE: button title is "🔊 Play model" (emoji prefix) — match with .*
+# NOTE: button titles are "🔊 Play model" and "🎙️ Record" (emoji prefixes
+# in the same text node) — whole-text matching needs the .* prefix on both.
 - assertVisible:
     text: ".*Play model"
 - assertVisible:
-    text: "Record"
+    text: ".*Record"
 - takeScreenshot: screenshots/practice-01-idle.png
 
 # Play model uses on-device TTS — safe on emulator, no permission needed

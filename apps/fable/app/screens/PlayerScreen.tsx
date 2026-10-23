@@ -125,7 +125,7 @@ export function PlayerScreen({ session, onDone }: { session: Session; onDone: ()
     <Screen scroll={false}>
       <View style={[styles.root, { padding: spacing.lg }]}>
         <View style={styles.header}>
-          <Pressable hitSlop={16} onPress={() => { void stopNarration(); onDone(); }} accessibilityRole="button" accessibilityLabel="close">
+          <Pressable testID="player-close" hitSlop={16} onPress={() => { void stopNarration(); onDone(); }} accessibilityRole="button" accessibilityLabel="close">
             <FableText variant="h2" color={colors.textSecondary}>✕</FableText>
           </Pressable>
           <FableText variant="bodySmall" color={colors.textSecondary}>

@@ -59,10 +59,13 @@ appId: com.lanceledger.app
     timeout: 30000
     optional: true
 - takeScreenshot: screenshots/today-01-empty.png
+# NOTE: the summary line renders as "income: $0   expenses: $0" — bare
+# "income"/"expenses" match nothing under whole-text regex (diagnosed
+# from run 38991469907's failure screenshot).
 - assertVisible:
-    text: "income"
+    text: ".*income.*"
 - assertVisible:
-    text: "expenses"
+    text: ".*expenses.*"
 # ================= Add expense =================
 - tapOn:
     text: "Add"

@@ -63,9 +63,11 @@ appId: com.salahmate.app
 - assertVisible:
     text: "Today's prayers"
 # Mark Fajr done (first prayer row; the habits hint below also mentions Fajr,
-# but the prayer list renders first in the hierarchy)
+# but the prayer list renders first in the hierarchy). NOTE: the row label
+# is "Fajr · الفجر" (name + Arabic) — a bare "Fajr" selector matches
+# nothing under whole-text regex (diagnosed from run 38991469925).
 - tapOn:
-    text: "Fajr"
+    text: ".*Fajr.*"
 - assertVisible:
     text: "Today's score"
 - takeScreenshot: screenshots/today-02-done.png

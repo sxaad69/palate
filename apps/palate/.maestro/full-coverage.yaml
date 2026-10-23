@@ -22,10 +22,17 @@ appId: com.palate.app
 #   paywall-02-restore.png            Paywall after "Restore purchase"
 #   profile-02-dark.png               Profile tab (dark mode)
 
-# Fresh install state on every run
+# Fresh install state on every run. NOTE: Maestro's launchApp grants ALL
+# permissions by default ({all: allow}) — with CAMERA granted the Scan
+# button becomes "Analyze meal" (real backend analysis, returns Unknown
+# on the emulator's black camera). This flow tests the demo scan path,
+# so CAMERA must start DENIED (diagnosed from run 39011914613's failure
+# screenshot: live camera preview + "Analyze meal" button on fresh install).
 - launchApp:
     appId: "com.palate.app"
     clearState: true
+    permissions:
+      android.permission.CAMERA: deny
 - tapOn:
     text: "Wait"
     optional: true
@@ -75,10 +82,10 @@ appId: com.palate.app
     text: "Point at any dish — Palate recognizes cuisines from around the world, not just Western food."
 - takeScreenshot: screenshots/scan-01-idle.png
 
-# Trigger a scan. On fresh install (clearState), camera permission is not
-# granted, so the button is "Simulate scan" which yields the Chicken Kabsa
-# demo result. "Analyze meal" (permission granted) does a real analysis
-# which returns "Unknown" on the emulator — that path is NOT tested here.
+# Trigger a scan. Camera permission is DENIED at launch (see launchApp
+# note above), so the button is "Simulate scan" which yields the Chicken
+# Kabsa demo result. "Analyze meal" (permission granted) does a real
+# analysis which returns "Unknown" on the emulator — NOT tested here.
 - tapOn:
     text: "Simulate scan"
 # Analyzing phase lasts ~2s; screenshot captures whatever state appears

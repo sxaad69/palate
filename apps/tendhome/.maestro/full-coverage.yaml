@@ -103,11 +103,13 @@ appId: com.tendhome.app
     optional: true
     optional: true
 - takeScreenshot: screenshots/tasks-01-library.png
-# "Add custom task" is below the fold — scroll down to reveal it
+# "Add custom task" sits below the entire task library (every category
+# group) — on the software-rendered emulator 10s of scrolling only reached
+# the "General" group (see fail screenshot 2026-10-17). Allow 45s.
 - scrollUntilVisible:
     element:
       text: "Add custom task"
-    timeout: 10000
+    timeout: 45000
 - assertVisible:
     text: "Add custom task"
 # ================= Costs tab =================

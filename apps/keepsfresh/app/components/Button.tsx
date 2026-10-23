@@ -16,6 +16,7 @@ interface Props {
   loading?: boolean;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
+  testID?: string;
 }
 
 export function Button({
@@ -27,6 +28,7 @@ export function Button({
   loading,
   style,
   accessibilityLabel,
+  testID,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
 
@@ -49,6 +51,7 @@ export function Button({
 
   return (
     <Pressable
+      testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? title}
       accessibilityState={{ disabled: !!disabled }}

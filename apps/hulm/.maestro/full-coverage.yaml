@@ -14,7 +14,7 @@ appId: com.hulm.app
 #   dreamdetail-01.png            Dream detail: narrative, reflect, symbols
 #   symbols-01.png                Symbols tab: lexicon list
 #   symboldetail-01.png           Symbol detail
-#   insights-01.png               Insights tab: stats (dreams logged, streak)
+#   insights-01.png               Insights tab: Plus lock screen (free user)
 #   settings-01.png               Settings tab (light)
 #   settings-02-dark.png          Settings tab in dark mode
 #   paywall-01.png                Paywall: Hulm Plus
@@ -115,19 +115,17 @@ appId: com.hulm.app
 - tapOn:
     text: "‹ Symbols"
 # ================= Insights tab =================
+# Insights is Plus-gated for free users: the tab shows the lock screen
+# ("Insights are a Plus feature." + Go Plus), NOT the stats — proven by
+# the 2026-10-17 fail screenshot. The paywall section below relies on
+# this same gate. Stats asserts belong to a Plus-activated flow.
 - tapOn:
     text: "Insights"
-# Tab content needs a moment to render
-- extendedWaitUntil:
-    visible: "Dreams logged"
-    timeout: 10000
 - assertVisible:
-    text: "Dreams logged"
+    text: "Insights are a Plus feature."
+- assertVisible:
+    text: "Go Plus"
 - takeScreenshot: screenshots/insights-01.png
-- assertVisible:
-    text: "Waking moods"
-- assertVisible:
-    text: "Peaceful"
 # ================= Settings tab =================
 - tapOn:
     text: "Settings"

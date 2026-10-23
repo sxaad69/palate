@@ -107,8 +107,11 @@ appId: com.fable.breath
 
 # Close the modal (X) — returns to Library. Session was NOT completed,
 # so nothing is logged and Progress stays empty.
+# Tap by testID: the text="close" tap reported COMPLETED in 2026-10-17's
+# run but the player stayed open (fail screenshot) — the label match did
+# not reach the Pressable inside the Modal.
 - tapOn:
-    text: "close"
+    id: "player-close"
 - assertVisible:
     text: "Library"
 # ================= Progress tab (empty) =================

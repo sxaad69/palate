@@ -63,8 +63,13 @@ appId: com.keepsfresh.pantry
 - takeScreenshot: screenshots/pantry-01-empty.png
 
 # ================= Add item (smart default from food DB) =================
+# NOTE: two "Add item" buttons exist on the empty Pantry screen (header
+# pill + empty-state CTA). Maestro's text tap hit the header pill (its
+# bounds overlap the status bar) and the AddItem modal never opened —
+# diagnosed from run 39011918361's failure screenshot ("Milk" landed in
+# the Pantry SEARCH field, no form). Tap the empty-state CTA by testID.
 - tapOn:
-    text: "Add item"
+    id: "add-item-empty"
 - extendedWaitUntil:
     visible: "Item name"
     timeout: 15000

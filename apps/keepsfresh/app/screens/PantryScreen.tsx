@@ -148,7 +148,7 @@ export function PantryScreen({
           <KText variant="body" color={colors.textSecondary} style={styles.emptyBody}>
             {t().emptyPantryBody}
           </KText>
-          <Button title={t().addItem} onPress={onAdd} style={{ marginTop: spacing.md }} />
+          <Button testID="add-item-empty" title={t().addItem} onPress={onAdd} style={{ marginTop: spacing.md }} />
         </View>
       ) : filtered ? (
         <View style={{ marginTop: spacing.md }}>

@@ -83,11 +83,13 @@ appId: com.meetbrief.notes
 - inputText: "Coverage test meeting"
 - hideKeyboard
 
-# Dismiss the keyboard, then start recording. The big red record button has
-# no visible text — its accessibility label ("Record") collides with the tab
-# and header titles, so a text tap is ambiguous; tap it by position instead.
-# It sits centered in the middle of the screen (~52% down).
-- back
+# Keyboard is already dismissed by hideKeyboard above. Do NOT press back
+# here: on Android, back pops the Record tab back to Meetings (proven by
+# the 2026-10-17 fail screenshots — the flow typed into the Meetings
+# search field and "Add action item" was never on screen).
+# The big red record button has no visible text — its accessibility label
+# ("Record") collides with the tab and header titles, so a text tap is
+# ambiguous; tap it by position instead. It sits centered (~52% down).
 - tapOn:
     point: "50%,52%"
 - extendedWaitUntil:

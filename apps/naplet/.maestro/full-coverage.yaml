@@ -67,13 +67,15 @@ appId: com.naplet.app
     text: ".*Start sleep"
 - assertVisible:
     text: "Sleeping…"
+# Button label is "🌙 End sleep" (emoji prefix in the same text node) —
+# whole-text matching needs the .* prefix, same as ".*Start sleep" above.
 - assertVisible:
-    text: "End sleep"
+    text: ".*End sleep"
 - takeScreenshot: screenshots/log-02-sleeping.png
 
 # End the sleep right away — proves the sleep timer round-trips
 - tapOn:
-    text: "End sleep"
+    text: ".*End sleep"
 - assertVisible:
     text: ".*Start sleep"
 # ================= Feed editor =================
