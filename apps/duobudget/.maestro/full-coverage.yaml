@@ -123,8 +123,10 @@ appId: com.twopurse.app
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
+# NOTE: the Profile upsell card title node is "✦ Get TwoPurse Pro"
+# (emoji prefix) — bare text cannot whole-match (run 40010970696).
 - tapOn:
-    text: "Get TwoPurse Pro"
+    text: ".*Get TwoPurse Pro.*"
 - assertVisible:
     text: "TwoPurse Pro"
 - takeScreenshot: screenshots/paywall-01.png
