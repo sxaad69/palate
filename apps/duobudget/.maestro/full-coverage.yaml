@@ -60,7 +60,9 @@ appId: com.twopurse.app
 - assertVisible:
     text: "Groceries"
 - assertVisible:
-    text: "left to spend"
+    # NOTE: envelope sub-lines render "$0 spent · $400 left to spend" —
+    # bare "left to spend" is a substring (run 40002978820 screenshot).
+    text: ".*left to spend.*"
 - takeScreenshot: screenshots/envelopes-01.png
 
 # ================= Add expense =================
@@ -103,7 +105,9 @@ appId: com.twopurse.app
 - tapOn:
     text: "Money date"
 - assertVisible:
-    text: "Reviewing"
+    # NOTE: renders as one node "Reviewing October 2026" (reviewFor +
+    # month label in a single Text) — bare "Reviewing" cannot match.
+    text: ".*Reviewing.*"
 - assertVisible:
     text: "Roll over & close month"
 - takeScreenshot: screenshots/moneydate-01.png
