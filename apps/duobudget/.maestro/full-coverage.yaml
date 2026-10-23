@@ -71,7 +71,10 @@ appId: com.twopurse.app
 - assertVisible:
     text: "Add expense"
 - assertVisible:
-    text: "Who spent it?"
+    # NOTE: "?" is a regex quantifier — the pattern "Who spent it?" can
+    # never full-match the label node "WHO SPENT IT?" (caps-styled).
+    # Use the .* form without the literal "?".
+    text: ".*Who spent it.*"
 - takeScreenshot: screenshots/expense-01-sheet.png
 
 - tapOn:
