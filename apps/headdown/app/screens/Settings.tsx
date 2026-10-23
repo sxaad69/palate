@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Alert, Switch } from 'react-native';
+import { View, StyleSheet, Pressable, Alert, Switch, ScrollView } from 'react-native';
 import { useTheme, type ThemeMode } from '../theme/ThemeProvider';
 import { spacing, radii } from '../theme/tokens';
 import { useStrings } from '../lib/strings';
@@ -60,7 +60,10 @@ export default function SettingsScreen({ onPaywall }: { onPaywall: () => void })
 
   return (
     <Screen padded={false}>
-      <View style={styles.body}>
+      {/* ScrollView (mirrors Home): the settings cards + Go Plus + erase
+          buttons exceed the viewport height — in a fixed View they were
+          clipped and unreachable (E2E run 39987552986). */}
+      <ScrollView contentContainerStyle={styles.body}>
         <Text variant="h1" style={styles.title}>{t.settings}</Text>
         <Card style={styles.card}>
           <Row label={t.language} value={lang}
@@ -102,13 +105,13 @@ export default function SettingsScreen({ onPaywall }: { onPaywall: () => void })
         {!pro && <Button title={t.upgrade} onPress={onPaywall} variant="primary" />}
         <Button title={t.eraseAll} onPress={confirmErase} variant="ghost" />
         <Text variant="caption" align="center" style={{ color: colors.textTertiary }}>{t.version}</Text>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  body: { padding: spacing.lg, gap: spacing.md, flex: 1 },
+  body: { padding: spacing.lg, gap: spacing.md },
   title: { marginBottom: spacing.sm },
   card: { gap: spacing.md },
   row: { gap: spacing.sm },
