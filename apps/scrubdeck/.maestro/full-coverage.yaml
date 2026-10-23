@@ -12,7 +12,7 @@ appId: com.scrubdeck.app
 #   study-02-back.png            Study: card back + Again/Hard/Good/Easy
 #   study-03-graded.png          next card after grading Good
 #   decks-01.png                 Decks tab
-#   decks-02-detail.png          deck detail: cards + Add card
+#   decks-02-detail.png          Plus gate alert on New deck (custom decks are Plus)
 #   progress-01.png              Progress tab: stats + mastery bars
 #   settings-01.png              Settings tab (light)
 #   paywall-01.png               Paywall
@@ -100,12 +100,13 @@ appId: com.scrubdeck.app
     text: "Fundamentals"
 - takeScreenshot: screenshots/decks-01.png
 
-# NOTE (corrected — run 40021109539): built-in deck rows do NOT open a
-# detail view; the deck detail ("Add card", "← Decks") exists only for
-# CUSTOM decks. (The earlier index:1 theory was wrong — only one
-# "Fundamentals" node exists on this screen, so that tap failed
-# outright.) The designed path: create a custom deck in the form
-# below; it opens automatically on creation.
+# NOTE (corrected twice — runs 40021109539 + 40027815179): built-in
+# deck rows do NOT open a detail view, and the deck detail ("Add
+# card") exists only for CUSTOM decks — which are PLUS-gated:
+# createDeck() pops a "Plus deck" alert for free users (screenshot:
+# "Plus deck / Custom decks & cards", name typed, alert up). So for
+# a free user the reachable Decks behaviour is: list renders, the
+# create attempt hits the Plus gate, dismiss returns to the list.
 - tapOn:
     text: "Deck name"
 - inputText: "My Deck"
@@ -116,12 +117,14 @@ appId: com.scrubdeck.app
     text: "New deck"
     index: 1
 - assertVisible:
-    text: "Add card"
+    text: "Plus deck"
+- assertVisible:
+    text: "Custom decks & cards"
 - takeScreenshot: screenshots/decks-02-detail.png
 
-# Back to deck list
+# Dismiss the gate alert — back on the deck list
 - tapOn:
-    text: "← Decks"
+    text: "Later"
 - assertVisible:
     text: "Fundamentals"
 # ================= Progress tab =================
