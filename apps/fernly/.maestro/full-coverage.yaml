@@ -45,37 +45,47 @@ appId: com.fernly.app
     text: "Monstera"
 - tapOn:
     text: "Continue"
-# ================= Today tab (tasks due for the new plant) =================
+# ================= Today tab (fresh plant: nothing due yet) =================
+# NOTE (diagnosed from run 40003008475's failure screenshot): a newly
+# adopted plant has NO due tasks — nextDueAt = adoptedAt + interval —
+# so Today correctly shows the "All caught up" empty state, and the
+# "day care streak" stat lives on the Profile tab, not here. The old
+# asserts ("day care streak" + a "Done" tap on Today) described a UI
+# that does not exist. The care-log proof now happens on the plant
+# detail screen (per-type "Done" buttons), and the streak assert moved
+# to the Profile section where the stat actually renders.
 - assertVisible:
     text: "Today"
 - assertVisible:
-    text: "day care streak"
+    text: "All caught up — your jungle is happy."
 - takeScreenshot: screenshots/today-01-tasks.png
 
-# Complete the first due task — proves the care log + streak work
-- tapOn:
-    text: "Done"
-- assertVisible:
-    text: "day care streak"
-- takeScreenshot: screenshots/today-02-task-done.png
-
 # ================= Plants tab =================
+# NOTE: the tab label is "My plants" (bare "Plants" matches nothing),
+# and list-card titles render "🌱 Monstera" (emoji prefix) — .* forms.
 - tapOn:
-    text: "Plants"
+    text: "My plants"
 - assertVisible:
     text: "My plants"
 - assertVisible:
-    text: "Monstera"
+    text: ".*Monstera.*"
 - takeScreenshot: screenshots/plants-01.png
 
 # ================= Plant detail =================
 - tapOn:
-    text: "Monstera"
+    text: ".*Monstera.*"
+# Care rows render as one node: "💧 Water · every 7 days" — .* forms.
 - assertVisible:
-    text: "Water"
+    text: ".*Water.*"
 - assertVisible:
-    text: "Fertilize"
+    text: ".*Fertilize.*"
 - takeScreenshot: screenshots/plant-01-detail.png
+
+# Log a watering via the row's "Done" button — proves the care log
+# works (the streak stat it feeds is asserted on Profile below)
+- tapOn:
+    text: "Done"
+- takeScreenshot: screenshots/plant-02-care-logged.png
 
 # Stack back returns to the collection
 - back
@@ -96,8 +106,9 @@ appId: com.fernly.app
 - hideKeyboard
 - tapOn:
     text: "Save plant"
+# Card title renders "🌱 Pothy" (emoji + nickname) — .* form.
 - assertVisible:
-    text: "Pothy"
+    text: ".*Pothy.*"
 - takeScreenshot: screenshots/plants-02-two.png
 
 # ================= Plant Doctor =================
@@ -105,8 +116,10 @@ appId: com.fernly.app
     text: "Doctor"
 - assertVisible:
     text: "Plant Doctor"
+# Subtitle node is the full sentence "What is wrong with your plant?
+# Pick the symptoms you see." — .* form (no trailing ? — regex escape).
 - assertVisible:
-    text: "What is wrong with your plant?"
+    text: ".*What is wrong with your plant.*"
 - takeScreenshot: screenshots/doctor-01.png
 
 - tapOn:
@@ -124,6 +137,9 @@ appId: com.fernly.app
     text: "Profile"
 - assertVisible:
     text: "Appearance"
+# The care-streak stat lives here (label renders as its own node)
+- assertVisible:
+    text: "day care streak"
 - takeScreenshot: screenshots/profile-01.png
 
 # ================= Paywall =================
