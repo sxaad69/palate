@@ -5,7 +5,7 @@ import { spacing, radii } from '../theme/tokens';
 import { useStrings } from '../lib/strings';
 import { useFocus } from '../store/focus';
 import {
-  initBilling, closeBilling, getWeeklyProduct, subscribeWeekly, restorePurchases,
+  initBilling, closeBilling, getWeeklyProduct, subscribeWeekly,
   type WeeklyProduct,
 } from '../lib/billing';
 import { Screen } from '../components/Screen';
@@ -39,14 +39,6 @@ export default function PaywallScreen({ onClose }: { onClose: () => void }) {
     try { await subscribeWeekly(); } catch { setBusy(false); }
   };
 
-  const restore = async () => {
-    setBusy(true);
-    try {
-      const ok = await restorePurchases();
-      if (ok) { setPro(true); onClose(); }
-    } finally { setBusy(false); }
-  };
-
   const features = [t.f1, t.f2, t.f3];
 
   return (
@@ -71,7 +63,10 @@ export default function PaywallScreen({ onClose }: { onClose: () => void }) {
       </View>
       <View style={styles.footer}>
         <Button title={busy ? '…' : t.weeklyTrial} onPress={buy} variant="primary" disabled={busy} />
-        <Button title={t.later} onPress={restore} variant="ghost" disabled={busy} />
+        {/* "Later" must DISMISS the paywall. It was wired to a restore-
+            purchases handler, so tapping it never closed the screen
+            (E2E run 39995848353: paywall still open 18s after the tap). */}
+        <Button title={t.later} onPress={onClose} variant="ghost" disabled={busy} />
         <Text variant="caption" align="center" style={{ color: colors.textTertiary }}>{t.payNote}</Text>
       </View>
     </Screen>
