@@ -100,11 +100,20 @@ appId: com.scrubdeck.app
     text: "Fundamentals"
 - takeScreenshot: screenshots/decks-01.png
 
-# NOTE: "Fundamentals" matches both the Home deck card (plain View, no
-# onPress, stays mounted under the tab) and the Decks row (Pressable).
-# The Pressable row is the second match (index 1).
+# NOTE (corrected — run 40021109539): built-in deck rows do NOT open a
+# detail view; the deck detail ("Add card", "← Decks") exists only for
+# CUSTOM decks. (The earlier index:1 theory was wrong — only one
+# "Fundamentals" node exists on this screen, so that tap failed
+# outright.) The designed path: create a custom deck in the form
+# below; it opens automatically on creation.
 - tapOn:
-    text: "Fundamentals"
+    text: "Deck name"
+- inputText: "My Deck"
+- hideKeyboard
+# "New deck" matches the form title (index 0, inert) and the submit
+# Button's Pressable (index 1) — tap the button.
+- tapOn:
+    text: "New deck"
     index: 1
 - assertVisible:
     text: "Add card"
