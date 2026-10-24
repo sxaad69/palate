@@ -84,8 +84,10 @@ appId: com.naplet.app
 # 40044831672). Use the button's exact label.
 - tapOn:
     text: "🍼 Feed"
+# Editor header is also "🍼 Feed" (one node) — bare "Feed" matches
+# nothing here (run 40049472777).
 - assertVisible:
-    text: "Feed"
+    text: ".*Feed.*"
 - takeScreenshot: screenshots/feed-01.png
 
 - tapOn:
@@ -107,7 +109,7 @@ appId: com.naplet.app
 - tapOn:
     text: "🩲 Diaper"
 - assertVisible:
-    text: "Diaper"
+    text: ".*Diaper.*"
 - tapOn:
     text: "Dirty"
 - takeScreenshot: screenshots/diaper-01.png
