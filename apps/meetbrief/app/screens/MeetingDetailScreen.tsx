@@ -288,7 +288,9 @@ export function MeetingDetailScreen({
     <Screen>
       <View style={{ gap: spacing.md, paddingTop: spacing.sm }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={strings.close}>
+          {/* testID: the text tap on "‹" completed without navigating
+              in run 40078960794 — tap by id, fable player-close precedent. */}
+          <Pressable testID="detail-close" onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={strings.close}>
             <MeetText variant="h2" color={colors.accent}>‹</MeetText>
           </Pressable>
           <MeetText variant="caption" color={colors.textSecondary}>

@@ -132,10 +132,15 @@ appId: com.meetbrief.notes
     text: "e.g. Send the proposal by Friday"
 - inputText: "Coverage action"
 - hideKeyboard
-# NOTE: the "+" Button has accessibilityLabel="Add action item" which
-# overrides its text in the hierarchy — tap the label, not "+"
+# NOTE: the "+" Button AND the action input share
+# accessibilityLabel="Add action item" — the input comes first in
+# the hierarchy, so a bare tap only refocuses the input (run
+# 40078960794: 0/0 items, text still in the field). Index 1 is
+# the + Button. The detail-close chevron is tapped by testID:
+# the text tap on "‹" completed without navigating in that run.
 - tapOn:
     text: "Add action item"
+    index: 1
 - assertVisible:
     text: "Coverage action"
 - tapOn:
@@ -144,7 +149,7 @@ appId: com.meetbrief.notes
 
 # Back to the meetings list
 - tapOn:
-    text: "‹"
+    id: "detail-close"
 # ================= Meetings tab (with meeting) =================
 - tapOn:
     text: "Meetings"
