@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { Keyboard, View, StyleSheet, Pressable } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import { Screen } from '../components/Screen';
 import { KText } from '../components/KText';
@@ -110,6 +110,12 @@ export function AddItemScreen({
   const suggestions = useMemo(() => findFood(name, lang), [name, lang]);
 
   const pick = (f: FoodDefault) => {
+    // Tapping a suggestion fills the form — and dismisses the
+    // keyboard so the Save button below the fold becomes
+    // reachable (E2E runs 40081041951/40087472723/40091422557:
+    // every keyboard dismissal tried from the test side failed
+    // to stick, so the scroll to Save never moved).
+    Keyboard.dismiss();
     setPickedDefault(f);
     setName(lang === 'ar' ? f.ar : f.en);
     setCat(f.cat);
