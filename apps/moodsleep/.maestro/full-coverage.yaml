@@ -93,16 +93,21 @@ appId: com.restory.app
 - assertVisible:
     text: "Your sleep has a story to tell"
 - takeScreenshot: screenshots/insights-01-locked.png
+# The lock-screen CTA reads "Unlock Restory Pro" (i18n unlockPro) —
+# "Unlock your rest story" is the PAYWALL's title, not this button
+# (run 40053643056 failure screenshot).
 - assertVisible:
-    text: "Unlock your rest story"
+    text: "Unlock Restory Pro"
 # ================= Paywall =================
 - tapOn:
-    text: "Unlock your rest story"
+    text: "Unlock Restory Pro"
 - assertVisible:
     text: "Unlock your rest story"
 - takeScreenshot: screenshots/paywall-01.png
+# Subtitle renders "Weekly plan · free trial · cancel anytime" as
+# one node — .* form.
 - assertVisible:
-    text: "Weekly plan"
+    text: ".*Weekly plan.*"
 # Back to Insights
 - back
 
