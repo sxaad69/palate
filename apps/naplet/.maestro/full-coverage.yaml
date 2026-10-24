@@ -79,24 +79,33 @@ appId: com.naplet.app
 - assertVisible:
     text: ".*Start sleep"
 # ================= Feed editor =================
+# The quick-log button's label is "🍼 Feed" (LogScreen) — bare "Feed"
+# whole-matches nothing tappable here and the tap failed (run
+# 40044831672). Use the button's exact label.
 - tapOn:
-    text: "Feed"
+    text: "🍼 Feed"
 - assertVisible:
     text: "Feed"
 - takeScreenshot: screenshots/feed-01.png
 
 - tapOn:
     text: "Bottle"
+# "Amount (ml)": parentheses are regex groups — the bare pattern can
+# never whole-match the literal label. Escaped, it matches the label
+# Text (index 0) and the TextInput's accessibilityLabel (index 1) —
+# tap the input so inputText has a focused field.
 - tapOn:
-    text: "Amount (ml)"
+    text: "Amount \\(ml\\)"
+    index: 1
 - inputText: "120"
 - hideKeyboard
 - takeScreenshot: screenshots/feed-02-bottle.png
 - tapOn:
     text: "Save"
 # ================= Diaper editor =================
+# Same emoji-prefix label as Feed: the button is "🩲 Diaper".
 - tapOn:
-    text: "Diaper"
+    text: "🩲 Diaper"
 - assertVisible:
     text: "Diaper"
 - tapOn:
