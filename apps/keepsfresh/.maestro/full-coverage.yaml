@@ -75,14 +75,15 @@ appId: com.keepsfresh.pantry
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/add-01-form.png
-- inputText: "Milk"
-# Do NOT hideKeyboard here: the form is a fullScreen RN Modal and a
-# BACK press pops it (run 40075233430: modal closed, pantry empty
-# again). Tap the "Milk" food-DB suggestion card instead — it picks
-# the smart default (or refocuses the input; either way the typed
-# name stays and save() works with its 7-day default expiry).
+# Tap the name field FIRST: inputText types into the focused
+# element, and nothing focuses this field on form open — run
+# 40078899557 shows the typed text never landed (fresh form,
+# empty name, no suggestions). Do NOT hideKeyboard after typing:
+# the form is a fullScreen RN Modal and a BACK press pops it
+# (run 40075233430: modal closed, pantry empty again).
 - tapOn:
-    text: "Milk"
+    text: "Item name"
+- inputText: "Milk"
 # Food-DB suggestion / typed name — proves the smart-default lookup
 - assertVisible:
     text: "Milk"
