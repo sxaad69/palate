@@ -119,8 +119,10 @@ appId: com.restory.app
 - takeScreenshot: screenshots/progress-01.png
 - assertVisible:
     text: "History"
+# History row renders "🤩 5/5" (mood emoji + score, one node) — .*
+# form (run 40055349189 failure screenshot shows the row present).
 - assertVisible:
-    text: "5/5"
+    text: ".*5/5.*"
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
@@ -129,8 +131,10 @@ appId: com.restory.app
 - takeScreenshot: screenshots/profile-01.png
 - assertVisible:
     text: "Bedtime reminder"
+# Parentheses are regex groups — escape them to match the literal
+# button title "Export data (CSV)" (naplet Amount (ml) lesson).
 - assertVisible:
-    text: "Export data (CSV)"
+    text: "Export data \\(CSV\\)"
 # ================= Dark mode =================
 - tapOn:
     text: "Dark"
