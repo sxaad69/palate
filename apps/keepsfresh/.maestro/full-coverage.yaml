@@ -89,19 +89,18 @@ appId: com.keepsfresh.pantry
     text: "Milk"
 - takeScreenshot: screenshots/add-02-suggestions.png
 
-# Dismiss the keyboard by tapping the suggestion card's
-# caption ("7d · Fridge" — unique to the card, modal-only):
-# with the keyboard open, scrollUntilVisible cannot swipe the
-# form (runs 40081041951, 40087472723, 40091422557: swipes
-# land on Gboard). Every test-side dismissal tried so far
-# failed to stick (Category label tap, Gboard Done point tap).
-# The card's pick() now calls Keyboard.dismiss() app-side, so
-# EITHER the tap is swallowed for dismissal (ScrollView
-# 'never') OR it delivers and pick() dismisses — both paths
-# close the keyboard. Do NOT use hideKeyboard — a BACK press
-# pops the fullScreen modal (run 40075233430).
+# Tap the suggestion card's caption ("7d · Fridge" — unique
+# to the card, modal-only) to pick the smart default. Under
+# 'handled' taps this DELIVERS (run 40101222361: category
+# flipped to Dairy, banner appeared) but the input stays
+# focused, so the keyboard is deterministically OPEN here —
+# and a BACK press with the keyboard open goes to the IME,
+# not the modal. (The modal-pop in run 40075233430 happened
+# with the keyboard already closed.) So hideKeyboard is safe
+# at exactly this point, and only here.
 - tapOn:
     text: "7d · Fridge"
+- hideKeyboard
 # The submit button is "Save" ("Add to pantry" exists nowhere in
 # the app) and sits at the bottom of the scrollable form.
 - scrollUntilVisible:
