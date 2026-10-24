@@ -130,8 +130,12 @@ appId: com.lanceledger.app
 # ================= Clients =================
 - tapOn:
     text: "Clients"
+# Empty state is one composed node ("No clients yet. Tag
+# transactions with a client to see who makes you money." —
+# run 40089389431 screenshot), so the bare assert cannot
+# whole-match. Partial form, per the Maestro selector rule.
 - assertVisible:
-    text: "No clients yet"
+    text: ".*No clients yet.*"
 - takeScreenshot: screenshots/clients-01-empty.png
 
 - tapOn:
