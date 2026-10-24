@@ -91,7 +91,16 @@ function Shell() {
         {route.name === 'symbol' && (
           <SymbolDetailScreen symbolId={route.symbolId} onBack={backFromSymbol} />
         )}
-        {paywall && <PaywallScreen onClose={() => setPaywall(false)} />}
+        {/* The paywall must COVER the current screen. Rendered as a
+            plain sibling it shared the flex column with the route
+            screen — both squished to half height and the paywall's
+            "Later" button rendered off-screen (E2E run 40064806337
+            failure screenshot). Absolute-fill overlay instead. */}
+        {paywall && (
+          <View style={styles.paywallOverlay}>
+            <PaywallScreen onClose={() => setPaywall(false)} />
+          </View>
+        )}
       </View>
       {isTab && !paywall && (
         <View style={[styles.tabs, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
@@ -135,6 +144,7 @@ export default function App() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { flex: 1 },
+  paywallOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
   tabs: {
     flexDirection: 'row',
     borderTopWidth: 1,
