@@ -174,10 +174,13 @@ appId: com.meetbrief.notes
 # ================= Paywall =================
 - tapOn:
     text: "Upgrade to Pro"
+# Paywall title is "MeetBrief Pro" (run 40082468714 screenshot) —
+# "Go Pro" exists nowhere on it. Subtitle is one node
+# ("Weekly plan · free trial · cancel anytime"), so partial-match it.
 - assertVisible:
-    text: "Go Pro"
+    text: "MeetBrief Pro"
 - assertVisible:
-    text: "free trial"
+    text: ".*free trial.*"
 - takeScreenshot: screenshots/paywall-01.png
 
 - tapOn:
