@@ -76,14 +76,27 @@ appId: com.keepsfresh.pantry
     optional: true
 - takeScreenshot: screenshots/add-01-form.png
 - inputText: "Milk"
-- hideKeyboard
-# Food-DB suggestions appear below the input — proves the smart-default lookup
+# Do NOT hideKeyboard here: the form is a fullScreen RN Modal and a
+# BACK press pops it (run 40075233430: modal closed, pantry empty
+# again). Tap the "Milk" food-DB suggestion card instead — it picks
+# the smart default (or refocuses the input; either way the typed
+# name stays and save() works with its 7-day default expiry).
+- tapOn:
+    text: "Milk"
+# Food-DB suggestion / typed name — proves the smart-default lookup
 - assertVisible:
     text: "Milk"
 - takeScreenshot: screenshots/add-02-suggestions.png
 
+# The submit button is "Save" ("Add to pantry" exists nowhere in
+# the app) and sits at the bottom of the scrollable form.
+- scrollUntilVisible:
+    element:
+      text: "Save"
+    direction: DOWN
+    timeout: 30000
 - tapOn:
-    text: "Add to pantry"
+    text: "Save"
 # ================= Pantry tab (with item) =================
 - assertVisible:
     text: "Milk"
