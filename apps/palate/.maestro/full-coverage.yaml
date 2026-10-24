@@ -136,8 +136,10 @@ appId: com.palate.app
 - assertVisible:
     text: "Current streak"
 - takeScreenshot: screenshots/progress-01.png
+# Progress section header renders "🏆 Badges" (emoji + text, one
+# node) — bare form fails (run 40073567646).
 - assertVisible:
-    text: "Badges"
+    text: ".*Badges.*"
 # ================= Profile tab =================
 - tapOn:
     text: "Profile"
