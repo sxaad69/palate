@@ -168,7 +168,14 @@ export function AddItemScreen({
   };
 
   return (
-    <Screen>
+    // 'handled': taps on Pressable children (chips, suggestion
+    // cards) are DELIVERED, so tapping a suggestion runs pick()
+    // (which dismisses the keyboard) instead of being swallowed.
+    // Under the default 'never', content taps in this modal
+    // form repeatedly failed to dismiss Gboard in E2E runs
+    // 40087472723/40091422557/40094798391, and scrollUntilVisible
+    // 'Save' could never move while the keyboard covered the form.
+    <Screen keyboardShouldPersistTaps="handled">
       <View style={[styles.header, { marginTop: spacing.md }]}>
         <KText variant="h1">{editing ? t().editItemTitle : t().addItemTitle}</KText>
         <Button title={t().cancel} variant="ghost" size="sm" onPress={onClose} />

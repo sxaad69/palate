@@ -7,10 +7,12 @@ export function Screen({
   children,
   scroll = true,
   style,
+  keyboardShouldPersistTaps,
 }: {
   children: React.ReactNode;
   scroll?: boolean;
   style?: StyleProp<ViewStyle>;
+  keyboardShouldPersistTaps?: 'never' | 'always' | 'handled';
 }) {
   const { colors, spacing } = useTheme();
   if (!scroll) {
@@ -25,6 +27,7 @@ export function Screen({
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: spacing.md, paddingBottom: spacing.xl }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       >
         {children}
       </ScrollView>
