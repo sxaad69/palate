@@ -113,8 +113,11 @@ appId: com.keepsfresh.pantry
 # ================= Pantry tab (with item) =================
 - assertVisible:
     text: "Milk"
+# Section header is one composed node ("THIS WEEK · 1" —
+# run 40103711767 screenshot), so the bare assert cannot
+# whole-match. Partial form, per the Maestro selector rule.
 - assertVisible:
-    text: "This week"
+    text: ".*This week.*"
 - takeScreenshot: screenshots/pantry-02-with-item.png
 
 # Mark the item used up — it leaves the pantry and feeds the stats counter
