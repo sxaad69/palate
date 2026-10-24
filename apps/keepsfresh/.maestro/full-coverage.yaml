@@ -89,6 +89,14 @@ appId: com.keepsfresh.pantry
     text: "Milk"
 - takeScreenshot: screenshots/add-02-suggestions.png
 
+# Dismiss the keyboard by tapping a harmless label: with the
+# keyboard open, scrollUntilVisible cannot swipe the form (run
+# 40081041951: the swipe area is covered by Gboard). Do NOT use
+# hideKeyboard — a BACK press pops the fullScreen modal (run
+# 40075233430). Tapping a ScrollView label dismisses the
+# keyboard with no side effect.
+- tapOn:
+    text: "Category"
 # The submit button is "Save" ("Add to pantry" exists nowhere in
 # the app) and sits at the bottom of the scrollable form.
 - scrollUntilVisible:
