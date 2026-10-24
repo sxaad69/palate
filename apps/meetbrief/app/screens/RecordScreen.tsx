@@ -266,6 +266,7 @@ export function RecordScreen({
             <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, paddingBottom: spacing.md }}>
               {phase === 'idle' && (
                 <Pressable
+                  testID="record-button"
                   accessibilityRole="button"
                   accessibilityLabel={strings.record}
                   onPress={() => void start()}

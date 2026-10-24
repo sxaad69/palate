@@ -88,17 +88,14 @@ appId: com.meetbrief.notes
 # the 2026-10-17 fail screenshots — the flow typed into the Meetings
 # search field and "Add action item" was never on screen).
 # The big red record button has no visible text — its accessibility
-# label is "Record", colliding with the header title (index 0) and
-# the tab (last). The button is index 1. The old point tap (50%,52%)
-# was calibrated for an older layout: the button now sits ~83% down,
-# so the tap hit empty space, recording never started, and the
-# optional transport steps below silently no-opped — the flow then
-# typed the action item into the still-focused title field and died
-# at "Add action item" (run 40064792376). Transport steps are HARD
-# now: if recording cannot start, fail loudly here.
+# label "Record" collides with the header title and the tab. Index 1
+# turned out to hit a non-tappable node (tap "completed" but nothing
+# started — run 40066928191), and the old point tap (50%,52%) hit
+# empty space (button sits ~83% down). Deterministic path: tap by
+# testID, like fable's player-close. Transport steps stay HARD: if
+# recording cannot start, fail loudly here.
 - tapOn:
-    text: "Record"
-    index: 1
+    id: "record-button"
 - extendedWaitUntil:
     visible: "Recording"
     timeout: 15000
