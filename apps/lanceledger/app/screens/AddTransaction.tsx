@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, StyleSheet, Switch, TextInput, View } from 'react-native';
 import { Screen } from '../components/Screen';
 import { Text } from '../components/Text';
@@ -33,6 +34,24 @@ export function AddTransactionScreen({
   const [daysAgo, setDaysAgo] = useState(0);
   const [deductible, setDeductible] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // The tab screen stays mounted, so after a save the "Saved ✓"
+  // confirmation stuck around forever — returning to the Add tab
+  // never showed the form again (E2E run 40078776026: the "Add
+  // income" chip was unreachable). Reset to a fresh form every
+  // time the tab regains focus.
+  useFocusEffect(
+    useCallback(() => {
+      setSaved(false);
+      setKind(initialKind);
+      setAmount('');
+      setCategory('other');
+      setVendor('');
+      setClientId(null);
+      setDaysAgo(0);
+      setDeductible(false);
+    }, [initialKind]),
+  );
 
   const date = (() => {
     const d = new Date();
