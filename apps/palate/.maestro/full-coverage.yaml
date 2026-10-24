@@ -109,11 +109,14 @@ appId: com.palate.app
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/today-02-with-meal.png
+# Home meal card renders "Chicken Kabsa · كبسة دجاج" as one node —
+# bare form fails here (run 40070075660), though the result-screen
+# title above is a bare node and stays exact.
 - assertVisible:
-    text: "Chicken Kabsa"
+    text: ".*Chicken Kabsa.*"
 # ================= Dish detail =================
 - tapOn:
-    text: "Chicken Kabsa"
+    text: ".*Chicken Kabsa.*"
 - assertVisible:
     text: "Portion"
 - takeScreenshot: screenshots/dishdetail-01.png
