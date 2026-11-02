@@ -127,6 +127,20 @@ appId: com.palate.app
     text: "1.5 plates"
 - takeScreenshot: screenshots/dishdetail-02-portion.png
 
+# Boundary Test: Decrease down to MIN_PLATES (0.5 plate minimum boundary)
+- tapOn:
+    text: "Decrease portion"
+- tapOn:
+    text: "Decrease portion"
+- assertVisible:
+    text: "0.5 plates"
+- takeScreenshot: screenshots/dishdetail-03-portion-min.png
+
+# Boundary Test: Increase back to normal
+- tapOn:
+    text: "Increase portion"
+- takeScreenshot: screenshots/dishdetail-04-portion-restored.png
+
 # System back returns to Today
 - back
 
@@ -171,3 +185,20 @@ appId: com.palate.app
 - assertVisible:
     text: "Dark"
 - takeScreenshot: screenshots/profile-02-dark.png
+
+# Dark mode visual validation across Today and Progress tabs
+- tapOn:
+    text: "Today"
+- assertVisible:
+    text: ".*Chicken Kabsa.*"
+- takeScreenshot: screenshots/today-03-dark.png
+
+- tapOn:
+    text: "Progress"
+- assertVisible:
+    text: ".*Badges.*"
+- takeScreenshot: screenshots/progress-02-dark.png
+
+# Return to Profile
+- tapOn:
+    text: "Profile"
