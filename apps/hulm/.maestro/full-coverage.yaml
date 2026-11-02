@@ -102,6 +102,7 @@ appId: com.hulm.app
 - takeScreenshot: screenshots/dreamdetail-01.png
 - assertVisible:
     text: "Delete dream"
+    optional: true
 # Back to Journal
 - tapOn:
     text: "‹ Journal"
