@@ -116,8 +116,7 @@ appId: com.fable.breath
 - tapOn:
     text: "✕"
     optional: true
-- back:
-    optional: true
+- back
 - assertVisible:
     text: "Library"
 # ================= Progress tab (empty) =================
