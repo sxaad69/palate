@@ -1,16 +1,16 @@
 # Nightly 23-App Portfolio E2E Test Report
-**Last Check:** 2026-11-02 07:30:06
-**Passed Tonight:** 4 / 23
+**Last Check:** 2026-11-02 08:00:07
+**Passed Tonight:** 3 / 23
 **Active Runs (Group A/B):** Group A=Active, Group B=Active
-**Dispatched This Cycle:** duobudget, dryspell
+**Dispatched This Cycle:** None (slots busy)
 
 | App | Concurrency Group | Status | Latest Run ID |
 |---|:---:|---|:---:|
 | `dosedone` | Group A | PASSED | [41380712974](https://github.com/sxaad69/palate/actions/runs/41380712974) |
-| `dryspell` | Group B | FAILED (failure) | [41385031909](https://github.com/sxaad69/palate/actions/runs/41385031909) |
-| `duobudget` | Group A | FAILED (cancelled) | [41384990152](https://github.com/sxaad69/palate/actions/runs/41384990152) |
-| `fable` | Group B | FAILED (cancelled) | [41380712902](https://github.com/sxaad69/palate/actions/runs/41380712902) |
-| `fastuna` | Group A | FAILED (cancelled) | [41380712813](https://github.com/sxaad69/palate/actions/runs/41380712813) |
+| `dryspell` | Group B | RUNNING | [41389029341](https://github.com/sxaad69/palate/actions/runs/41389029341) |
+| `duobudget` | Group A | FAILED (failure) | [41388824950](https://github.com/sxaad69/palate/actions/runs/41388824950) |
+| `fable` | Group B | FAILED (cancelled) | [41389029242](https://github.com/sxaad69/palate/actions/runs/41389029242) |
+| `fastuna` | Group A | RUNNING | [41389029269](https://github.com/sxaad69/palate/actions/runs/41389029269) |
 | `fernly` | Group B | FAILED (cancelled) | [41380712882](https://github.com/sxaad69/palate/actions/runs/41380712882) |
 | `gratitude` | Group A | FAILED (cancelled) | [41380712935](https://github.com/sxaad69/palate/actions/runs/41380712935) |
 | `headdown` | Group B | FAILED (cancelled) | [41380712898](https://github.com/sxaad69/palate/actions/runs/41380712898) |
@@ -18,10 +18,10 @@
 | `keepsfresh` | Group B | FAILED (cancelled) | [41380712921](https://github.com/sxaad69/palate/actions/runs/41380712921) |
 | `lanceledger` | Group A | FAILED (cancelled) | [41380712933](https://github.com/sxaad69/palate/actions/runs/41380712933) |
 | `meetbrief` | Group B | FAILED (cancelled) | [41380712866](https://github.com/sxaad69/palate/actions/runs/41380712866) |
-| `modestfit` | Group A | PASSED | [41384990151](https://github.com/sxaad69/palate/actions/runs/41384990151) |
+| `modestfit` | Group A | FAILED (cancelled) | [41389029261](https://github.com/sxaad69/palate/actions/runs/41389029261) |
 | `moodsleep` | Group B | FAILED (cancelled) | [41380713040](https://github.com/sxaad69/palate/actions/runs/41380713040) |
 | `naplet` | Group A | FAILED (cancelled) | [41380712871](https://github.com/sxaad69/palate/actions/runs/41380712871) |
-| `palate` | Group B | FAILED (cancelled) | [41384990169](https://github.com/sxaad69/palate/actions/runs/41384990169) |
+| `palate` | Group B | FAILED (cancelled) | [41389029224](https://github.com/sxaad69/palate/actions/runs/41389029224) |
 | `petmed` | Group A | FAILED (cancelled) | [41380712926](https://github.com/sxaad69/palate/actions/runs/41380712926) |
 | `pip` | Group B | PASSED | [41380712826](https://github.com/sxaad69/palate/actions/runs/41380712826) |
 | `posturecheck` | Group A | FAILED (cancelled) | [41380712863](https://github.com/sxaad69/palate/actions/runs/41380712863) |
