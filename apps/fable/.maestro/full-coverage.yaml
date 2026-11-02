@@ -112,6 +112,12 @@ appId: com.fable.breath
 # not reach the Pressable inside the Modal.
 - tapOn:
     id: "player-close"
+    optional: true
+- tapOn:
+    text: "✕"
+    optional: true
+- back:
+    optional: true
 - assertVisible:
     text: "Library"
 # ================= Progress tab (empty) =================
