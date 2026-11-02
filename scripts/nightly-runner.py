@@ -52,6 +52,8 @@ def main():
             if f"({w['app']})" in wfname:
                 if w['app'] not in latest_by_app:
                     latest_by_app[w['app']] = r
+                elif latest_by_app[w['app']]["conclusion"] == "cancelled" and r["conclusion"] == "success":
+                    latest_by_app[w['app']] = r
 
     status_summary = []
     group_a_running = False
