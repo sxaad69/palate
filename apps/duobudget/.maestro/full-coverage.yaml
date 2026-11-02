@@ -126,9 +126,11 @@ appId: com.twopurse.app
     text: ".*Couple Sync.*"
     optional: true
 - takeScreenshot: screenshots/profile-sync.png
-- scroll:
-    direction: "UP"
-    optional: true
+- scrollUntilVisible:
+    element:
+      text: "Appearance"
+    direction: UP
+    timeout: 20000
 
 # ================= Paywall =================
 # NOTE: the Profile upsell card title node is "✦ Get TwoPurse Pro"
