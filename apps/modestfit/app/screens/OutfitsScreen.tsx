@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, Share, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '../theme/ThemeProvider';
@@ -18,6 +18,19 @@ export function OutfitsScreen() {
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const s = t();
   const [expanded, setExpanded] = useState<string | null>(null);
+
+  const handleShare = async (name: string, occ: string, pieces: ReturnType<typeof pieceById>[]) => {
+    const validPieces = pieces.filter((p): p is NonNullable<typeof p> => !!p);
+    const pieceLines = validPieces.map((p) => `• ${p.name[lang]}`).join('\n');
+    const hijab = validPieces.find((p) => p.category === 'hijab');
+    const hijabLine = hijab ? `\n🧕 Hijab: ${hijab.name[lang]} (${hijab.color})` : '';
+    const message = `✨ Modest Outfit: ${name}\nOccasion: ${s[`occ_${occ}`] || occ}\n\nPieces:\n${pieceLines}${hijabLine}\n\n#ModestFashion #OOTD #ModestFit`;
+    try {
+      await Share.share({ message });
+    } catch {
+      // dismissed
+    }
+  };
 
   const confirmDelete = (id: string, name: string) => {
     Alert.alert(name, '', [
@@ -99,14 +112,21 @@ export function OutfitsScreen() {
                   ))}
                 </View>
               )}
-              <View style={{ flexDirection: 'row', marginTop: spacing.sm }}>
+              <View style={{ flexDirection: 'row', marginTop: spacing.sm, alignItems: 'center' }}>
                 <Button
                   title={open ? s.close : s.selectPieces}
                   size="sm"
                   variant="ghost"
                   onPress={() => setExpanded(open ? null : o.id)}
                 />
-                <View style={{ width: spacing.sm }} />
+                <View style={{ width: spacing.xs }} />
+                <Button
+                  title={`↗ ${s.shareOutfit}`}
+                  size="sm"
+                  variant="secondary"
+                  onPress={() => handleShare(o.name, o.occasion, pieces)}
+                />
+                <View style={{ width: spacing.xs }} />
                 <Button
                   title={s.delete}
                   size="sm"

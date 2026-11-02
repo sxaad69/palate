@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Pressable, TextInput, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Pressable, TextInput, StyleSheet, Share } from 'react-native';
 import { useTheme, type ThemeMode } from '../theme/ThemeProvider';
 import { Screen } from '../components/Screen';
 import { TPText } from '../components/TPText';
@@ -68,9 +68,32 @@ export function ProfileScreen({ onOpenPaywall }: { onOpenPaywall: () => void }) 
     meName,
     partnerName,
     setNames,
+    householdCode,
+    setHouseholdCode,
     isPro,
     setAppThemeMode,
   } = useTwoPurse();
+
+  const [joinCode, setJoinCode] = useState('');
+  const [linkedStatus, setLinkedStatus] = useState<string | null>(null);
+
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        message: `${t().inviteMessage}${householdCode}`,
+      });
+    } catch {
+      // dismissed
+    }
+  };
+
+  const handleLink = () => {
+    if (joinCode.trim().length >= 4) {
+      setHouseholdCode(joinCode.trim().toUpperCase());
+      setLinkedStatus(t().householdLinked);
+      setJoinCode('');
+    }
+  };
 
   const pickTheme = (m: ThemeMode) => {
     setThemeMode(m);
@@ -151,6 +174,91 @@ export function ProfileScreen({ onOpenPaywall }: { onOpenPaywall: () => void }) 
           style={[styles.input, { borderColor: colors.border, color: colors.textPrimary, backgroundColor: colors.surface, borderRadius: radii.md, padding: spacing.md }]}
         />
       </Row>
+
+      {/* Couple Sync (Household Share) */}
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          borderRadius: radii.lg,
+          borderWidth: 1,
+          borderColor: colors.border,
+          padding: spacing.md,
+          marginTop: spacing.sm,
+          marginBottom: spacing.md,
+        }}
+      >
+        <TPText variant="h3" color={colors.accent} style={{ marginBottom: spacing.xs }}>
+          👥 {t().coupleSync}
+        </TPText>
+        <TPText variant="bodySmall" color={colors.textSecondary} style={{ marginBottom: spacing.md }}>
+          {t().householdSyncDesc}
+        </TPText>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: colors.surfaceAlt,
+            padding: spacing.md,
+            borderRadius: radii.md,
+            marginBottom: spacing.md,
+          }}
+        >
+          <View>
+            <TPText variant="overline" color={colors.textTertiary}>
+              {t().yourHouseholdCode}
+            </TPText>
+            <TPText variant="h2" color={colors.textPrimary} style={{ letterSpacing: 2 }}>
+              {householdCode}
+            </TPText>
+          </View>
+          <Button
+            title={t().shareInvite}
+            variant="secondary"
+            size="sm"
+            onPress={handleShare}
+          />
+        </View>
+
+        <TPText variant="overline" color={colors.textTertiary} style={{ marginBottom: spacing.xs }}>
+          {t().joinHousehold}
+        </TPText>
+        <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+          <TextInput
+            placeholder={t().enterCode}
+            placeholderTextColor={colors.textTertiary}
+            value={joinCode}
+            onChangeText={setJoinCode}
+            autoCapitalize="characters"
+            maxLength={8}
+            style={[
+              styles.input,
+              {
+                flex: 1,
+                borderColor: colors.border,
+                color: colors.textPrimary,
+                backgroundColor: colors.surfaceAlt,
+                borderRadius: radii.md,
+                paddingHorizontal: spacing.md,
+                paddingVertical: spacing.sm,
+              },
+            ]}
+          />
+          <Button
+            title={t().linkHousehold}
+            variant="primary"
+            size="sm"
+            onPress={handleLink}
+            disabled={joinCode.trim().length < 4}
+          />
+        </View>
+        {linkedStatus ? (
+          <TPText variant="caption" color={colors.success} style={{ marginTop: spacing.sm }}>
+            ✓ {linkedStatus}
+          </TPText>
+        ) : null}
+      </View>
 
       <View
         style={{

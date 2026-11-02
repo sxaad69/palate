@@ -70,12 +70,22 @@ export function makeStarterEnvelopes(specs: StarterSpec[]): Envelope[] {
   }));
 }
 
+export function makeHouseholdCode(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
 interface TwoPurseState {
   onboarded: boolean;
   lang: Lang;
   currency: string;
   meName: string;
   partnerName: string;
+  householdCode: string;
   envelopes: Envelope[];
   expenses: Expense[];
   credits: Credits;
@@ -94,6 +104,8 @@ interface TwoPurseState {
   setLanguage: (l: Lang) => void;
   setCurrency: (c: string) => void;
   setNames: (me: string, partner: string) => void;
+  setHouseholdCode: (code: string) => void;
+  generateHouseholdCode: () => string;
   addExpense: (e: Omit<Expense, 'id' | 'createdAt'>) => void;
   deleteExpense: (id: string) => void;
   saveEnvelope: (e: Omit<Envelope, 'id' | 'position' | 'archived'> & { id?: string }) => Envelope | null;
@@ -113,6 +125,7 @@ interface Persisted {
   currency: string;
   meName: string;
   partnerName: string;
+  householdCode?: string;
   themeMode: ThemeMode;
   envelopes: Envelope[];
   expenses: Expense[];
@@ -127,6 +140,7 @@ const DEFAULTS: Persisted = {
   currency: 'USD',
   meName: '',
   partnerName: '',
+  householdCode: '',
   themeMode: 'system',
   envelopes: [],
   expenses: [],
@@ -149,11 +163,13 @@ export function TwoPurseProvider({ children }: { children: React.ReactNode }) {
         if (raw) {
           const p = JSON.parse(raw) as Partial<Persisted>;
           const pro = !!p.pro || (await isProLocal());
-          setS({ ...DEFAULTS, ...p, pro });
+          const householdCode = p.householdCode || makeHouseholdCode();
+          setS({ ...DEFAULTS, ...p, householdCode, pro });
           if (p.lang === 'ar' || p.lang === 'en') setLang(p.lang);
         } else {
           const pro = await isProLocal();
-          setS((prev) => ({ ...prev, pro }));
+          const householdCode = makeHouseholdCode();
+          setS((prev) => ({ ...prev, householdCode, pro }));
         }
       } catch {
         // start fresh
@@ -192,6 +208,17 @@ export function TwoPurseProvider({ children }: { children: React.ReactNode }) {
 
   const setNames = useCallback((me: string, partner: string) => {
     setS((prev) => ({ ...prev, meName: me, partnerName: partner }));
+  }, []);
+
+  const setHouseholdCode = useCallback((code: string) => {
+    const cleaned = code.trim().toUpperCase().slice(0, 8);
+    setS((prev) => ({ ...prev, householdCode: cleaned }));
+  }, []);
+
+  const generateHouseholdCode = useCallback(() => {
+    const newCode = makeHouseholdCode();
+    setS((prev) => ({ ...prev, householdCode: newCode }));
+    return newCode;
   }, []);
 
   const addExpense: TwoPurseState['addExpense'] = useCallback((e) => {
@@ -287,6 +314,7 @@ export function TwoPurseProvider({ children }: { children: React.ReactNode }) {
       currency: s.currency,
       meName: s.meName,
       partnerName: s.partnerName,
+      householdCode: s.householdCode || '2PURSE',
       envelopes: s.envelopes,
       expenses: s.expenses,
       credits: s.credits,
@@ -298,6 +326,8 @@ export function TwoPurseProvider({ children }: { children: React.ReactNode }) {
       setLanguage,
       setCurrency,
       setNames,
+      setHouseholdCode,
+      generateHouseholdCode,
       addExpense,
       deleteExpense,
       saveEnvelope,
@@ -313,6 +343,8 @@ export function TwoPurseProvider({ children }: { children: React.ReactNode }) {
       setLanguage,
       setCurrency,
       setNames,
+      setHouseholdCode,
+      generateHouseholdCode,
       addExpense,
       deleteExpense,
       saveEnvelope,

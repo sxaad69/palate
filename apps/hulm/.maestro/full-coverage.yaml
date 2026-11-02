@@ -93,6 +93,12 @@ appId: com.hulm.app
     text: "The flood and the staircase"
 - assertVisible:
     text: "Reflect"
+- assertVisible:
+    text: ".*AI Psychological Reflection.*"
+    optional: true
+- assertVisible:
+    text: ".*Share Dream Card.*"
+    optional: true
 - takeScreenshot: screenshots/dreamdetail-01.png
 - assertVisible:
     text: "Delete dream"

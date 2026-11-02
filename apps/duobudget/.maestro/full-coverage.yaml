@@ -121,6 +121,14 @@ appId: com.twopurse.app
 - assertVisible:
     text: "Appearance"
 - takeScreenshot: screenshots/profile-01.png
+- scroll
+- assertVisible:
+    text: ".*Couple Sync.*"
+    optional: true
+- takeScreenshot: screenshots/profile-sync.png
+- scroll:
+    direction: "UP"
+    optional: true
 
 # ================= Paywall =================
 # NOTE: the Profile upsell card title node is "✦ Get TwoPurse Pro"

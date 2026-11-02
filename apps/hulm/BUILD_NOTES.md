@@ -37,10 +37,12 @@ Built 2026-10-03 · `com.hulm.app` · Expo SDK 57 · strict TS (`npx tsc --noEmi
 1. Keyword auto-suggest: the journal *finds* symbols in your words — no manual lookup.
 2. Reflection questions per symbol (journaling mechanic), not one-line "meanings".
 3. Structural religious-ruling disclaimer — trust positioning for the MENA/global Muslim audience; recurring-symbol insights as the Plus hook.
+4. **AI Archetypal Dream Reflection Engine** (`app/lib/interpretation.ts`): pivots app from static dictionary lookup to dynamic Jungian psychological reflection (Rebirth/Water, Transcendence/Flight, Shadow Integration, Inner Journey) with personalized reflection prompts.
+5. **Viral Social Dream Cards**: one-tap shareable dream reflection cards formatted for Instagram/TikTok stories, combining archetypal themes, confirmed symbols, and introspective prompts with safety disclaimers.
 
 ## Stubbed / left for launch
+- Edge function hookup: `app/lib/interpretation.ts` contains the client-side archetype engine and is architected to call Supabase Edge Function `interpret-dream` when live backend credentials are provided.
 - Play Console: create `hulm_weekly` subscription with 7-day free trial; no server-side purchase verification (provisional local unlock).
 - Supabase: migration not applied live; sync not wired (local-first v1).
 - Notification delivery unverified on hardware (no reminders in v1 — deliberate).
 - AR translations need native-speaker review.
-- Nothing pushed to GitHub (local only, per instructions).

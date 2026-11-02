@@ -44,17 +44,19 @@ Expo SDK 57 + strict TS app at `~/workspace/apps/duobudget/app/`:
 3. **Month-end "money date" ritual** — a guided monthly review screen with
    one-tap rollover of leftovers into a savings envelope. No competitor frames
    the monthly close as a couples ritual.
-4. **Partner mode without accounts (honest v1)** — no sign-up, no bank linking;
-   "partner handoff" is a one-tap shareable plain-text monthly summary. Cloud
-   two-device sync is the documented v2 insertion point (schema + RLS reserved).
+4. **Multiplayer viral invite loop (Couple Sync)** — built-in household join-code
+   system. Each installation generates a unique 6-character household code (e.g. `2PURSE`)
+   with a one-tap native Share sheet trigger (*"Join my budget on TwoPurse! Enter household code: {CODE}"*).
+   Partners can enter the join code directly in the Profile tab to link their devices,
+   driving organic K > 1 viral acquisition with zero sign-up friction.
 
 ## Deliberately stubbed / left for launch
 
-- **Partner cloud sync (v2 insertion point):** migration reserves
-  `households(join_code)`, `household_members`, `envelopes`, `expenses` with
-  RLS deny-all. v2 work: join-code flow, device_id claims, RLS policies
-  (member-only read/write), last-write-wins merge in the store, re-answer Data
-  safety + update privacy policy BEFORE shipping v2.
+- **Partner cloud sync backend integration:** UI and store state (`householdCode`,
+  `setHouseholdCode`, `generateHouseholdCode`, invite sharing) are fully implemented.
+  Supabase migration reserves `households(join_code)`, `household_members`, `envelopes`,
+  and `expenses`. Launch task: connect client store to Supabase Edge Function `sync-household`
+  via WebSocket or periodic poll using `householdCode` as room key.
 - **Billing server verification:** client acknowledges + unlocks locally
   (Palate's verify-purchase edge-function pattern to be added at launch).
 - **`twopurse_weekly` product:** create in Play Console (weekly + free trial)

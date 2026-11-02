@@ -149,6 +149,9 @@ appId: com.modestfit.app
 # Verdict renders "✓ Meets your modesty preferences" (prefix) — .* form.
 - assertVisible:
     text: ".*Meets your modesty preferences.*"
+- assertVisible:
+    text: ".*Share outfit.*"
+    optional: true
 # ================= Ideas tab =================
 - tapOn:
     text: "Ideas"

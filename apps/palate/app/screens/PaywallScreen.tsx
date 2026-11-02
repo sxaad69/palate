@@ -99,7 +99,7 @@ export function PaywallScreen() {
     else setMessage('No previous purchase found.');
   }, []);
 
-  const price = product?.displayPrice ?? '$4.99';
+  const price = product?.displayPrice ?? '$2.99';
 
   return (
     <Screen>
@@ -179,7 +179,7 @@ export function PaywallScreen() {
             <View>
               <Text variant="h1">{price}</Text>
               <Text variant="bodySmall" color="textSecondary">
-                per month · cancel anytime
+                per week · 7-day free trial · cancel anytime
               </Text>
             </View>
           </View>

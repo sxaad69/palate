@@ -15,8 +15,10 @@ import {
 import { verifyPurchaseToken } from './api';
 
 // Play Console product IDs — create these in Play Console > Monetize > Products > Subscriptions.
-// The monthly sub must exist before any purchase can succeed.
+// Weekly with 7-day free trial is the primary high-LTV SKU; monthly kept for backward compatibility.
+export const PRO_WEEKLY_SKU = 'palate_pro_weekly';
 export const PRO_MONTHLY_SKU = 'palate_pro_monthly';
+export const SUBSCRIPTION_SKUS = [PRO_WEEKLY_SKU, PRO_MONTHLY_SKU];
 
 const PRO_STATUS_KEY = '@palate:pro_status';
 const PRO_EXPIRY_KEY = '@palate:pro_expiry_ms';
@@ -93,7 +95,7 @@ function toProProduct(p: ProductOrSubscription): ProProduct | null {
 export async function getProProduct(): Promise<ProProduct | null> {
   if (!connected) return null;
   try {
-    const products = await fetchProducts({ skus: [PRO_MONTHLY_SKU], type: 'subs' });
+    const products = await fetchProducts({ skus: SUBSCRIPTION_SKUS, type: 'subs' });
     if (!products) return null;
     for (const p of products) {
       const pro = toProProduct(p);
@@ -105,10 +107,10 @@ export async function getProProduct(): Promise<ProProduct | null> {
   }
 }
 
-export async function subscribe(): Promise<void> {
+export async function subscribe(sku: string = PRO_WEEKLY_SKU): Promise<void> {
   if (!connected) throw new Error('Billing is not available on this device.');
   await requestPurchase({
-    request: { google: { skus: [PRO_MONTHLY_SKU] } },
+    request: { google: { skus: [sku] } },
     type: 'subs',
   });
 }
@@ -117,7 +119,7 @@ export async function restorePurchases(): Promise<boolean> {
   if (!connected) return false;
   try {
     const purchases = await getAvailablePurchases();
-    const active = purchases.some((p) => p.productId === PRO_MONTHLY_SKU);
+    const active = purchases.some((p) => p.productId === PRO_WEEKLY_SKU || p.productId === PRO_MONTHLY_SKU);
     if (active) {
       await setProStatus(true);
       // Finish any unfinished transactions found during restore.

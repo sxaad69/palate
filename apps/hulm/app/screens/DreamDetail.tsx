@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Pressable, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, Alert, Share } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import { spacing } from '../theme/tokens';
 import { useStrings } from '../lib/strings';
 import { useDreams, type Mood } from '../store/dreams';
 import { SYMBOLS } from '../data/symbols';
+import { getDreamReflection } from '../lib/interpretation';
 import { Screen } from '../components/Screen';
 import { Text } from '../components/Text';
 import { Button } from '../components/Button';
@@ -45,6 +46,29 @@ export default function DreamDetailScreen({
     ]);
   };
 
+  const reflection = getDreamReflection(dream.narrative, dream.symbolIds, rtl ? 'ar' : 'en');
+
+  const handleShareCard = async () => {
+    const symbolNames = dream.symbolIds
+      .map((sid) => SYMBOLS.find((s) => s.id === sid))
+      .filter((s): s is NonNullable<typeof s> => !!s)
+      .map((s) => (rtl ? s.ar : s.en))
+      .join(', ');
+
+    const cardText = `🌙 Hulm Dream Card: "${dream.title || 'Dream Reflection'}"\n\n` +
+      `✨ ${t.archetype}: ${reflection.archetype}\n` +
+      `🔍 ${reflection.theme}\n\n` +
+      `💭 ${t.reflectionQuestion}:\n"${reflection.reflectionQuestion}"\n\n` +
+      (symbolNames ? `🏷️ ${t.confirmedSymbols}: ${symbolNames}\n\n` : '') +
+      `— Journaled with Hulm (${t.disclaimerShort})`;
+
+    try {
+      await Share.share({ message: cardText });
+    } catch {
+      // dismissed
+    }
+  };
+
   return (
     <Screen padded={false}>
       <ScrollView contentContainerStyle={styles.body}>
@@ -68,6 +92,33 @@ export default function DreamDetailScreen({
         <Card>
           <Text variant="body">{dream.narrative}</Text>
         </Card>
+
+        {/* AI Archetypal Reflection Card */}
+        <Card style={{ borderColor: colors.accent, borderWidth: 1 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.xs }}>
+            <Text variant="h3" style={{ color: colors.accent }}>✨ {t.aiReflection}</Text>
+          </View>
+          <Text variant="caption" style={{ color: colors.textTertiary, marginBottom: spacing.xs }}>
+            {t.archetype}: {reflection.archetype}
+          </Text>
+          <Text variant="body" style={{ marginBottom: spacing.sm }}>
+            {reflection.theme}
+          </Text>
+          <View style={{ backgroundColor: colors.highlight, padding: spacing.sm, borderRadius: 8, marginTop: spacing.xs }}>
+            <Text variant="caption" style={{ color: colors.accent, fontWeight: 'bold', marginBottom: 2 }}>
+              💭 {t.reflectionQuestion}
+            </Text>
+            <Text variant="bodySmall">
+              {reflection.reflectionQuestion}
+            </Text>
+          </View>
+        </Card>
+
+        <Button
+          title={`🌙 ${t.shareCard}`}
+          onPress={handleShareCard}
+          variant="secondary"
+        />
 
         <Text variant="h3">{t.reflect}</Text>
         {dream.symbolIds.length === 0 ? (

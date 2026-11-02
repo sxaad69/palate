@@ -1,9 +1,9 @@
 # ModestFit — Play listing (EN)
 
-**Title:** ModestFit: Modest Outfit Planner
+**Title:** ModestFit: Modest Wardrobe & Hijab Outfit Planner
 
 **Short description (80 chars):**
-Plan modest outfits from your own wardrobe — hijab pairing included.
+Plan modest outfits from your own wardrobe — hijab pairing & modesty check.
 
 **Full description:**
 Getting dressed should be easy — and always feel right. ModestFit is the wardrobe and outfit planner built for modest dressers.

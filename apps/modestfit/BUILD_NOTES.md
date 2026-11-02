@@ -29,3 +29,5 @@
 2. Hijab pairing engine (local color-harmony rules, zero cost).
 3. Occasion + 7-day outfit planning with wear tracking.
 4. Capsule wardrobe insights (pieces→outfits efficiency, most/never-worn).
+5. **Viral Outfit Sharing & Hijab OOTD Cards** — instant one-tap social sharing from My Outfits formatting outfit items, hijab color harmony, and occasion for TikTok/IG #ModestFashion sharing.
+6. **Optimized ASO Positioning** — updated listing targeting `ModestFit: Modest Wardrobe & Hijab Outfit Planner` / `ModestFit: دولابك المحتشم وتنسيق الحجاب والإطلالات` across EN and AR stores.

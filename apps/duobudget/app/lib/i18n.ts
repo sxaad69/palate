@@ -118,6 +118,15 @@ const en = {
   version: 'Version',
   deleteExpense: 'Delete',
   confirmArchive: 'Archived envelopes are hidden from the budget. You can restore them anytime.',
+  coupleSync: 'Couple Sync (Household Share)',
+  householdSyncDesc: 'Connect with your partner to sync your envelopes and spending across both phones.',
+  yourHouseholdCode: 'Your household code',
+  shareInvite: 'Share invite with partner',
+  inviteMessage: 'Join my budget on TwoPurse! Enter household code: ',
+  joinHousehold: 'Join partner\u2019s household',
+  enterCode: 'Enter 6-char code',
+  linkHousehold: 'Link',
+  householdLinked: 'Household linked! Both devices now share this budget.',
 } as const;
 
 const ar: Record<keyof typeof en, string> = {
@@ -227,6 +236,15 @@ const ar: Record<keyof typeof en, string> = {
   version: 'الإصدار',
   deleteExpense: 'حذف',
   confirmArchive: 'المظاريف المؤرشفة تُخفى من الميزانية. يمكنك استعادتها في أي وقت.',
+  coupleSync: 'مزامنة الشريكين (مشاركة الميزانية)',
+  householdSyncDesc: 'تواصل مع شريكك لمزامنة المظاريف والإنفاق المشترك بين الهاتفين.',
+  yourHouseholdCode: 'رمز الميزانية الخاص بك',
+  shareInvite: 'مشاركة الدعوة مع الشريك',
+  inviteMessage: 'انضم إلى ميزانيتي في TwoPurse! أدخل رمز العائلة: ',
+  joinHousehold: 'الانضمام لميزانية الشريك',
+  enterCode: 'أدخل الرمز (6 خانات)',
+  linkHousehold: 'ربط',
+  householdLinked: 'تم الربط بنجاح! أصبح الهاتفان يتشاركان نفس الميزانية.',
 };
 
 export type Lang = 'en' | 'ar';
