@@ -1,13 +1,13 @@
 # Nightly 23-App Portfolio E2E Test Report
-**Last Check:** 2026-11-02 07:00:06
-**Passed Tonight:** 3 / 23
+**Last Check:** 2026-11-02 07:30:06
+**Passed Tonight:** 4 / 23
 **Active Runs (Group A/B):** Group A=Active, Group B=Active
-**Dispatched This Cycle:** None (slots busy)
+**Dispatched This Cycle:** duobudget, dryspell
 
 | App | Concurrency Group | Status | Latest Run ID |
 |---|:---:|---|:---:|
 | `dosedone` | Group A | PASSED | [41380712974](https://github.com/sxaad69/palate/actions/runs/41380712974) |
-| `dryspell` | Group B | RUNNING | [41385031909](https://github.com/sxaad69/palate/actions/runs/41385031909) |
+| `dryspell` | Group B | FAILED (failure) | [41385031909](https://github.com/sxaad69/palate/actions/runs/41385031909) |
 | `duobudget` | Group A | FAILED (cancelled) | [41384990152](https://github.com/sxaad69/palate/actions/runs/41384990152) |
 | `fable` | Group B | FAILED (cancelled) | [41380712902](https://github.com/sxaad69/palate/actions/runs/41380712902) |
 | `fastuna` | Group A | FAILED (cancelled) | [41380712813](https://github.com/sxaad69/palate/actions/runs/41380712813) |
@@ -18,7 +18,7 @@
 | `keepsfresh` | Group B | FAILED (cancelled) | [41380712921](https://github.com/sxaad69/palate/actions/runs/41380712921) |
 | `lanceledger` | Group A | FAILED (cancelled) | [41380712933](https://github.com/sxaad69/palate/actions/runs/41380712933) |
 | `meetbrief` | Group B | FAILED (cancelled) | [41380712866](https://github.com/sxaad69/palate/actions/runs/41380712866) |
-| `modestfit` | Group A | RUNNING | [41384990151](https://github.com/sxaad69/palate/actions/runs/41384990151) |
+| `modestfit` | Group A | PASSED | [41384990151](https://github.com/sxaad69/palate/actions/runs/41384990151) |
 | `moodsleep` | Group B | FAILED (cancelled) | [41380713040](https://github.com/sxaad69/palate/actions/runs/41380713040) |
 | `naplet` | Group A | FAILED (cancelled) | [41380712871](https://github.com/sxaad69/palate/actions/runs/41380712871) |
 | `palate` | Group B | FAILED (cancelled) | [41384990169](https://github.com/sxaad69/palate/actions/runs/41384990169) |
