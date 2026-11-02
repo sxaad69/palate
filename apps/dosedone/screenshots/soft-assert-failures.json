@@ -1,0 +1,10 @@
+{
+  "app": "dosedone",
+  "soft_failures": [
+    {
+      "type": "soft_assert",
+      "detail": "Tap on (Optional) \"Skip for now\"... COMPLETED"
+    }
+  ],
+  "count": 1
+}
