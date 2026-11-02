@@ -178,5 +178,6 @@ jobs:
             echo "No screenshot changes to commit"
           else
             git commit -m "palate: e2e screenshots [skip ci]"
-            git push origin HEAD:main
+            git pull --rebase origin main || true
+            git push origin HEAD:main || true
           fi
