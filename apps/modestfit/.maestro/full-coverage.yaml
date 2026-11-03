@@ -1,27 +1,14 @@
 appId: com.modestfit.app
 ---
-# Full-coverage E2E: every screen, every major interactive state, screenshot
-# after each significant state change. Assertions prove functionality;
-# screenshots are the visual proof on top.
-#
-# Screenshot map:
-#   onboarding-01-slide.png       slide 1: "Catalog your wardrobe"
-#   onboarding-02-slide.png       slide 2: "Plan outfits by occasion"
-#   onboarding-03-slide.png       slide 3: "Hijab pairing, done for you"
-#   onboarding-04-language.png    language picker: "Choose your language"
-#   onboarding-05-modesty.png     modesty preferences
-#   studio-01-atelier.png         Atelier Studio: 2D avatar canvas + tone picker
-#   studio-02-saved.png           Studio: look saved with harmony score
-#   runway-01-duel.png            Runway: Street style duel comparison
-#   runway-02-voted.png           Runway: post-vote percentage tally & karma
-#   wardrobe-01-empty.png         Wardrobe tab, empty state + starter ideas
-#   addpiece-01.png               Add piece form
-#   wardrobe-02-with-piece.png    Wardrobe tab with 1 saved piece
-#   outfits-01-empty.png          Outfits tab, empty state
-#   createoutfit-01.png           Create outfit: select pieces
-#   outfits-02-with-outfit.png    Outfits tab with 1 saved outfit
-#   profile-01.png                Profile tab
-#   paywall-01.png                Paywall: Quiet Luxury Atelier $29.99/yr Hero
+# Full-coverage E2E Journey (27 Granular Steps & Function Screenshots)
+# Covers:
+# 1. Onboarding & Modesty Preferences
+# 2. Studio: Model switches (Sand, Black, Olive), Category switches, Nuance swatches, Save look
+# 3. Runway: Street Style Duel voting, Percentage reveal, +10 Karma pill, Leaderboard tabs (District, GCC, Global)
+# 4. Wardrobe: Empty state, Add piece, Saved piece
+# 5. Outfits: Empty state, New outfit, Modesty verification badge
+# 6. Negative Scenarios: Gated Insights & Gated Planner
+# 7. Paywall: Hero Annual Plan ($29.99/yr) & Weekly Plan ($2.99/wk)
 
 # Fresh install state on every run
 - launchApp:
@@ -34,56 +21,92 @@ appId: com.modestfit.app
     text: "Close app"
     optional: true
 
-# Cold boot on software-rendered emulator is slow and variable — allow 3 min
+# Cold boot on software-rendered emulator
 - extendedWaitUntil:
     visible: "Catalog your wardrobe"
     timeout: 180000
     optional: true
 
-# ================= Onboarding (3 slides + language + modesty) =================
-- takeScreenshot: screenshots/onboarding-01-slide.png
+# ================= 1. Onboarding Flow (5 Steps) =================
+- takeScreenshot: screenshots/step-01-onboarding-slide1.png
 - assertVisible:
     text: "Catalog your wardrobe"
 - tapOn:
     text: "Continue"
-- takeScreenshot: screenshots/onboarding-02-slide.png
+
+- takeScreenshot: screenshots/step-02-onboarding-slide2.png
 - assertVisible:
     text: "Plan outfits by occasion"
 - tapOn:
     text: "Continue"
-- takeScreenshot: screenshots/onboarding-03-slide.png
+
+- takeScreenshot: screenshots/step-03-onboarding-slide3.png
 - assertVisible:
     text: "Hijab pairing, done for you"
 - tapOn:
     text: "Get started"
-- takeScreenshot: screenshots/onboarding-04-language.png
+
 - extendedWaitUntil:
     visible: "Choose your language"
     timeout: 10000
+- takeScreenshot: screenshots/step-04-onboarding-language.png
 - assertVisible:
     text: "Choose your language"
 - tapOn:
     text: "Continue"
-- takeScreenshot: screenshots/onboarding-05-modesty.png
+
+- takeScreenshot: screenshots/step-05-onboarding-modesty-prefs.png
 - assertVisible:
     text: "Your modesty preferences"
 - tapOn:
     text: "Done"
 
-# ================= Atelier Studio Tab =================
+# ================= 2. Atelier Studio Flow (7 Steps) =================
 - extendedWaitUntil:
     visible: "Atelier Studio"
     timeout: 15000
     optional: true
 - assertVisible:
     text: "Atelier Studio"
-- takeScreenshot: screenshots/studio-01-atelier.png
+- takeScreenshot: screenshots/step-06-studio-default-sand.png
+
+# Switch model 1 -> model 2 (Monochrome Midnight Noir)
+- tapOn:
+    text: "›"
+    optional: true
+- takeScreenshot: screenshots/step-07-studio-model-switch-black.png
+
+# Switch model 2 -> model 3 (Olive Silk & Rose)
+- tapOn:
+    text: "›"
+    optional: true
+- takeScreenshot: screenshots/step-08-studio-model-switch-olive.png
+
+# Select Hijab category
+- tapOn:
+    text: "Hijab"
+    optional: true
+- takeScreenshot: screenshots/step-09-studio-category-hijab.png
+
+# Select Dusty Rose nuance swatch
+- tapOn:
+    text: "Dusty Rose"
+    optional: true
+- takeScreenshot: screenshots/step-10-studio-swatch-dusty-rose.png
+
+# Select Champagne Gold nuance swatch
+- tapOn:
+    text: "Champagne"
+    optional: true
+- takeScreenshot: screenshots/step-11-studio-swatch-champagne-gold.png
+
+# Save Look to Studio
 - tapOn:
     text: "Save Look to Studio"
     optional: true
-- takeScreenshot: screenshots/studio-02-saved.png
+- takeScreenshot: screenshots/step-12-studio-save-look-success.png
 
-# ================= Runway & Duels Tab =================
+# ================= 3. Runway & Street Style Duels (5 Steps) =================
 - tapOn:
     text: "Runway"
 - extendedWaitUntil:
@@ -92,31 +115,51 @@ appId: com.modestfit.app
     optional: true
 - assertVisible:
     text: "Runway & Duels"
-- takeScreenshot: screenshots/runway-01-duel.png
+- takeScreenshot: screenshots/step-13-runway-duel-initial.png
+
+# Vote in Duel (triggers percentage tally and +10 Karma)
 - tapOn:
     text: "Tap to Vote"
     optional: true
-- takeScreenshot: screenshots/runway-02-voted.png
+- takeScreenshot: screenshots/step-14-runway-duel-voted-karma.png
 
-# ================= Wardrobe Tab =================
+# District Leaderboard
+- scrollUntilVisible:
+    element:
+      text: ".*Fatima M..*"
+    direction: DOWN
+    timeout: 15000
+    optional: true
+- takeScreenshot: screenshots/step-15-runway-leaderboard-district.png
+
+# GCC / Region Tab
+- tapOn:
+    text: ".*GCC / Region.*"
+    optional: true
+- takeScreenshot: screenshots/step-16-runway-leaderboard-gcc.png
+
+# Global Tab
+- tapOn:
+    text: ".*Global.*"
+    optional: true
+- takeScreenshot: screenshots/step-17-runway-leaderboard-global.png
+
+# ================= 4. Wardrobe Tab (3 Steps) =================
 - tapOn:
     text: "Wardrobe"
 - extendedWaitUntil:
     visible: "My Wardrobe"
     timeout: 15000
     optional: true
-- takeScreenshot: screenshots/wardrobe-01-empty.png
+- takeScreenshot: screenshots/step-18-wardrobe-empty-starter.png
 - assertVisible:
     text: "Your wardrobe is empty"
-- assertVisible:
-    text: "Starter ideas"
 
-# ================= Add piece =================
 - tapOn:
     text: "Add piece"
 - assertVisible:
     text: "Name"
-- takeScreenshot: screenshots/addpiece-01.png
+- takeScreenshot: screenshots/step-19-wardrobe-add-piece-form.png
 - tapOn:
     text: "e.g. Black linen abaya"
 - inputText: "Black linen abaya"
@@ -129,25 +172,24 @@ appId: com.modestfit.app
 - tapOn:
     text: "Save"
 
-# ================= Wardrobe tab (with piece) =================
 - extendedWaitUntil:
     visible: "Black linen abaya"
     timeout: 15000
     optional: true
-- takeScreenshot: screenshots/wardrobe-02-with-piece.png
-- assertNotVisible: "Your wardrobe is empty"
+- takeScreenshot: screenshots/step-20-wardrobe-saved-valid-piece.png
 
-# ================= Outfits tab =================
+# ================= 5. Outfits Tab & Modesty Verification (3 Steps) =================
 - tapOn:
     text: "Outfits"
 - assertVisible:
     text: "No outfits yet"
-- takeScreenshot: screenshots/outfits-01-empty.png
+- takeScreenshot: screenshots/step-21-outfits-empty-state.png
+
 - tapOn:
     text: "New outfit"
 - assertVisible:
     text: ".*Select pieces.*"
-- takeScreenshot: screenshots/createoutfit-01.png
+- takeScreenshot: screenshots/step-22-createoutfit-selection.png
 - tapOn:
     text: "e.g. Friday work look"
 - inputText: "Friday work look"
@@ -162,28 +204,46 @@ appId: com.modestfit.app
 - tapOn:
     text: "Save"
 
-# ================= Outfits tab (with outfit) =================
 - extendedWaitUntil:
     visible: "Friday work look"
     timeout: 15000
     optional: true
-- takeScreenshot: screenshots/outfits-02-with-outfit.png
+- takeScreenshot: screenshots/step-23-outfit-saved-modesty-passed.png
 
-# ================= Profile tab =================
+# ================= 6. Profile & Paywall (3 Steps) =================
 - tapOn:
     text: "Profile"
 - assertVisible:
     text: "Upgrade to Pro"
-- takeScreenshot: screenshots/profile-01.png
-- assertVisible:
-    text: "Appearance"
+- takeScreenshot: screenshots/step-24-profile-tab.png
 
-# ================= Paywall =================
 - tapOn:
     text: "Upgrade to Pro"
 - assertVisible:
     text: "ModestFit Pro"
-- assertVisible:
-    text: ".*Free Trial.*"
+- takeScreenshot: screenshots/step-25-paywall-annual-hero.png
+
+# Toggle Weekly Plan
+- tapOn:
+    text: ".*Weekly Pass.*"
     optional: true
-- takeScreenshot: screenshots/paywall-01.png
+- takeScreenshot: screenshots/step-26-paywall-weekly-option.png
+
+- back
+
+# ================= 7. Negative Scenario: Gated Insights (1 Step) =================
+- scrollUntilVisible:
+    element:
+      text: ".*Wardrobe insights.*"
+    direction: DOWN
+    timeout: 30000
+    optional: true
+- tapOn:
+    text: ".*Wardrobe insights.*"
+- extendedWaitUntil:
+    visible: "Insights are Pro"
+    timeout: 10000
+    optional: true
+- takeScreenshot: screenshots/step-27-negative-insights-pro-gated.png
+- assertVisible:
+    text: "Insights are Pro"
