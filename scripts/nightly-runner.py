@@ -37,23 +37,24 @@ def main():
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"[{now_str}] Starting Nightly Orchestration Check...")
 
-    raw_runs = run(["gh", "run", "list", "--limit", "60", "--json", "databaseId,workflowName,status,conclusion,createdAt,url"])
+    raw_runs = run(["gh", "run", "list", "--limit", "200", "--json", "databaseId,workflowName,status,conclusion,createdAt,url"])
     try:
         runs = json.loads(raw_runs)
     except Exception as e:
         print(f"Error parsing runs: {e}")
         return
 
-    # Map latest run for each workflow file
+    # Map latest run and best successful run for each workflow file
     latest_by_app = {}
+    best_success_by_app = {}
     for r in runs:
         wfname = r["workflowName"]
         for w in workflows:
             if f"({w['app']})" in wfname:
                 if w['app'] not in latest_by_app:
                     latest_by_app[w['app']] = r
-                elif latest_by_app[w['app']]["conclusion"] == "cancelled" and r["conclusion"] == "success":
-                    latest_by_app[w['app']] = r
+                if r["conclusion"] == "success" and w['app'] not in best_success_by_app:
+                    best_success_by_app[w['app']] = r
 
     status_summary = []
     group_a_running = False
@@ -66,28 +67,31 @@ def main():
         app = w["app"]
         group = w["group"]
         r = latest_by_app.get(app)
+        succ = best_success_by_app.get(app)
 
-        if r:
-            st = r["status"]
+        if r and r["status"] in ("in_progress", "queued"):
+            if group == "a": group_a_running = True
+            if group == "b": group_b_running = True
+            if succ:
+                # App already passed, but a re-run is running
+                passed_tonight.add(app)
+                status_summary.append((app, group, "PASSED (re-running)", r["databaseId"], None))
+            else:
+                status_summary.append((app, group, "RUNNING", r["databaseId"], None))
+        elif succ:
+            passed_tonight.add(app)
+            status_summary.append((app, group, "PASSED", succ["databaseId"], None))
+            # Download screenshots if needed
+            sc_dir = os.path.join("apps", app, "screenshots")
+            if not os.path.exists(sc_dir) or len(os.listdir(sc_dir)) == 0:
+                print(f"Downloading screenshots for {app}...")
+                run(["gh", "run", "download", str(succ["databaseId"]), "-n", f"screenshots-{app}", "-D", sc_dir, "--clobber"])
+        elif r:
             conc = r["conclusion"]
             run_id = r["databaseId"]
-
-            if st in ("in_progress", "queued"):
-                if group == "a": group_a_running = True
-                if group == "b": group_b_running = True
-                status_summary.append((app, group, "RUNNING", run_id, None))
-            elif conc == "success":
-                passed_tonight.add(app)
-                status_summary.append((app, group, "PASSED", run_id, None))
-                # Download screenshots if not already downloaded
-                sc_dir = os.path.join("apps", app, "screenshots")
-                if not os.path.exists(sc_dir) or len(os.listdir(sc_dir)) == 0:
-                    print(f"Downloading screenshots for {app}...")
-                    run(["gh", "run", "download", str(run_id), "-n", f"screenshots-{app}", "-D", sc_dir])
-            else:
-                failed_tonight.add(app)
-                status_summary.append((app, group, f"FAILED ({conc})", run_id, None))
-                pending_apps.append(w)
+            failed_tonight.add(app)
+            status_summary.append((app, group, f"FAILED ({conc})", run_id, None))
+            pending_apps.append(w)
         else:
             status_summary.append((app, group, "NOT_STARTED", None, None))
             pending_apps.append(w)
