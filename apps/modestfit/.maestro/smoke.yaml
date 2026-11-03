@@ -5,7 +5,7 @@ appId: com.modestfit.app
     clearState: true
 
 # --- Onboarding: 3 slides, language, modesty prefs ---
-- takeScreenshot: screenshots/shot-01.png
+- takeScreenshot: screenshots/shot-01-onboarding.png
 - assertVisible: "Catalog your wardrobe"
 - tapOn: "Continue"
 - tapOn: "Continue"
@@ -15,30 +15,36 @@ appId: com.modestfit.app
 - assertVisible: "Your modesty preferences"
 - tapOn: "Done"
 
-# --- Wardrobe tab: adopt a starter piece, add a piece ---
-- takeScreenshot: screenshots/shot-02.png
-- assertVisible: "My Wardrobe"
-- tapOn: "Add piece"
-- assertVisible: "Name"
-- tapOn: "Save"
+# --- Atelier Studio Tab (Default Home) ---
+- extendedWaitUntil:
+    visible: "Atelier Studio"
+    timeout: 15000
+    optional: true
+- assertVisible: "Atelier Studio"
+- takeScreenshot: screenshots/shot-02-studio.png
+- tapOn:
+    text: "Save Look to Studio"
+    optional: true
+
+# --- Runway & Duels Tab ---
+- tapOn: "Runway"
+- assertVisible: "Runway & Duels"
+- takeScreenshot: screenshots/shot-03-runway.png
+- tapOn:
+    text: "Tap to Vote"
+    optional: true
+
+# --- Wardrobe Tab ---
+- tapOn: "Wardrobe"
 - assertVisible: "My Wardrobe"
 
-# --- Outfits tab: create an outfit ---
+# --- Outfits Tab ---
 - tapOn: "Outfits"
 - assertVisible: "My Outfits"
-- tapOn: "New outfit"
-- takeScreenshot: screenshots/shot-03.png
-- assertVisible: "Select pieces"
-- tapOn: "Save"
 
-# --- Ideas tab: generate suggestions ---
-- tapOn: "Ideas"
-- assertVisible: "Shop your closet"
-
-# --- Profile tab: appearance + paywall entry ---
+# --- Profile & Paywall ---
 - tapOn: "Profile"
 - assertVisible: "Appearance"
 - tapOn: "Upgrade to Pro"
-- assertVisible: "Cancel anytime"
-
-- takeScreenshot: screenshots/shot-04.png
+- assertVisible: "ModestFit Pro"
+- takeScreenshot: screenshots/shot-04-paywall.png

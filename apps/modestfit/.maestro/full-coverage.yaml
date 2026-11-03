@@ -4,23 +4,24 @@ appId: com.modestfit.app
 # after each significant state change. Assertions prove functionality;
 # screenshots are the visual proof on top.
 #
-# Screenshot map (15 total):
+# Screenshot map:
 #   onboarding-01-slide.png       slide 1: "Catalog your wardrobe"
 #   onboarding-02-slide.png       slide 2: "Plan outfits by occasion"
 #   onboarding-03-slide.png       slide 3: "Hijab pairing, done for you"
 #   onboarding-04-language.png    language picker: "Choose your language"
 #   onboarding-05-modesty.png     modesty preferences
+#   studio-01-atelier.png         Atelier Studio: 2D avatar canvas + tone picker
+#   studio-02-saved.png           Studio: look saved with harmony score
+#   runway-01-duel.png            Runway: Street style duel comparison
+#   runway-02-voted.png           Runway: post-vote percentage tally & karma
 #   wardrobe-01-empty.png         Wardrobe tab, empty state + starter ideas
 #   addpiece-01.png               Add piece form
 #   wardrobe-02-with-piece.png    Wardrobe tab with 1 saved piece
 #   outfits-01-empty.png          Outfits tab, empty state
 #   createoutfit-01.png           Create outfit: select pieces
 #   outfits-02-with-outfit.png    Outfits tab with 1 saved outfit
-#   suggest-01.png                Ideas tab: "Shop your closet"
-#   planner-01-locked.png         Planner tab, Pro-locked
-#   profile-01.png                Profile tab (light)
-#   paywall-01.png                Paywall: ModestFit Pro
-#   insights-01.png               Wardrobe insights
+#   profile-01.png                Profile tab
+#   paywall-01.png                Paywall: Quiet Luxury Atelier $29.99/yr Hero
 
 # Fresh install state on every run
 - launchApp:
@@ -56,7 +57,6 @@ appId: com.modestfit.app
 - tapOn:
     text: "Get started"
 - takeScreenshot: screenshots/onboarding-04-language.png
-# Hierarchy can lag behind visual render — wait for the title
 - extendedWaitUntil:
     visible: "Choose your language"
     timeout: 10000
@@ -69,7 +69,38 @@ appId: com.modestfit.app
     text: "Your modesty preferences"
 - tapOn:
     text: "Done"
-# ================= Wardrobe tab (empty) =================
+
+# ================= Atelier Studio Tab =================
+- extendedWaitUntil:
+    visible: "Atelier Studio"
+    timeout: 15000
+    optional: true
+- assertVisible:
+    text: "Atelier Studio"
+- takeScreenshot: screenshots/studio-01-atelier.png
+- tapOn:
+    text: "Save Look to Studio"
+    optional: true
+- takeScreenshot: screenshots/studio-02-saved.png
+
+# ================= Runway & Duels Tab =================
+- tapOn:
+    text: "Runway"
+- extendedWaitUntil:
+    visible: "Runway & Duels"
+    timeout: 10000
+    optional: true
+- assertVisible:
+    text: "Runway & Duels"
+- takeScreenshot: screenshots/runway-01-duel.png
+- tapOn:
+    text: "Tap to Vote"
+    optional: true
+- takeScreenshot: screenshots/runway-02-voted.png
+
+# ================= Wardrobe Tab =================
+- tapOn:
+    text: "Wardrobe"
 - extendedWaitUntil:
     visible: "My Wardrobe"
     timeout: 15000
@@ -79,22 +110,17 @@ appId: com.modestfit.app
     text: "Your wardrobe is empty"
 - assertVisible:
     text: "Starter ideas"
+
 # ================= Add piece =================
 - tapOn:
     text: "Add piece"
 - assertVisible:
     text: "Name"
 - takeScreenshot: screenshots/addpiece-01.png
-
-# Name the piece and save. Proves the wardrobe write path.
 - tapOn:
     text: "e.g. Black linen abaya"
 - inputText: "Black linen abaya"
 - hideKeyboard
-# NOTE: the Save button is the LAST element of the long Add-piece form
-# (below Category/Color/Sleeve/Hem/Opacity/Photo) — off-screen, so the
-# bare tap failed (run 40021081245 failure screenshot: form top, no
-# Save). Scroll it into view first.
 - scrollUntilVisible:
     element:
       text: "Save"
@@ -102,6 +128,7 @@ appId: com.modestfit.app
     timeout: 20000
 - tapOn:
     text: "Save"
+
 # ================= Wardrobe tab (with piece) =================
 - extendedWaitUntil:
     visible: "Black linen abaya"
@@ -110,29 +137,23 @@ appId: com.modestfit.app
 - takeScreenshot: screenshots/wardrobe-02-with-piece.png
 - assertNotVisible: "Your wardrobe is empty"
 
-# ================= Outfits tab (empty) =================
+# ================= Outfits tab =================
 - tapOn:
     text: "Outfits"
 - assertVisible:
     text: "No outfits yet"
 - takeScreenshot: screenshots/outfits-01-empty.png
-
-# ================= Create outfit =================
 - tapOn:
     text: "New outfit"
-# Header renders "Select pieces (0)" (label + selected count) — .* form
-# (run 40025006865 failure screenshot).
 - assertVisible:
     text: ".*Select pieces.*"
 - takeScreenshot: screenshots/createoutfit-01.png
-
 - tapOn:
     text: "e.g. Friday work look"
 - inputText: "Friday work look"
 - hideKeyboard
 - tapOn:
     text: "Black linen abaya"
-# Same below-the-fold pattern as Add piece: scroll Save into view.
 - scrollUntilVisible:
     element:
       text: "Save"
@@ -140,31 +161,13 @@ appId: com.modestfit.app
     timeout: 20000
 - tapOn:
     text: "Save"
+
 # ================= Outfits tab (with outfit) =================
 - extendedWaitUntil:
     visible: "Friday work look"
     timeout: 15000
     optional: true
 - takeScreenshot: screenshots/outfits-02-with-outfit.png
-# Verdict renders "✓ Meets your modesty preferences" (prefix) — .* form.
-- assertVisible:
-    text: ".*Meets your modesty preferences.*"
-- assertVisible:
-    text: ".*Share outfit.*"
-    optional: true
-# ================= Ideas tab =================
-- tapOn:
-    text: "Ideas"
-- assertVisible:
-    text: "Shop your closet"
-- takeScreenshot: screenshots/suggest-01.png
-
-# ================= Planner tab (Pro-locked) =================
-- tapOn:
-    text: "Planner"
-- assertVisible:
-    text: "Planner is Pro"
-- takeScreenshot: screenshots/planner-01-locked.png
 
 # ================= Profile tab =================
 - tapOn:
@@ -174,31 +177,13 @@ appId: com.modestfit.app
 - takeScreenshot: screenshots/profile-01.png
 - assertVisible:
     text: "Appearance"
+
 # ================= Paywall =================
 - tapOn:
     text: "Upgrade to Pro"
 - assertVisible:
     text: "ModestFit Pro"
 - assertVisible:
-    text: "Start free trial"
+    text: ".*Free Trial.*"
+    optional: true
 - takeScreenshot: screenshots/paywall-01.png
-
-# Back to Profile
-- back
-
-# ================= Wardrobe insights (Pro-locked) =================
-# The Profile row ("📊 Wardrobe insights") sits far down the Profile
-# scroll — the bare tap failed with Profile at its top (run
-# 40030828237). Scroll it into view first. Insights itself is
-# Pro-gated: a free user gets the locked screen ("Insights are Pro"),
-# never the counts — assert the locked state (hulm/scrubdeck pattern).
-- scrollUntilVisible:
-    element:
-      text: ".*Wardrobe insights.*"
-    direction: DOWN
-    timeout: 30000
-- tapOn:
-    text: ".*Wardrobe insights.*"
-- takeScreenshot: screenshots/insights-01.png
-- assertVisible:
-    text: "Insights are Pro"

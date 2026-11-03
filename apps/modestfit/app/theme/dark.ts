@@ -13,6 +13,8 @@ export interface ThemeColors {
   textInverse: string;
   accent: string;
   accentMuted: string;
+  gold: string;
+  goldMuted: string;
   rose: string;
   roseMuted: string;
   danger: string;
@@ -35,6 +37,8 @@ export const darkColors: ThemeColors = {
   textInverse: p.ink900,
   accent: p.olive300,
   accentMuted: p.olive800,
+  gold: '#D4AF37',
+  goldMuted: '#4A3B18',
   rose: p.rose300,
   roseMuted: p.rose900,
   danger: '#D98A76',

@@ -15,6 +15,7 @@ import {
 // Create in Play Console > Monetize > Products > Subscriptions:
 //   - product ID below, weekly billing period, with a free trial configured.
 export const PRO_WEEKLY_SKU = 'modestfit_weekly';
+export const PRO_ANNUAL_SKU = 'modestfit_annual';
 
 const PRO_STATUS_KEY = '@modestfit:pro_status';
 
@@ -49,7 +50,7 @@ export async function initBilling(onUnlock: () => void): Promise<boolean> {
   // Restore prior entitlement silently.
   try {
     const purchases = await getAvailablePurchases();
-    if (purchases.some((p) => p.productId === PRO_WEEKLY_SKU)) {
+    if (purchases.some((p) => p.productId === PRO_WEEKLY_SKU || p.productId === PRO_ANNUAL_SKU)) {
       await AsyncStorage.setItem(PRO_STATUS_KEY, '1');
       onUnlock();
     }
@@ -78,12 +79,28 @@ export async function getWeeklyPrice(): Promise<string | null> {
   }
 }
 
+export async function getAnnualPrice(): Promise<string | null> {
+  if (!connected) return null;
+  try {
+    const products = await fetchProducts({ skus: [PRO_ANNUAL_SKU], type: 'subs' });
+    return products?.[0]?.displayPrice ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Launches the Play Billing sheet for the weekly+trial subscription. */
 export async function buyWeekly(): Promise<void> {
-  // Trial is configured server-side on the product in Play Console
-  // (deep-dive rule), not in code.
   await requestPurchase({
     request: { google: { skus: [PRO_WEEKLY_SKU] } },
+    type: 'subs',
+  });
+}
+
+/** Launches the Play Billing sheet for the annual Hero subscription. */
+export async function buyAnnual(): Promise<void> {
+  await requestPurchase({
+    request: { google: { skus: [PRO_ANNUAL_SKU] } },
     type: 'subs',
   });
 }

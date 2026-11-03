@@ -1,4 +1,6 @@
 export type RootTabParamList = {
+  Studio: undefined;
+  Runway: undefined;
   Wardrobe: undefined;
   Outfits: undefined;
   Planner: undefined;
@@ -14,4 +16,6 @@ export type RootStackParamList = {
   CreateOutfit: { suggestionBaseIds?: string[]; suggestionHijabId?: string } | undefined;
   AssignDay: { date: string };
   Insights: undefined;
+  Planner: undefined;
+  Suggest: undefined;
 };

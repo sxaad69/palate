@@ -23,8 +23,8 @@ export function OutfitsScreen() {
     const validPieces = pieces.filter((p): p is NonNullable<typeof p> => !!p);
     const pieceLines = validPieces.map((p) => `• ${p.name[lang]}`).join('\n');
     const hijab = validPieces.find((p) => p.category === 'hijab');
-    const hijabLine = hijab ? `\n🧕 Hijab: ${hijab.name[lang]} (${hijab.color})` : '';
-    const message = `✨ Modest Outfit: ${name}\nOccasion: ${s[`occ_${occ}`] || occ}\n\nPieces:\n${pieceLines}${hijabLine}\n\n#ModestFashion #OOTD #ModestFit`;
+    const hijabLine = hijab ? `\n🧕 Hijab: ${hijab.name[lang]} (${hijab.colorKey})` : '';
+    const message = `✨ Modest Outfit: ${name}\nOccasion: ${(s as Record<string, string>)[`occ_${occ}`] || occ}\n\nPieces:\n${pieceLines}${hijabLine}\n\n#ModestFashion #OOTD #ModestFit`;
     try {
       await Share.share({ message });
     } catch {

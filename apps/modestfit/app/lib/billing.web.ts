@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // (localStorage on web).
 
 export const PRO_WEEKLY_SKU = 'modestfit_weekly';
+export const PRO_ANNUAL_SKU = 'modestfit_annual';
 
 const PRO_STATUS_KEY = '@modestfit:pro_status';
 
@@ -22,7 +23,15 @@ export async function getWeeklyPrice(): Promise<string | null> {
   return null;
 }
 
+export async function getAnnualPrice(): Promise<string | null> {
+  return null;
+}
+
 export async function buyWeekly(): Promise<void> {
+  throw new Error('Billing is not available on web.');
+}
+
+export async function buyAnnual(): Promise<void> {
   throw new Error('Billing is not available on web.');
 }
 

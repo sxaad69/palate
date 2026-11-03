@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator as createNativeStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useTheme } from './theme/ThemeProvider';
 import { ModestFitProvider, useModestFit } from './store/app';
@@ -10,6 +10,8 @@ import { t } from './lib/i18n';
 import { closeBilling, initBilling } from './lib/billing';
 import { MFText } from './components/MFText';
 import { OnboardingScreen } from './screens/OnboardingScreen';
+import { StudioScreen } from './screens/StudioScreen';
+import { RunwayDuelScreen } from './screens/RunwayDuelScreen';
 import { WardrobeScreen } from './screens/WardrobeScreen';
 import { OutfitsScreen } from './screens/OutfitsScreen';
 import { PlannerScreen } from './screens/PlannerScreen';
@@ -26,6 +28,8 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const TAB_ICONS: Record<keyof RootTabParamList, string> = {
+  Studio: '👘',
+  Runway: '👑',
   Wardrobe: '👗',
   Outfits: '✨',
   Planner: '📅',
@@ -56,10 +60,10 @@ function Tabs() {
         ),
       })}
     >
+      <Tab.Screen name="Studio" component={StudioScreen} />
+      <Tab.Screen name="Runway" component={RunwayDuelScreen} />
       <Tab.Screen name="Wardrobe" component={WardrobeScreen} />
       <Tab.Screen name="Outfits" component={OutfitsScreen} />
-      <Tab.Screen name="Planner" component={PlannerScreen} />
-      <Tab.Screen name="Suggest" component={SuggestScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -90,6 +94,8 @@ function MainStack() {
         options={{ presentation: 'modal' }}
       />
       <Stack.Screen name="Insights" component={InsightsScreen} />
+      <Stack.Screen name="Planner" component={PlannerScreen} />
+      <Stack.Screen name="Suggest" component={SuggestScreen} />
     </Stack.Navigator>
   );
 }
