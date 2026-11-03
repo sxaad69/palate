@@ -1,7 +1,7 @@
 # Nightly 23-App Portfolio E2E Test Report
-**Last Check:** 2026-11-03 04:01:55
+**Last Check:** 2026-11-03 04:30:04
 **Passed Tonight:** 23 / 23
-**Active Runs (Group A/B):** Group A=Idle, Group B=Active
+**Active Runs (Group A/B):** Group A=Idle, Group B=Idle
 **Dispatched This Cycle:** None (slots busy)
 
 | App | Concurrency Group | Status | Latest Run ID |
@@ -11,7 +11,7 @@
 | `duobudget` | Group A | PASSED | [41391633523](https://github.com/sxaad69/palate/actions/runs/41391633523) |
 | `fable` | Group B | PASSED | [41538134682](https://github.com/sxaad69/palate/actions/runs/41538134682) |
 | `fastuna` | Group A | PASSED | [41389029269](https://github.com/sxaad69/palate/actions/runs/41389029269) |
-| `fernly` | Group B | PASSED (re-running) | [41556838319](https://github.com/sxaad69/palate/actions/runs/41556838319) |
+| `fernly` | Group B | PASSED | [41556838319](https://github.com/sxaad69/palate/actions/runs/41556838319) |
 | `gratitude` | Group A | PASSED | [41553311979](https://github.com/sxaad69/palate/actions/runs/41553311979) |
 | `headdown` | Group B | PASSED | [41372821617](https://github.com/sxaad69/palate/actions/runs/41372821617) |
 | `hulm` | Group A | PASSED | [41525150126](https://github.com/sxaad69/palate/actions/runs/41525150126) |
