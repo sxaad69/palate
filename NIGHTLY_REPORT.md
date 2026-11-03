@@ -1,8 +1,8 @@
 # Nightly 23-App Portfolio E2E Test Report
-**Last Check:** 2026-11-03 02:30:09
-**Passed Tonight:** 18 / 23
+**Last Check:** 2026-11-03 03:00:10
+**Passed Tonight:** 19 / 23
 **Active Runs (Group A/B):** Group A=Active, Group B=Active
-**Dispatched This Cycle:** posturecheck, moodsleep
+**Dispatched This Cycle:** salahmate
 
 | App | Concurrency Group | Status | Latest Run ID |
 |---|:---:|---|:---:|
@@ -19,12 +19,12 @@
 | `lanceledger` | Group A | PASSED | [41372817551](https://github.com/sxaad69/palate/actions/runs/41372817551) |
 | `meetbrief` | Group B | PASSED | [41378070048](https://github.com/sxaad69/palate/actions/runs/41378070048) |
 | `modestfit` | Group A | PASSED | [41384990151](https://github.com/sxaad69/palate/actions/runs/41384990151) |
-| `moodsleep` | Group B | FAILED (cancelled) | [41380713040](https://github.com/sxaad69/palate/actions/runs/41380713040) |
+| `moodsleep` | Group B | PASSED | [41545923816](https://github.com/sxaad69/palate/actions/runs/41545923816) |
 | `naplet` | Group A | PASSED | [41538101375](https://github.com/sxaad69/palate/actions/runs/41538101375) |
 | `palate` | Group B | PASSED | [41521064421](https://github.com/sxaad69/palate/actions/runs/41521064421) |
 | `petmed` | Group A | PASSED | [41537813566](https://github.com/sxaad69/palate/actions/runs/41537813566) |
 | `pip` | Group B | PASSED | [41380712826](https://github.com/sxaad69/palate/actions/runs/41380712826) |
-| `posturecheck` | Group A | FAILED (cancelled) | [41380712863](https://github.com/sxaad69/palate/actions/runs/41380712863) |
+| `posturecheck` | Group A | RUNNING | [41545917882](https://github.com/sxaad69/palate/actions/runs/41545917882) |
 | `salahmate` | Group B | FAILED (cancelled) | [41380712819](https://github.com/sxaad69/palate/actions/runs/41380712819) |
 | `scrubdeck` | Group A | FAILED (cancelled) | [41380712828](https://github.com/sxaad69/palate/actions/runs/41380712828) |
 | `shadowtalk` | Group B | FAILED (cancelled) | [41380712873](https://github.com/sxaad69/palate/actions/runs/41380712873) |
