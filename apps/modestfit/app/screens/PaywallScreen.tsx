@@ -38,7 +38,22 @@ export function PaywallScreen() {
         await buyWeekly();
       }
     } catch {
-      // user cancelled or billing unavailable — stay on paywall
+      // In development / test builds before Google Play Store SKUs are published:
+      Alert.alert(
+        'Sandbox Payment Test',
+        'Google Play Billing requires published SKUs on Play Console. Would you like to simulate a successful Sandbox purchase approval?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Simulate Approval (Unlock Pro)',
+            onPress: () => {
+              void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
+              setPro(true);
+              Alert.alert('Sandbox Success', 'VIP Atelier Pro unlocked! You can now test all Pro features.');
+            },
+          },
+        ]
+      );
     } finally {
       setBusy(false);
     }
@@ -202,10 +217,20 @@ export function PaywallScreen() {
         {/* Action Buttons */}
         <View style={{ marginTop: spacing.md }}>
           {isPro ? (
-            <View style={[styles.alreadyProBox, { backgroundColor: colors.goldMuted, borderColor: colors.gold }]}>
-              <MFText variant="body" color={colors.gold} style={{ textAlign: 'center', fontWeight: '700' }}>
-                👑 {s.alreadyPro}
-              </MFText>
+            <View style={{ gap: spacing.sm }}>
+              <View style={[styles.alreadyProBox, { backgroundColor: colors.goldMuted, borderColor: colors.gold }]}>
+                <MFText variant="body" color={colors.gold} style={{ textAlign: 'center', fontWeight: '700' }}>
+                  👑 {s.alreadyPro}
+                </MFText>
+              </View>
+              <Button
+                title="Reset to Free Tier (Sandbox Test)"
+                variant="ghost"
+                onPress={() => {
+                  setPro(false);
+                  Alert.alert('Reset Complete', 'Returned to Free Tier (20-piece limit).');
+                }}
+              />
             </View>
           ) : (
             <>
