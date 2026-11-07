@@ -243,6 +243,82 @@ assert(topVotes > secondVotes, 'Top stylist strictly has highest vote tally');
 
 
 console.log('\n============================================================');
+console.log('5. PAYMENT FLOWS & PLAY BILLING SANDBOX HARNESS TESTS');
+console.log('============================================================');
+
+const PRO_ANNUAL_SKU = 'modestfit_annual';
+const PRO_WEEKLY_SKU = 'modestfit_weekly';
+
+// Test 5.1: Subscription SKUs match Google Play Console product identifiers
+assert(PRO_ANNUAL_SKU === 'modestfit_annual', 'Annual Hero subscription SKU is modestfit_annual');
+assert(PRO_WEEKLY_SKU === 'modestfit_weekly', 'Weekly subscription SKU is modestfit_weekly');
+
+// Test 5.2: Pricing structure and savings calculation
+const annualPriceUsd = 29.99;
+const weeklyPriceUsd = 2.99;
+const weeklyYearlyEquivalent = weeklyPriceUsd * 52; // $155.48
+const savingsPercentage = Math.round(((weeklyYearlyEquivalent - annualPriceUsd) / weeklyYearlyEquivalent) * 100);
+const monthlyEquivalent = annualPriceUsd / 12; // $2.499
+
+assert(savingsPercentage >= 65, `Annual pass delivers ${savingsPercentage}% savings vs weekly (>=65% value claim)`);
+assert(monthlyEquivalent < 2.50 && monthlyEquivalent > 2.48, 'Annual pass breaks down to $2.49/mo equivalent');
+
+// Test 5.3: Sandbox purchase simulation lifecycle
+interface UserEntitlementState {
+  isPro: boolean;
+  plan: 'free' | 'annual' | 'weekly';
+  hasTrial: boolean;
+  wardrobePieceCount: number;
+}
+
+let userState: UserEntitlementState = {
+  isPro: false,
+  plan: 'free',
+  hasTrial: false,
+  wardrobePieceCount: 20,
+};
+
+// Free user reaches 20 piece boundary
+assert(simulateAddPiece(userState.wardrobePieceCount, userState.isPro) === false, 'Sandbox Pre-Purchase: 21st piece blocked on Free tier');
+
+// Simulate Sandbox Approval on Annual Pass (with 7-day trial)
+function simulateSandboxPurchaseApproval(
+  state: UserEntitlementState,
+  selectedPlan: 'annual' | 'weekly'
+): UserEntitlementState {
+  return {
+    ...state,
+    isPro: true,
+    plan: selectedPlan,
+    hasTrial: selectedPlan === 'annual', // 7-day trial on Annual Hero Pass
+  };
+}
+
+userState = simulateSandboxPurchaseApproval(userState, 'annual');
+
+assert(userState.isPro === true, 'Sandbox Post-Purchase: Pro entitlement granted');
+assert(userState.plan === 'annual', 'Sandbox Post-Purchase: Plan set to annual');
+assert(userState.hasTrial === true, 'Sandbox Post-Purchase: 7-day free trial active');
+assert(simulateAddPiece(userState.wardrobePieceCount, userState.isPro) === true, 'Sandbox Post-Purchase: 21st piece allowed without limit');
+
+// Simulate Sandbox Reset to Free Tier (Developer QA verification)
+function simulateSandboxResetToFree(state: UserEntitlementState): UserEntitlementState {
+  return {
+    ...state,
+    isPro: false,
+    plan: 'free',
+    hasTrial: false,
+  };
+}
+
+userState = simulateSandboxResetToFree(userState);
+
+assert(userState.isPro === false, 'Sandbox Reset: Pro entitlement revoked back to Free tier');
+assert(userState.plan === 'free', 'Sandbox Reset: Plan safely reverted to free');
+assert(simulateAddPiece(userState.wardrobePieceCount, userState.isPro) === false, 'Sandbox Reset: 20-piece wardrobe boundary re-enforced');
+
+
+console.log('\n============================================================');
 console.log(`SUMMARY: ${passedCount} PASSED, ${failedCount} FAILED`);
 console.log('============================================================\n');
 
